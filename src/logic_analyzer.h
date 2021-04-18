@@ -203,7 +203,7 @@ class RingBuffer {
 
 
 /**
- * @brief Main Logic Analizer API using the SUMP Protocol
+ * @brief Main Logic Analyzer API using the SUMP Protocol
  * @author Phil Schatzmann
  * @copyright GPLv3
  */

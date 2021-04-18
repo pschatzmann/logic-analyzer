@@ -10,6 +10,7 @@
 #include "network.h"
 #include "logic_analyzer.h"
 #include "config_esp32.h"
+#include "config_esp8266.h"
 #include "config_avr.h"
 
 LogicAnalyzer logicAnalyzer;

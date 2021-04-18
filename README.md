@@ -45,7 +45,6 @@ void loop() {
 ```
 
 
-
 # Connecting to Pulseview
 
 - Start the Arduino __"logic-analyzer"__ Sketch
@@ -56,3 +55,10 @@ void loop() {
     - Click on __"Scan for Devices using driver above"__ button
     - Select the Device - __"Arduino"__ which should be available and confirm with OK
 
+
+# Supported Archtectures
+
+- ESP32
+- ESP8266
+- AVR Processors
+- Raspberry Pico
