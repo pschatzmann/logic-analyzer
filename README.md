@@ -1,6 +1,6 @@
 # Arduino Logic Analyzer
 
-Recently when I started to research the topic of [Logic Analyzers](https://en.wikipedia.org/wiki/Logic_analyzer) I found the incredible [PulseView Project](https://sigrok.org/wiki/PulseView). However, I did not want to invest in additional hardware but just use one of my favorite microprocessors (ESP32, Raspberry Pico) as capturing device.
+Recently, when I started to research the topic of [Logic Analyzers](https://en.wikipedia.org/wiki/Logic_analyzer), I found the incredible [PulseView Project](https://sigrok.org/wiki/PulseView). However, I did not want to invest in additional hardware but just use one of my favorite microprocessors (ESP32, Raspberry Pico) as capturing device.
 
 There are quite a few logic analyzer projects with the same goal:
 
@@ -14,4 +14,14 @@ Howerver all of them are geared for __one specific architecture__ and therfore a
 I wanted to come up with a better design and provide a [basic C++ API](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) that clearly separates the generic functionality from the processor specific in order to support an easy rollout to new architectures: The only common precondition is the Arduino API. 
 
 To come up with an optimized implementation for a specific board you just need to implement a specifig config.h and optionally you can also subclass LogicAnalyzer and overwirte e.g. your custom capture method...
+
+# Connecting to Pulseview
+
+- Start the Arduino logic-analyzer Sketch
+- Start Pulseview
+- Select Connect to a Device:
+    - Choose the Driver: Openbentch Logic Sniffer & SUMP Compatibles
+    - Choose the Interfarface: Select Serial Port and the Port to your Arduino Device with the frequency defined in the config<Device>.h (e.g. the ESP32 uses 921600)
+    - Clock on "Scan for Devices using driver above" button
+    - Select the Device - Arduino should be available and confirm with OK
 
