@@ -305,9 +305,9 @@ class LogicAnalyzer {
         void processCommand(){
             //printLog("processCommand");
             if (hasCommand()){
-                int Sump4ByteComandArg = command();
-                printLog("processCommand %d", Sump4ByteComandArg);
-                processCommand(Sump4ByteComandArg);
+                int cmd = command();
+                printLog("processCommand %d", cmd);
+                processCommand(cmd);
             }
         }
 
@@ -415,7 +415,7 @@ class LogicAnalyzer {
         const char* device_id = "1ALS";
         const char* firmware_version = "\x020.13";
         const char* protocol_version = "\x041\x002";
-        Sump4ByteComandArg Sump4ByteComandArg;
+        Sump4ByteComandArg cmd4;
         EventHandler eventHandler = nullptr;
 
         /// Defines the command stream to Pulseview capturing divice
@@ -452,8 +452,8 @@ class LogicAnalyzer {
         /// gets the next 4 byte command
         Sump4ByteComandArg &commandExt() {
             delay(10);
-            stream_ptr->readBytes(Sump4ByteComandArg.uint8Values, 4);
-            return Sump4ByteComandArg;
+            stream_ptr->readBytes(cmd4.uint8Values, 4);
+            return cmd4;
         }
 
         /// writes the status of all activated pins to the capturing device
@@ -463,16 +463,16 @@ class LogicAnalyzer {
         }
 
         /// writes a byte command with uint32_t number argument
-        void write(uint8_t Sump4ByteComandArg, uint32_t number){
-            stream().write(Sump4ByteComandArg);
+        void write(uint8_t cmd, uint32_t number){
+            stream().write(cmd);
             uint32_t toSend = htonl(number);
             stream().write((byte*)&toSend,sizeof(uint32_t));
             stream().flush();
         }
 
         /// writes a byte command with char* argument
-        void write(uint8_t Sump4ByteComandArg, const char* str){
-            stream().write(Sump4ByteComandArg);
+        void write(uint8_t cmd, const char* str){
+            stream().write(cmd);
             stream().print(str);
             stream().write("\x000",1);
             stream().flush();
@@ -500,14 +500,14 @@ class LogicAnalyzer {
 
         /// Provides the command as PinBitArray
         PinBitArray commandExtPinBitArray() {
-            Sump4ByteComandArg Sump4ByteComandArg = getSump4ByteComandArg(); 
+            Sump4ByteComandArg cmd = getSump4ByteComandArg(); 
             switch(sizeof(PinBitArray)) {
                 case 1:
-                    return (PinBitArray) Sump4ByteComandArg.uint8Values[0];
+                    return (PinBitArray) cmd.uint8Values[0];
                 case 2:
-                    return (PinBitArray) Sump4ByteComandArg.get16(0);
+                    return (PinBitArray) cmd.get16(0);
                 default:
-                    return (PinBitArray) Sump4ByteComandArg.get32();
+                    return (PinBitArray) cmd.get32();
             }  
         }
 
@@ -568,10 +568,10 @@ class LogicAnalyzer {
         /**
          *  Proposess the SUMP commands
          */
-        void processCommand(int Sump4ByteComandArg){
+        void processCommand(int cmd){
             if (buffer_ptr==nullptr || impl_ptr==nullptr) return;
 
-            switch (Sump4ByteComandArg) {
+            switch (cmd) {
                 /**
                  * Resets the buffer and processing status. Resets are repeated 5 times!
                  */
@@ -631,8 +631,8 @@ class LogicAnalyzer {
                 */
                 case SUMP_SET_DIVIDER: {
                         printLog("->SUMP_SET_DIVIDER");
-                        Sump4ByteComandArg Sump4ByteComandArg = getSump4ByteComandArg();
-                        uint32_t divider = Sump4ByteComandArg.get32();
+                        Sump4ByteComandArg cmd = getSump4ByteComandArg();
+                        uint32_t divider = cmd.get32();
                         printLog("-divider: %lu\n", divider);
                         setupDelay(divider);
                     }
@@ -650,9 +650,9 @@ class LogicAnalyzer {
                 */
                 case SUMP_SET_READ_DELAY_COUNT: {
                         printLog("->SUMP_SET_READ_DELAY_COUNT");
-                        Sump4ByteComandArg Sump4ByteComandArg = getSump4ByteComandArg();
-                        read_count = min((uint32_t)Sump4ByteComandArg.get16(0), max_capure_size);
-                        delay_count = min((uint32_t)Sump4ByteComandArg.get16(1),max_capure_size);
+                        Sump4ByteComandArg cmd = getSump4ByteComandArg();
+                        read_count = min((uint32_t)cmd.get16(0), max_capure_size);
+                        delay_count = min((uint32_t)cmd.get16(1),max_capure_size);
                         printLog("--> read_count: %d", read_count);
                         printLog("--> delay_count: %d", delay_count);
                         raiseEvent(READ_DLEAY_COUNT);
@@ -662,8 +662,8 @@ class LogicAnalyzer {
                 /* read the rest of the command bytes and check if RLE is enabled. */
                 case SUMP_SET_FLAGS: {
                         printLog("->SUMP_SET_FLAGS");
-                        Sump4ByteComandArg Sump4ByteComandArg =  getSump4ByteComandArg();
-                        is_continuous_capture = ((Sump4ByteComandArg.uint8Values[1] & 0B1000000) != 0);
+                        Sump4ByteComandArg cmd =  getSump4ByteComandArg();
+                        is_continuous_capture = ((cmd.uint8Values[1] & 0B1000000) != 0);
                         printLog("--> is_continuous_capture: %d\n", is_continuous_capture);
                         raiseEvent(FLAGS);
 
@@ -681,7 +681,7 @@ class LogicAnalyzer {
 
                 /* ignore any unrecognized bytes. */
                 default:
-                    printLog("->UNHANDLED command: %d", Sump4ByteComandArg);
+                    printLog("->UNHANDLED command: %d", cmd);
                     break;
                 
             };
