@@ -65,7 +65,7 @@ $(function() {
 <div class="title">Arduino Logic Analyzer </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> Recently when I started to research the topic of <a href="https://en.wikipedia.org/wiki/Logic_analyzer">Logic Analyzers</a> I found the incredible <a href="https://sigrok.org/wiki/PulseView">PulseView Project</a>. However, I did not want to invest in additional hardware but just use one of my favorite microprocessors (ESP32, Raspberry Pico) as capturing device.</p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> Recently, when I started to research the topic of <a href="https://en.wikipedia.org/wiki/Logic_analyzer">Logic Analyzers</a>, I found the incredible <a href="https://sigrok.org/wiki/PulseView">PulseView Project</a>. However, I did not want to invest in additional hardware but just use one of my favorite microprocessors (ESP32, Raspberry Pico) as capturing device.</p>
 <p>There are quite a few logic analyzer projects with the same goal:</p>
 <ul>
 <li><a href="https://github.com/gillham/logic_analyzer">https://github.com/gillham/logic_analyzer</a></li>
@@ -74,8 +74,21 @@ $(function() {
 <li><a href="https://github.com/Ebiroll/esp32_sigrok">https://github.com/Ebiroll/esp32_sigrok</a></li>
 </ul>
 <p>Howerver all of them are geared for <b>one specific architecture</b> and therfore are <b>not portable</b>.</p>
-<p>I wanted to come up with a better design and provide a basic C++ API that clearly separates the generic functionality from the processor specific in order to support an easy rollout to new architectures: The only common precondition is the Arduino API.</p>
-<p>To come up with an optimized implementation for a specific board you just need to implement a specifig config.h and optionally you can also subclass LogicAnalyzer and overwirte e.g. your custom capture method... </p>
+<p>I wanted to come up with a better design and provide a <a href="https://pschatzmann.github.io/logic-analyzer/html/annotated.html">basic C++ API</a> that clearly separates the generic functionality from the processor specific in order to support an easy rollout to new architectures: The only common precondition is the Arduino API.</p>
+<p>To come up with an optimized implementation for a specific board you just need to implement a specifig config.h and optionally you can also subclass LogicAnalyzer and overwirte e.g. your custom capture method...</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Connecting to Pulseview</h1>
+<ul>
+<li>Start the Arduino logic-analyzer Sketch</li>
+<li>Start Pulseview</li>
+<li>Select Connect to a Device:<ul>
+<li>Choose the Driver: Openbentch Logic Sniffer &amp; SUMP Compatibles</li>
+<li>Choose the Interfarface: Select Serial Port and the Port to your Arduino Device with the frequency defined in the config&lt;Device&gt;.h (e.g. the ESP32 uses 921600)</li>
+<li>Clock on "Scan for Devices using driver above" button</li>
+<li>Select the Device - Arduino should be available and confirm with OK </li>
+</ul>
+</li>
+</ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

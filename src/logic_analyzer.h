@@ -244,11 +244,6 @@ class LogicAnalyzer {
 
         }
 
-        /// Defines the command stream to Pulseview capturing divice
-        void setStream(Stream &stream){
-            stream_ptr = &stream;
-        }
-
         /// provides command output stream of capturing divice
         Stream &stream() {
             return *stream_ptr;
@@ -423,6 +418,12 @@ class LogicAnalyzer {
         CMD cmd;
         EventHandler eventHandler = nullptr;
 
+        /// Defines the command stream to Pulseview capturing divice
+        void setStream(Stream &stream){
+            stream_ptr = &stream;
+        }
+
+        /// Defines the actual status
         void setStatus(Status status){
             this->status = status;
             raiseEvent(STATUS);
