@@ -13,9 +13,9 @@
 #include "Arduino.h"
 #include "network.h"
 #include "logic_analyzer.h"
-#include "pin_reader_pico.h"
+#include "config_pico.h"
 
-LogicAnalyzerESP32 logicAnalyzer;
+LogicAnalyzer logicAnalyzer;
 int pinStart=0;
 int numberOfPins=4;
 bool loggingActive = true;
@@ -24,7 +24,7 @@ int16_t maxCaptureSize=10000;
 void setup() {
     Serial.begin(921600);
     Serial1.begin(115200);
-    logicAnalyzer.begin(Serial, new LogicAnalyzerPicoImpl(numberOfPins), maxCaptureSize, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(numberOfPins), maxCaptureSize, pinStart, numberOfPins);
 }
 
 void loop() {

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#ifdef RP2040
+#ifdef PICO
 #include "Arduino.h"
 
 using namespace logic_analyzer;
