@@ -215,7 +215,7 @@ class LogicAnalyzer {
         }
 
         /// starts the processing
-        void begin(Stream &procesingStream, PinReaderAbstract *impl_ptr, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=true){
+        void begin(Stream &procesingStream, PinReaderAbstract *impl_ptr, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false){
             printLog("begin");
             this->setStream(procesingStream);
             this->max_capure_size = maxCaptureSize;
