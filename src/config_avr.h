@@ -3,6 +3,9 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 
+#define PINS_TYPE uint8_t  // Select based on the number of pins and start pin to be recorded
+#define MAX_CAPTURE_SIZE 10000
+
 // Software Serial for logging
 #define RXD2 12
 #define TXD2 13

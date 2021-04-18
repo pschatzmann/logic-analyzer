@@ -6,7 +6,6 @@
  * See https://sigrok.org/wiki/Openbench_Logic_Sniffer#Short_Commands * 
  */
 
-#define PINS_TYPE uint16_t  // Select based on the number of pins and start pin to be recorded
 #include "Arduino.h"
 #include "network.h"
 #include "logic_analyzer.h"
@@ -16,7 +15,7 @@
 LogicAnalyzer logicAnalyzer;
 int pinStart=4;
 int numberOfPins=8;
-int32_t maxCaptureSize=10000;
+int32_t maxCaptureSize=MAX_CAPTURE_SIZE;
 
 void setup() {
     LOG_SETUP;

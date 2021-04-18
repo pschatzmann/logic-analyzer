@@ -18,7 +18,6 @@
 LogicAnalyzer logicAnalyzer;
 int pinStart=0;
 int numberOfPins=4;
-bool loggingActive = true;
 int16_t maxCaptureSize=10000;
 
 void setup() {

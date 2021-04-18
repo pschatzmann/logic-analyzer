@@ -2,6 +2,9 @@
 #ifdef ESP32
 #include "Arduino.h"
 
+#define PINS_TYPE uint16_t  // Select based on the number of pins and start pin to be recorded
+#define MAX_CAPTURE_SIZE 10000
+
 // pin number is specific to your esp32 board
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2 
