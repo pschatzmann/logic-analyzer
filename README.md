@@ -17,7 +17,8 @@ To come up with an optimized implementation for a specific board you just need t
 
 # The Arduino Sketch
 
-The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just need to call begin on a LogicAnalyzer object:
+The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just need to call begin on a LogicAnalyzer object and add the command handler in the loop():
+
 ```
 #include "Arduino.h"
 #include "network.h"
