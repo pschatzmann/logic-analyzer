@@ -77,7 +77,8 @@ void printLog(const char* fmt, ...) {
 /**
  * @brief 4 Byte SUMP Protocol Command.  The uint8Values data is provided in network format (big endian) while
  * the internal representation is little endian on the 
- * 
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  */
 class Sump4ByteComandArg {
     public:
@@ -99,7 +100,8 @@ class Sump4ByteComandArg {
 
 /**
  * @brief Processor specific implementation Logic - abstract class
- * 
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  */
 class PinReaderAbstract {
     public:
@@ -110,7 +112,8 @@ class PinReaderAbstract {
 
 /**
  * @brief Data is captured in a ring buffer. If the buffer is full we overwrite the oldest entries....
- * 
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  */
 class RingBuffer {
     public:
@@ -201,7 +204,8 @@ class RingBuffer {
 
 /**
  * @brief Main Logic Analizer API using the SUMP Protocol
- * 
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  */
 class LogicAnalyzer {
     public:

@@ -48,11 +48,11 @@ void loop() {
 
 # Connecting to Pulseview
 
-- Start the Arduino logic-analyzer Sketch
-- Start Pulseview
-- Select Connect to a Device:
-    - Choose the Driver: Openbentch Logic Sniffer & SUMP Compatibles
-    - Choose the Interfarface: Select Serial Port and the Port to your Arduino Device with the frequency defined in the config<Device>.h (e.g. the ESP32 uses 921600)
-    - Clock on "Scan for Devices using driver above" button
-    - Select the Device - Arduino should be available and confirm with OK
+- Start the Arduino __"logic-analyzer"__ Sketch
+- Start __Pulseview__
+- Select "Connect to a Device":
+    - Choose the Driver: __Openbentch Logic Sniffer & SUMP Compatibles__
+    - Choose the Interface: Select __Serial Port__ with the Port to your Arduino Device and the frequency defined in the config<Device>.h (e.g. the ESP32 uses 921600)
+    - Click on __"Scan for Devices using driver above"__ button
+    - Select the Device - __"Arduino"__ which should be available and confirm with OK
 
