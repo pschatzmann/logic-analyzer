@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['raiseevent_59',['raiseEvent',['../classlogic__analyzer_1_1_logic_analyzer.html#a1e7a9370e6a16de17f408a01ffe12cbc',1,'logic_analyzer::LogicAnalyzer']]],
-  ['read_60',['read',['../classlogic__analyzer_1_1_ring_buffer.html#a0993113f09880c96be2cc6f230716df7',1,'logic_analyzer::RingBuffer']]],
-  ['readall_61',['readAll',['../classlogic__analyzer_1_1_pin_reader_abstract.html#a6bbc823e928435879afd7e7e57c8e089',1,'logic_analyzer::PinReaderAbstract']]],
-  ['readcount_62',['readCount',['../classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd',1,'logic_analyzer::LogicAnalyzer']]],
-  ['reset_63',['reset',['../classlogic__analyzer_1_1_logic_analyzer.html#a943c89e5c7148d693833c44c1cede29b',1,'logic_analyzer::LogicAnalyzer']]]
+  ['processcommand_61',['processCommand',['../classlogic__analyzer_1_1_logic_analyzer.html#ab8ffc9a1687042b7f825b29ebb7332dc',1,'logic_analyzer::LogicAnalyzer::processCommand()'],['../classlogic__analyzer_1_1_logic_analyzer.html#a6e3a99bb00e67386d67750d697b59c18',1,'logic_analyzer::LogicAnalyzer::processCommand(int cmd)']]]
 ];

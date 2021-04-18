@@ -10,7 +10,8 @@ var searchData=
   ['setstream_31',['setStream',['../classlogic__analyzer_1_1_logic_analyzer.html#a095e8a06e449baf0404499c900698891',1,'logic_analyzer::LogicAnalyzer']]],
   ['settriggermask_32',['setTriggerMask',['../classlogic__analyzer_1_1_logic_analyzer.html#a0f0e720485b3a26e039cd8bdefeadbfc',1,'logic_analyzer::LogicAnalyzer']]],
   ['settriggervalues_33',['setTriggerValues',['../classlogic__analyzer_1_1_logic_analyzer.html#a87aa46982cca8a2ca84e87eda7abe90c',1,'logic_analyzer::LogicAnalyzer']]],
-  ['size_34',['size',['../classlogic__analyzer_1_1_ring_buffer.html#afb3b7a38fb081ee36bce166be91113af',1,'logic_analyzer::RingBuffer']]],
-  ['stream_35',['stream',['../classlogic__analyzer_1_1_logic_analyzer.html#a23b4860b98b6a511c311123608b66574',1,'logic_analyzer::LogicAnalyzer']]],
-  ['sump4bytecomandarg_36',['Sump4ByteComandArg',['../classlogic__analyzer_1_1_sump4_byte_comand_arg.html',1,'logic_analyzer']]]
+  ['setupdelay_34',['setupDelay',['../classlogic__analyzer_1_1_logic_analyzer.html#ac564055d9643c4ac007de0e269d9361b',1,'logic_analyzer::LogicAnalyzer']]],
+  ['size_35',['size',['../classlogic__analyzer_1_1_ring_buffer.html#afb3b7a38fb081ee36bce166be91113af',1,'logic_analyzer::RingBuffer']]],
+  ['stream_36',['stream',['../classlogic__analyzer_1_1_logic_analyzer.html#a23b4860b98b6a511c311123608b66574',1,'logic_analyzer::LogicAnalyzer']]],
+  ['sump4bytecomandarg_37',['Sump4ByteComandArg',['../classlogic__analyzer_1_1_sump4_byte_comand_arg.html',1,'logic_analyzer']]]
 ];

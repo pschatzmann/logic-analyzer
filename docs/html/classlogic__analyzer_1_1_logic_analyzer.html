@@ -75,17 +75,25 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Main Logic Analizer API using the SUMP Protocol.  
+<p>Main Logic Analyzer API using the SUMP Protocol.  
  <a href="classlogic__analyzer_1_1_logic_analyzer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="logic__analyzer_8h_source.html">logic_analyzer.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae1a91607634e07f4edf7448d3eb55175"><td class="memItemLeft" align="right" valign="top"><a id="ae1a91607634e07f4edf7448d3eb55175"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ae1a91607634e07f4edf7448d3eb55175">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_pin_reader_abstract.html">PinReaderAbstract</a> *impl_ptr, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=true)</td></tr>
-<tr class="memdesc:ae1a91607634e07f4edf7448d3eb55175"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the processing <br /></td></tr>
-<tr class="separator:ae1a91607634e07f4edf7448d3eb55175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a073d7e4da72c284aa0817cdf29934"><td class="memItemLeft" align="right" valign="top"><a id="ab7a073d7e4da72c284aa0817cdf29934"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab7a073d7e4da72c284aa0817cdf29934">LogicAnalyzer</a> ()</td></tr>
+<tr class="memdesc:ab7a073d7e4da72c284aa0817cdf29934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:ab7a073d7e4da72c284aa0817cdf29934"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="memItemLeft" align="right" valign="top"><a id="ab9edc2b4f038ffc2bd21d7a0e26ca41b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab9edc2b4f038ffc2bd21d7a0e26ca41b">~LogicAnalyzer</a> ()</td></tr>
+<tr class="memdesc:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd1107b97e5e40e0f77b24296915b5d"><td class="memItemLeft" align="right" valign="top"><a id="a8bd1107b97e5e40e0f77b24296915b5d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a8bd1107b97e5e40e0f77b24296915b5d">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_pin_reader_abstract.html">PinReaderAbstract</a> *impl_ptr, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false)</td></tr>
+<tr class="memdesc:a8bd1107b97e5e40e0f77b24296915b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the processing <br /></td></tr>
+<tr class="separator:a8bd1107b97e5e40e0f77b24296915b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23b4860b98b6a511c311123608b66574"><td class="memItemLeft" align="right" valign="top"><a id="a23b4860b98b6a511c311123608b66574"></a>
 Stream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a23b4860b98b6a511c311123608b66574">stream</a> ()</td></tr>
 <tr class="memdesc:a23b4860b98b6a511c311123608b66574"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides command output stream of capturing divice <br /></td></tr>
@@ -209,8 +217,7 @@ PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a10dd6ff5e57fa7d783460af098b4267f">dumpData</a> ()</td></tr>
 <tr class="memdesc:a10dd6ff5e57fa7d783460af098b4267f"><td class="mdescLeft">&#160;</td><td class="mdescRight">dumps the caputred data to the recording device <br /></td></tr>
 <tr class="separator:a10dd6ff5e57fa7d783460af098b4267f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac564055d9643c4ac007de0e269d9361b"><td class="memItemLeft" align="right" valign="top"><a id="ac564055d9643c4ac007de0e269d9361b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setupDelay</b> (unsigned long divider)</td></tr>
+<tr class="memitem:ac564055d9643c4ac007de0e269d9361b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ac564055d9643c4ac007de0e269d9361b">setupDelay</a> (unsigned long divider)</td></tr>
 <tr class="separator:ac564055d9643c4ac007de0e269d9361b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a989d7b0f9270a7343231d7529d6faa94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a989d7b0f9270a7343231d7529d6faa94">sendMetadata</a> ()</td></tr>
 <tr class="separator:a989d7b0f9270a7343231d7529d6faa94"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -287,7 +294,9 @@ EventHandler&#160;</td><td class="memItemRight" valign="bottom"><b>eventHandler<
 <tr class="separator:a21a10c2235d29bc7016b898084dd9d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Main Logic Analizer API using the SUMP Protocol. </p>
+<div class="textblock"><p>Main Logic Analyzer API using the SUMP Protocol. </p>
+<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GPLv3 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6e3a99bb00e67386d67750d697b59c18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e3a99bb00e67386d67750d697b59c18">&#9670;&nbsp;</a></span>processCommand()</h2>
@@ -341,6 +350,33 @@ EventHandler&#160;</td><td class="memItemRight" valign="bottom"><b>eventHandler<
 </table>
 </div><div class="memdoc">
 <p>This function returns the metadata about our capabilities. It is sent in response to the OpenBench Logic Sniffer extended get metadata command </p>
+
+</div>
+</div>
+<a id="ac564055d9643c4ac007de0e269d9361b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac564055d9643c4ac007de0e269d9361b">&#9670;&nbsp;</a></span>setupDelay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void logic_analyzer::LogicAnalyzer::setupDelay </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>divider</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function calculates what delay we need for the specific sample rate. The dividers are based on SUMP's 100Mhz clock. For example, a 1MHz sample rate has a divider of 99 (0x63 in the command byte). rate = clock / (divider + 1) rate = 100,000,000 / (99 + 1) result is 1,000,000 saying we want a 1MHz sample rate. We calculate our inter sample delay from the divider and the delay between samples gives us the sample rate per second. So for 1MHz, delay = (99 + 1) / 100 which gives us a 1 microsecond delay. For 500KHz, delay = (199 + 1) / 100 which gives us a 2 microsecond delay. </p>
 
 </div>
 </div>

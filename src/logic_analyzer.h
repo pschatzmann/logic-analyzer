@@ -73,7 +73,6 @@ void printLog(const char* fmt, ...) {
 #endif
 }
 
-
 /**
  * @brief 4 Byte SUMP Protocol Command.  The uint8Values data is provided in network format (big endian) while
  * the internal representation is little endian on the 
@@ -201,7 +200,6 @@ class RingBuffer {
 };
 
 
-
 /**
  * @brief Main Logic Analyzer API using the SUMP Protocol
  * @author Phil Schatzmann
@@ -209,10 +207,12 @@ class RingBuffer {
  */
 class LogicAnalyzer {
     public:
+        /// Default Constructor
         LogicAnalyzer() {
             printLog("LogicAnalyzer");
         }
 
+        /// Destructor
         ~LogicAnalyzer() {
             printLog("~LogicAnalyzer");
             if (this->buffer_ptr)  delete this->buffer_ptr;
@@ -230,12 +230,14 @@ class LogicAnalyzer {
             this->pin_numbers = numberOfPins;
             this->buffer_ptr = new RingBuffer(maxCaptureSize);
 
+            // by default the pins are in read mode - so it is usually not really necesarry to set the mode to input
             if (setup_pins){
                 // pinmode imput for requested pins
                 for (int j=pinStart;j<numberOfPins;j++){
                     pinMode(pinStart+j, INPUT);
                 }
             }
+
             // set initial status
             setStatus(STOPPED);
     
@@ -434,7 +436,6 @@ class LogicAnalyzer {
             #ifdef LED_BUILTIN
             digitalWrite(LED_BUILTIN, this->status!=STOPPED);   // turn the LED on if not stopped
             #endif
-
         }
 
         /// raises an event
@@ -526,8 +527,7 @@ class LogicAnalyzer {
             stream().flush();
         }
 
-
-        /*
+        /**
         * This function calculates what delay we need for the specific sample rate.
         * The dividers are based on SUMP's 100Mhz clock.
         * For example, a 1MHz sample rate has a divider of 99 (0x63 in the command
@@ -565,9 +565,7 @@ class LogicAnalyzer {
             // protocol version & end
             stream().write(protocol_version, strlen(protocol_version)+1);
             stream().flush();
-
         }
-
 
         /**
          *  Proposess the SUMP commands
@@ -689,7 +687,6 @@ class LogicAnalyzer {
                     break;
                 
             };
-        
     }
 };
 

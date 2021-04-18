@@ -77,17 +77,50 @@ $(function() {
 <p>I wanted to come up with a better design and provide a <a href="https://pschatzmann.github.io/logic-analyzer/html/annotated.html">basic C++ API</a> that clearly separates the generic functionality from the processor specific in order to support an easy rollout to new architectures: The only common precondition is the Arduino API.</p>
 <p>To come up with an optimized implementation for a specific board you just need to implement a specifig config.h and optionally you can also subclass LogicAnalyzer and overwirte e.g. your custom capture method...</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
+The Arduino Sketch</h1>
+<p>The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just need to call begin on a LogicAnalyzer object and add the command handler in the loop():</p>
+<div class="fragment"><div class="line">#include &quot;Arduino.h&quot;</div>
+<div class="line">#include &quot;network.h&quot;</div>
+<div class="line">#include &quot;logic_analyzer.h&quot;</div>
+<div class="line">#include &quot;config_esp32.h&quot;</div>
+<div class="line">#include &quot;config_avr.h&quot;</div>
+<div class="line"> </div>
+<div class="line">LogicAnalyzer logicAnalyzer;</div>
+<div class="line">int pinStart=4;</div>
+<div class="line">int numberOfPins=8;</div>
+<div class="line">int32_t maxCaptureSize=MAX_CAPTURE_SIZE;</div>
+<div class="line"> </div>
+<div class="line">void setup() {</div>
+<div class="line">    LOG_SETUP;</div>
+<div class="line">    Serial.begin(SERIAL_SPEED);  </div>
+<div class="line">    Serial.setTimeout(SERIAL_TIMEOUT);</div>
+<div class="line">    logicAnalyzer.setCaptureFrequency(MAX_FREQ);</div>
+<div class="line">    logicAnalyzer.begin(Serial, new PinReader(pinStart), maxCaptureSize, pinStart, numberOfPins);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">void loop() {</div>
+<div class="line">    logicAnalyzer.processCommand();</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
 Connecting to Pulseview</h1>
 <ul>
-<li>Start the Arduino logic-analyzer Sketch</li>
-<li>Start Pulseview</li>
-<li>Select Connect to a Device:<ul>
-<li>Choose the Driver: Openbentch Logic Sniffer &amp; SUMP Compatibles</li>
-<li>Choose the Interfarface: Select Serial Port and the Port to your Arduino Device with the frequency defined in the config&lt;Device&gt;.h (e.g. the ESP32 uses 921600)</li>
-<li>Clock on "Scan for Devices using driver above" button</li>
-<li>Select the Device - Arduino should be available and confirm with OK </li>
+<li>Start the Arduino __"logic-analyzer"__ Sketch</li>
+<li>Start <b>Pulseview</b></li>
+<li>Select "Connect to a Device":<ul>
+<li>Choose the Driver: <b>Openbentch Logic Sniffer &amp; SUMP Compatibles</b></li>
+<li>Choose the Interface: Select <b>Serial Port</b> with the Port to your Arduino Device and the frequency defined in the config&lt;Device&gt;.h (e.g. the ESP32 uses 921600)</li>
+<li>Click on __"Scan for Devices using driver above"__ button</li>
+<li>Select the Device - __"Arduino"__ which should be available and confirm with OK</li>
 </ul>
 </li>
+</ul>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Supported Archtectures</h1>
+<ul>
+<li>ESP32</li>
+<li>ESP8266</li>
+<li>AVR Processors</li>
+<li>Raspberry Pico </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
