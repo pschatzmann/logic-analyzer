@@ -443,13 +443,13 @@ class LogicAnalyzer {
             return stream_ptr->available() > 0;
         }
 
-        /// gets the 1 byte command
+        /// gets the next 1 byte command
         uint8_t command() {
             int command = stream_ptr->read();
             return command;
         }
 
-        /// gets the 4 byte command
+        /// gets the next 4 byte command
         Sump4ByteComandArg &commandExt() {
             delay(10);
             stream_ptr->readBytes(Sump4ByteComandArg.uint8Values, 4);
@@ -499,7 +499,7 @@ class LogicAnalyzer {
         }
 
         /// Provides the command as PinBitArray
-        PinBitArray getSump4ByteComandArgPinBitArray() {
+        PinBitArray commandExtPinBitArray() {
             Sump4ByteComandArg Sump4ByteComandArg = getSump4ByteComandArg(); 
             switch(sizeof(PinBitArray)) {
                 case 1:
@@ -607,7 +607,7 @@ class LogicAnalyzer {
                 */
                 case SUMP_TRIGGER_MASK:
                     printLog("->SUMP_TRIGGER_MASK");
-                    setTriggerMask(getSump4ByteComandArgPinBitArray());
+                    setTriggerMask(commandExtPinBitArray());
                     break;
 
                 /*
@@ -616,7 +616,7 @@ class LogicAnalyzer {
                 */
                 case SUMP_TRIGGER_VALUES:
                     printLog("->SUMP_TRIGGER_VALUES");
-                    setTriggerValues(getSump4ByteComandArgPinBitArray());
+                    setTriggerValues(commandExtPinBitArray());
                     break;
 
 
