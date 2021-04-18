@@ -15,6 +15,36 @@ I wanted to come up with a better design and provide a [basic C++ API](https://p
 
 To come up with an optimized implementation for a specific board you just need to implement a specifig config.h and optionally you can also subclass LogicAnalyzer and overwirte e.g. your custom capture method...
 
+# The Arduino Sketch
+
+The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just need to call begin on a LogicAnalyzer object:
+```
+#include "Arduino.h"
+#include "network.h"
+#include "logic_analyzer.h"
+#include "config_esp32.h"
+#include "config_avr.h"
+
+LogicAnalyzer logicAnalyzer;
+int pinStart=4;
+int numberOfPins=8;
+int32_t maxCaptureSize=MAX_CAPTURE_SIZE;
+
+void setup() {
+    LOG_SETUP;
+    Serial.begin(SERIAL_SPEED);  
+    Serial.setTimeout(SERIAL_TIMEOUT);
+    logicAnalyzer.setCaptureFrequency(MAX_FREQ);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), maxCaptureSize, pinStart, numberOfPins);
+}
+
+void loop() {
+    logicAnalyzer.processCommand();
+}
+```
+
+
+
 # Connecting to Pulseview
 
 - Start the Arduino logic-analyzer Sketch
