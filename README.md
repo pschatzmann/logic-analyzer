@@ -33,7 +33,7 @@ void setup() {
     setupLogger(); // as defined in processor specific config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
@@ -62,5 +62,11 @@ I have tested the functionality with the following processors:
 |------------------------|-----------|-------------|------|
 |ESP32                   |   2463700 |      100000 |    8 |
 |ESP8266                 |   1038680 |       50000 |    4 |
-|AVR Processors (Nano)   |    109170 |         800 |    8 |
+|AVR Processors (Nano)   |    109170 |         500 |    8 |
 |Raspberry Pico          |           |             |      |
+
+
+# Limitations / Potential Improvements
+
+The baisc implementation is using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview.
+In order to support this we would need to extend the functionality to run the capturing on one core and the command handling on the second core.

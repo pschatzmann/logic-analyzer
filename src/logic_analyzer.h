@@ -198,7 +198,18 @@ class LogicAnalyzer {
             if (this->buffer_ptr)  delete this->buffer_ptr;
         }
 
-        /// starts the processing
+        /**
+         * @brief Starts the processing
+         * 
+         * @param procesingStream Stream which is used to communicate to pulsview
+         * @param impl_ptr  PinReader
+         * @param maxCaptureFreq Max Supported Capturing Frequency
+         * @param maxCaptureFreqThreshold Threshold which is used to change to the 'full speed' implementation which does not dontain any delays
+         * @param maxCaptureSize Maximum number of captured entries
+         * @param pinStart Start GPIO Pin Number for capturing
+         * @param numberOfPins Number of subsequent pins to capture
+         * @param setup_pins Change the pin mode to input 
+         */
         void begin(Stream &procesingStream, PinReader *impl_ptr,uint32_t maxCaptureFreq,uint32_t maxCaptureFreqThreshold,  uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false){
             printLog("begin");
             this->setStream(procesingStream);

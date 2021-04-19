@@ -11,10 +11,10 @@
 using namespace logic_analyzer;  
 
 LogicAnalyzer<PinBitArray> logicAnalyzer;
-int pinStart=0;
+int pinStart=START_PIN;
 int numberOfPins=sizeof(PinBitArray)*8;
 
-uint32_t frequencies[] = { 1000, 10000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000 };
+uint32_t frequencies[] = { 50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000 };
 
 void setup() {
     Serial.begin(115200);  
@@ -96,7 +96,7 @@ void testFrequencyMaxSpeed(){
 
 void testPins() {
     logicAnalyzer.reset();
-    for (int pin=0;pin<numberOfPins;pin++){
+    for (int pin=pinStart;pin<pinStart+numberOfPins;pin++){
         pinMode(pin, OUTPUT);
         digitalWrite(pin, HIGH);
         PinBitArray result = logicAnalyzer.captureSample();

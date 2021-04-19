@@ -3,11 +3,11 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 
-#define MAX_CAPTURE_SIZE 800
+#define MAX_CAPTURE_SIZE 500
 #define SERIAL_SPEED 9600
 #define SERIAL_TIMEOUT 500
-#define MAX_FREQ 50000
-#define MAX_FREQ_THRESHOLD 50000
+#define MAX_FREQ 100000
+#define MAX_FREQ_THRESHOLD 100000
 #define START_PIN 0
 #define PIN_COUNT sizeof(PinBitArray)*8
 

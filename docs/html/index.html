@@ -66,7 +66,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a> Recently, when I started to research the topic of <a href="https://en.wikipedia.org/wiki/Logic_analyzer">Logic Analyzers</a>, I found the incredible <a href="https://sigrok.org/wiki/PulseView">PulseView Project</a>. However, I did not want to invest in additional hardware but just use one of my favorite microprocessors (ESP32, Raspberry Pico) as capturing device.</p>
-<p>There are quite a few logic analyzer projects with the same goal:</p>
+<p>There are quite a few logic analyzer projects with a similar goal:</p>
 <ul>
 <li><a href="https://github.com/gillham/logic_analyzer">https://github.com/gillham/logic_analyzer</a></li>
 <li><a href="https://github.com/gamblor21/rp2040-logic-analyzer/">https://github.com/gamblor21/rp2040-logic-analyzer/</a></li>
@@ -80,22 +80,19 @@ $(function() {
 The Arduino Sketch</h1>
 <p>The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just need to call begin on a LogicAnalyzer object and add the command handler in the loop():</p>
 <div class="fragment"><div class="line">#include &quot;Arduino.h&quot;</div>
-<div class="line">#include &quot;network.h&quot;</div>
 <div class="line">#include &quot;logic_analyzer.h&quot;</div>
-<div class="line">#include &quot;config_esp32.h&quot;</div>
-<div class="line">#include &quot;config_avr.h&quot;</div>
 <div class="line"> </div>
-<div class="line">LogicAnalyzer logicAnalyzer;</div>
+<div class="line">using namespace logic_analyzer;  </div>
+<div class="line"> </div>
+<div class="line">LogicAnalyzer&lt;PinBitArray&gt; logicAnalyzer;</div>
 <div class="line">int pinStart=4;</div>
 <div class="line">int numberOfPins=8;</div>
-<div class="line">int32_t maxCaptureSize=MAX_CAPTURE_SIZE;</div>
 <div class="line"> </div>
 <div class="line">void setup() {</div>
-<div class="line">    LOG_SETUP;</div>
+<div class="line">    setupLogger(); // as defined in processor specific config</div>
 <div class="line">    Serial.begin(SERIAL_SPEED);  </div>
 <div class="line">    Serial.setTimeout(SERIAL_TIMEOUT);</div>
-<div class="line">    logicAnalyzer.setCaptureFrequency(MAX_FREQ);</div>
-<div class="line">    logicAnalyzer.begin(Serial, new PinReader(pinStart), maxCaptureSize, pinStart, numberOfPins);</div>
+<div class="line">    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">void loop() {</div>
@@ -116,12 +113,22 @@ Connecting to Pulseview</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Supported Archtectures</h1>
-<ul>
-<li>ESP32</li>
-<li>ESP8266</li>
-<li>AVR Processors</li>
-<li>Raspberry Pico </li>
-</ul>
+<p>I have tested the functionality with the following processors:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Processor   </th><th class="markdownTableHeadNone">Max Freq   </th><th class="markdownTableHeadNone">Max Samples   </th><th class="markdownTableHeadNone">Pins    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ESP32   </td><td class="markdownTableBodyNone">2463700   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ESP8266   </td><td class="markdownTableBodyNone">1038680   </td><td class="markdownTableBodyNone">50000   </td><td class="markdownTableBodyNone">4    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">AVR Processors (Nano)   </td><td class="markdownTableBodyNone">109170   </td><td class="markdownTableBodyNone">500   </td><td class="markdownTableBodyNone">8    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Limitations / Potential Improvements</h1>
+<p>The baisc implementation is using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this we would need to extend the functionality to run the capturing on one core and the command handling on the second core. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

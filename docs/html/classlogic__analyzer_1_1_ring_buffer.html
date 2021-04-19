@@ -80,9 +80,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a815279198695a610f8db2fb0c5662e96"><td class="memItemLeft" align="right" valign="top"><a id="a815279198695a610f8db2fb0c5662e96"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>RingBuffer</b> (int <a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a94e31620c6f5e37443199d1e4b9ff365">size</a>)</td></tr>
-<tr class="separator:a815279198695a610f8db2fb0c5662e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15641b790f1d5bcdc952dd6dbf644576"><td class="memItemLeft" align="right" valign="top"><a id="a15641b790f1d5bcdc952dd6dbf644576"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RingBuffer</b> (size_t <a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a244431ac4c31d159cd6f2df1391a523b">size</a>)</td></tr>
+<tr class="separator:a15641b790f1d5bcdc952dd6dbf644576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a4a7a288bec7cc8eaf17a9fb04558af"><td class="memItemLeft" align="right" valign="top"><a id="a4a4a7a288bec7cc8eaf17a9fb04558af"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a4a4a7a288bec7cc8eaf17a9fb04558af">write</a> (T value)</td></tr>
 <tr class="memdesc:a4a4a7a288bec7cc8eaf17a9fb04558af"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds an entry - if there is no more space we overwrite the oldest value <br /></td></tr>
@@ -95,18 +95,18 @@ T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlo
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a53bd3cf0816828e8ddc456e70afd2c26">clear</a> ()</td></tr>
 <tr class="memdesc:a53bd3cf0816828e8ddc456e70afd2c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">clears all entries <br /></td></tr>
 <tr class="separator:a53bd3cf0816828e8ddc456e70afd2c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00836bd639d8478d5a82d0910600b4c4"><td class="memItemLeft" align="right" valign="top"><a id="a00836bd639d8478d5a82d0910600b4c4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a00836bd639d8478d5a82d0910600b4c4">clear</a> (int count)</td></tr>
-<tr class="memdesc:a00836bd639d8478d5a82d0910600b4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">clears n entries from the buffer - if the number is bigger then the available data we ignore some future data <br /></td></tr>
-<tr class="separator:a00836bd639d8478d5a82d0910600b4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9912f24285655536579df7fe4e317ef4"><td class="memItemLeft" align="right" valign="top"><a id="a9912f24285655536579df7fe4e317ef4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a9912f24285655536579df7fe4e317ef4">available</a> ()</td></tr>
-<tr class="memdesc:a9912f24285655536579df7fe4e317ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the number of available entries <br /></td></tr>
-<tr class="separator:a9912f24285655536579df7fe4e317ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94e31620c6f5e37443199d1e4b9ff365"><td class="memItemLeft" align="right" valign="top"><a id="a94e31620c6f5e37443199d1e4b9ff365"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a94e31620c6f5e37443199d1e4b9ff365">size</a> ()</td></tr>
-<tr class="memdesc:a94e31620c6f5e37443199d1e4b9ff365"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the max buffer size <br /></td></tr>
-<tr class="separator:a94e31620c6f5e37443199d1e4b9ff365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf726ba3bc35fba6f629c17c196bb1ca"><td class="memItemLeft" align="right" valign="top"><a id="adf726ba3bc35fba6f629c17c196bb1ca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#adf726ba3bc35fba6f629c17c196bb1ca">clear</a> (size_t count)</td></tr>
+<tr class="memdesc:adf726ba3bc35fba6f629c17c196bb1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">clears n entries from the buffer - if the number is bigger then the available data we ignore some future data <br /></td></tr>
+<tr class="separator:adf726ba3bc35fba6f629c17c196bb1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa65fe66bb113e65c28f746664628220d"><td class="memItemLeft" align="right" valign="top"><a id="aa65fe66bb113e65c28f746664628220d"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#aa65fe66bb113e65c28f746664628220d">available</a> ()</td></tr>
+<tr class="memdesc:aa65fe66bb113e65c28f746664628220d"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the number of available entries <br /></td></tr>
+<tr class="separator:aa65fe66bb113e65c28f746664628220d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a244431ac4c31d159cd6f2df1391a523b"><td class="memItemLeft" align="right" valign="top"><a id="a244431ac4c31d159cd6f2df1391a523b"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_ring_buffer.html#a244431ac4c31d159cd6f2df1391a523b">size</a> ()</td></tr>
+<tr class="memdesc:a244431ac4c31d159cd6f2df1391a523b"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the max buffer size <br /></td></tr>
+<tr class="separator:a244431ac4c31d159cd6f2df1391a523b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fb683d437530fa8108813bad02ae6c9"><td class="memItemLeft" align="right" valign="top"><a id="a6fb683d437530fa8108813bad02ae6c9"></a>
 T *&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr</b> ()</td></tr>
 <tr class="separator:a6fb683d437530fa8108813bad02ae6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
