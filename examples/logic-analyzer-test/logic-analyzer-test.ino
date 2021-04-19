@@ -11,9 +11,8 @@
 using namespace logic_analyzer;  
 
 LogicAnalyzer<PinBitArray> logicAnalyzer;
-int pinStart=4;
-int numberOfPins=8;
-int32_t maxCaptureSize=1000;
+int pinStart=0;
+int numberOfPins=sizeof(PinBitArray)*8;
 
 uint32_t frequencies[] = { 1000, 10000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000 };
 
@@ -21,19 +20,40 @@ void setup() {
     Serial.begin(115200);  
     Serial.setTimeout(SERIAL_TIMEOUT);
     Serial.println("setup");
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), maxCaptureSize, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
-    testPins();
+    printLine();
+    testSingleSample();
+    testBufferSize();
     testFrequencyMaxSpeed();
 
     for(auto &f : frequencies){
         testFrequency(f);
     }
+    printLine();
+
+    testPins();
 
 }
 
 void printLine() {
-    Serial.print("--------------------------");
+    Serial.println("--------------------------");
+}
+
+void testBufferSize() {
+    Serial.print("buffer size: ");
+    Serial.println(logicAnalyzer.size());
+    printLine();
+}
+
+void testSingleSample() {
+    Serial.print("Caputre Single Sample: ");
+    logicAnalyzer.reset();
+    logicAnalyzer.setStatus(TRIGGERED);
+    logicAnalyzer.captureSampleFast();
+    Serial.println(logicAnalyzer.available());
+    printLine();
+  
 }
 
 void testFrequency(uint32_t frq){
@@ -41,34 +61,42 @@ void testFrequency(uint32_t frq){
     Serial.print(frq);
     logicAnalyzer.reset();
     logicAnalyzer.setCaptureFrequency(frq);
-    uint64_t start = millis();
-    logicAnalyzer.capture(false, false); // captures maxCaptureSize samples w/o dump
-    uint64_t end = millis();
+    logicAnalyzer.setStatus(TRIGGERED);
+    uint64_t start = micros();
+    logicAnalyzer.captureAll(); // captures maxCaptureSize samples w/o dump
+    uint64_t end = micros();
 
-    uint32_t measured_freq = maxCaptureSize * 1000 / (end - start);
-
+    float measured_freq = 1000000.0 * logicAnalyzer.available()  / (end - start);
+    
     Serial.print(" -> ");
-    Serial.println(measured_freq);
-    printLine();
+    Serial.print(measured_freq);
+    Serial.print(" using delay microsec ");
+    Serial.println((uint32_t)logicAnalyzer.delayTimeUs());
 }
 
 void testFrequencyMaxSpeed(){
-    Serial.print("testing max speed ");
+    Serial.println("testing max speed ");
     logicAnalyzer.reset();
-    uint64_t start = millis();
+    logicAnalyzer.setStatus(TRIGGERED);
+    uint64_t start = micros();
     logicAnalyzer.captureAllMaxSpeed();
-    uint64_t end = millis();
+    uint64_t end = micros();
 
-    uint32_t measured_freq = maxCaptureSize * 1000 / (end - start);
+    float measured_freq = 1000000.0 * logicAnalyzer.available()  / (end - start);
 
-    Serial.print(" -> ");
+    Serial.print("time us:");
+    Serial.println((double) (end - start));
+    Serial.print("sample count:");
+    Serial.println(logicAnalyzer.available());
+
+    Serial.print("max speed: ");
     Serial.println(measured_freq);
     printLine();
 }
 
 void testPins() {
     logicAnalyzer.reset();
-    for (int pin=0;pin<16;pin++){
+    for (int pin=0;pin<numberOfPins;pin++){
         pinMode(pin, OUTPUT);
         digitalWrite(pin, HIGH);
         PinBitArray result = logicAnalyzer.captureSample();

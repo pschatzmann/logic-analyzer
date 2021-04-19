@@ -7,19 +7,23 @@
 #include <gpio.h>
 
 // processor specific settings
-#define MAX_CAPTURE_SIZE 10000
+#define MAX_CAPTURE_SIZE 50000
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
-#define MAX_FREQ 500000
+#define MAX_FREQ 1038680
+#define MAX_FREQ_THRESHOLD 533200
+#define START_PIN 12
+#define PIN_COUNT 4
 
 
 namespace logic_analyzer {
 
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
-typedef uint16_t PinBitArray;
+typedef uint8_t PinBitArray;
 
 // no logging
 void setupLogger() {
+  ESP.wdtDisable();
 }
 
 

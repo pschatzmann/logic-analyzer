@@ -19,7 +19,7 @@ void setup() {
     setupLogger(); // as defined in processor specific config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {

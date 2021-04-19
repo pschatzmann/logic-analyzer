@@ -2,7 +2,7 @@
 
 Recently, when I started to research the topic of [Logic Analyzers](https://en.wikipedia.org/wiki/Logic_analyzer), I found the incredible [PulseView Project](https://sigrok.org/wiki/PulseView). However, I did not want to invest in additional hardware but just use one of my favorite microprocessors (ESP32, Raspberry Pico) as capturing device.
 
-There are quite a few logic analyzer projects with the same goal:
+There are quite a few logic analyzer projects with a similar goal:
 
 - https://github.com/gillham/logic_analyzer
 - https://github.com/gamblor21/rp2040-logic-analyzer/
@@ -21,22 +21,19 @@ The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just
 
 ```
 #include "Arduino.h"
-#include "network.h"
 #include "logic_analyzer.h"
-#include "config_esp32.h"
-#include "config_avr.h"
 
-LogicAnalyzer logicAnalyzer;
+using namespace logic_analyzer;  
+
+LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=4;
 int numberOfPins=8;
-int32_t maxCaptureSize=MAX_CAPTURE_SIZE;
 
 void setup() {
-    LOG_SETUP;
+    setupLogger(); // as defined in processor specific config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.setCaptureFrequency(MAX_FREQ);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), maxCaptureSize, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
@@ -56,9 +53,14 @@ void loop() {
     - Select the Device - __"Arduino"__ which should be available and confirm with OK
 
 
+
 # Supported Archtectures
 
-- ESP32
-- ESP8266
-- AVR Processors
-- Raspberry Pico
+I have tested the functionality with the following processors:
+
+|Processor               | Max Freq  | Max Samples | Pins |
+|------------------------|-----------|-------------|------|
+|ESP32                   |   2463700 |      100000 |    8 |
+|ESP8266                 |   1038680 |       50000 |    4 |
+|AVR Processors (Nano)   |    109170 |         800 |    8 |
+|Raspberry Pico          |           |             |      |

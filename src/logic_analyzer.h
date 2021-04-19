@@ -91,11 +91,12 @@ class Sump4ByteComandArg {
 template <class T> 
 class RingBuffer {
     public:
-        RingBuffer(int size){
-            this->size_count = size+1;
+        RingBuffer(size_t size){
+            this->size_count = size;
             data = new T[this->size_count];
             if (data==nullptr){
                 printLog("Requested capture size is too big");
+                this->size_count = 0;
             }
         }
 
@@ -104,19 +105,19 @@ class RingBuffer {
          }
 
         /// adds an entry - if there is no more space we overwrite the oldest value
-        inline void write(T value){
+        void write(T value){
             if (ignore_count > 0) {
                 ignore_count--;
                 return;
             }
-            data[write_pos] = value;
-            write_pos++;
+            data[write_pos++] = value;
             if (write_pos>size_count){
                 write_pos = 0;
             }
-            available_count++;
-            if (available_count>size_count){
-                available_count = size_count;
+            if (available_count<size_count){
+                available_count++;
+            } else {
+                read_pos = write_pos+1;
             }
         }
 
@@ -124,10 +125,10 @@ class RingBuffer {
         T read() {
             T result = 0;
             if (available_count>0){
-                result = data[read_pos++];
                 if (read_pos>size_count){
                     read_pos = 0;
                 }
+                result = data[read_pos++];
                 available_count--;
             }
             return result;
@@ -135,29 +136,32 @@ class RingBuffer {
 
         /// clears all entries
         void clear() {
+            ignore_count = 0;
             available_count = 0;
             write_pos = 0;
             read_pos = 0;
         }
 
         /// clears n entries from the buffer - if the number is bigger then the available data we ignore some future data
-        void clear(int count){
+        void clear(size_t count){
+            ignore_count = 0;
             if (count>available_count){
+                // calculate number of future entries to ignore
                 ignore_count = count - available_count;
-                size_count = available_count;
-            }            
-            for (int j=0;j<count;j++){
+            } 
+            // remove count entries            
+            for (int j=0;j<count && available()>0;j++){
                 read();
             }
         }
 
         /// returns the number of available entries
-        inline int available() {
+        size_t available() {
             return available_count;
         }
 
         /// returns the max buffer size
-        int size() {
+        size_t size() {
             return size_count;
         }
 
@@ -166,11 +170,11 @@ class RingBuffer {
         }
 
     private:
-        int available_count = 0;
-        int size_count = 0;
-        int write_pos = 0;
-        int read_pos = 0;
-        int ignore_count = 0;
+        size_t available_count = 0;
+        size_t size_count = 0;
+        size_t write_pos = 0;
+        size_t read_pos = 0;
+        size_t ignore_count = 0;
         T *data;
 };
 
@@ -195,10 +199,11 @@ class LogicAnalyzer {
         }
 
         /// starts the processing
-        void begin(Stream &procesingStream, PinReader *impl_ptr,uint32_t maxCaptureFreq,  uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false){
+        void begin(Stream &procesingStream, PinReader *impl_ptr,uint32_t maxCaptureFreq,uint32_t maxCaptureFreqThreshold,  uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false){
             printLog("begin");
             this->setStream(procesingStream);
             this->max_frequecy_value = maxCaptureFreq;
+            this->max_frequecy_threshold = maxCaptureFreqThreshold;
             this->max_capture_size = maxCaptureSize;
             this->read_count = maxCaptureSize;
             this->delay_count = maxCaptureSize;
@@ -232,10 +237,23 @@ class LogicAnalyzer {
             return *stream_ptr;
         }
 
+        Status status() {
+            return this->status_value;
+        }
+
+        /// Defines the actual status
+        void setStatus(Status status){
+            this->status_value = status;
+            raiseEvent(STATUS);
+            #ifdef LED_BUILTIN
+            digitalWrite(LED_BUILTIN, this->status_value!=STOPPED);   // turn the LED on if not stopped
+            #endif
+        }
+
         /// starts the capturing of the data
         virtual void capture(bool is_max_speed=false, bool is_dump=true) {
             printLog("capture(trigger)");
-            // waitring for trigger
+            // waiting for trigger
             if (trigger_mask) {
                 printLog("waiting for trigger");
                 while ((trigger_values ^ captureSample()) & trigger_mask)
@@ -286,39 +304,61 @@ class LogicAnalyzer {
         /// Generic Capturing of requested number of examples
         void captureAll() {
             printLog("captureing %ld entries",read_count);
-            while(status == TRIGGERED && buffer_ptr->available() < read_count ){
-                long end_us = delay_time_us + micros();
+            while(status_value == TRIGGERED && buffer_ptr->available() < read_count ){
                 captureSampleFast();   
-                long delay = end_us - micros();
-                if (delay>0) delayMicroseconds(delay);
+                delayMicroseconds(delay_time_us);
             }
         }
 
         /// Capturing of requested number of examples at maximum speed
         void captureAllMaxSpeed() {
             printLog("captureing %ld entries",read_count);
-            while(status == TRIGGERED && buffer_ptr->available() < read_count ){
-                captureSampleFast();   
+            while(status_value == TRIGGERED && buffer_ptr->available() < read_count ){
+                captureSampleFast();
             }
         }
 
         /// Continuous capturing at the requested speed
         void captureAllContinous() {
             printLog("contuinous capturing");
-            while(status == TRIGGERED){
-                long end_us = delay_time_us + micros();
+            while(status_value == TRIGGERED){
                 captureSampleFastContinuous();   
-                long delay = end_us - micros();
-                if (delay>0) delayMicroseconds(delay);
+                delayMicroseconds(delay_time_us);
             }
         }
 
         /// Continuous capturing at max speed
         void captureAllContinousMaxSpeed() {
             printLog("contuinous capturing with max speed");
-            while(status == TRIGGERED){
+            while(status_value == TRIGGERED){
                 captureSampleFastContinuous();   
             }
+        }
+
+        /// captures all pins - used by trigger
+        T captureSample() {
+            // actual state
+            T actual = impl_ptr->readAll();
+
+            // buffer single capture cycle
+            if (is_continuous_capture) {
+                write(actual);
+            } else if (status_value==TRIGGERED) {
+                buffer_ptr->write(actual);
+            } 
+            return actual;          
+        }
+
+        /// captures all pins and writes it to the buffer
+        void captureSampleFast() {
+            // actual state
+            buffer_ptr->write(impl_ptr->readAll());            
+        }
+
+        /// captures all pins and writes it to output stream
+        void captureSampleFastContinuous() {
+            // actual state
+            write(impl_ptr->readAll());            
         }
 
         /// process the next available command - if any
@@ -381,6 +421,11 @@ class LogicAnalyzer {
             return frequecy_value;
         }
 
+        /// Provides the delay time between measurements in microseconds 
+        uint64_t delayTimeUs() {
+            return delay_time_us;
+        }
+
         /// defines the caputring frequency
         void setCaptureFrequency(uint64_t value){
             frequecy_value = value;
@@ -413,19 +458,21 @@ class LogicAnalyzer {
             raiseEvent(RESET);
         }
 
-        /// captures all pins 
-        T captureSample() {
-            // actual state
-            T actual = impl_ptr->readAll();
-
-            // buffer single capture cycle
-            if (is_continuous_capture) {
-                write(actual);
-            } else if (status==TRIGGERED) {
-                buffer_ptr->write(actual);
-            } 
-            return actual;          
+        /// returns the max buffer size
+        size_t size() {
+            return buffer_ptr->size();
         }
+
+        /// returns the avialable buffer entries
+        size_t available() {
+            return buffer_ptr->available();
+        }
+
+        /// Provides direct access to the ring buffer
+        RingBuffer<T> &buffer(){
+            return *buffer_ptr;
+        }
+
     protected:
         bool is_continuous_capture = false; // => continous capture
         uint32_t max_capture_size;
@@ -436,10 +483,12 @@ class LogicAnalyzer {
         int pin_numbers = 0;
         uint64_t frequecy_value;  // in hz
         uint64_t max_frequecy_value;  // in hz
+        uint64_t max_frequecy_threshold;  // in hz
+
         uint64_t delay_time_us;
         uint64_t sump_reset_igorne_timeout=0;
         Stream *stream_ptr;
-        Status status;
+        Status status_value;
         T trigger_mask = 0;
         T trigger_values = 0;
         PinReader *impl_ptr = nullptr;
@@ -454,15 +503,6 @@ class LogicAnalyzer {
         /// Defines the command stream to Pulseview capturing divice
         void setStream(Stream &stream){
             stream_ptr = &stream;
-        }
-
-        /// Defines the actual status
-        void setStatus(Status status){
-            this->status = status;
-            raiseEvent(STATUS);
-            #ifdef LED_BUILTIN
-            digitalWrite(LED_BUILTIN, this->status!=STOPPED);   // turn the LED on if not stopped
-            #endif
         }
 
         /// raises an event
@@ -510,19 +550,6 @@ class LogicAnalyzer {
             stream().flush();
         }
 
-
-
-        /// captures all pins and writes it to the buffer
-        inline void captureSampleFast() {
-            // actual state
-            buffer_ptr->write(impl_ptr->readAll());            
-        }
-
-        /// captures all pins and writes it to output stream
-        inline void captureSampleFastContinuous() {
-            // actual state
-            write(impl_ptr->readAll());            
-        }
 
         /// Provides the result of the 4 byte command
         Sump4ByteComandArg getSump4ByteComandArg() {
@@ -627,7 +654,7 @@ class LogicAnalyzer {
                 case SUMP_ARM:
                     printLog("->SUMP_ARM");
                     setStatus(ARMED);
-                    capture(frequecy_value >= max_frequecy_value); // if frequecy_value >= max_frequecy_value -> capture at max speed
+                    capture(frequecy_value >= max_frequecy_threshold); // if frequecy_value >= max_frequecy_value -> capture at max speed
                     break;
 
                 /*

@@ -3,10 +3,13 @@
 #include "Arduino.h"
 
 // processor specific settings
-#define MAX_CAPTURE_SIZE 10000
+#define MAX_CAPTURE_SIZE 100000
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 500000
+#define MAX_FREQ_THRESHOLD 50000
+#define START_PIN 16
+#define PIN_COUNT sizeof(PinBitArray)*8
 
 // led pin number is specific to your esp32 board
 #ifndef LED_BUILTIN
@@ -28,7 +31,7 @@ void setupLogger() {
 
 
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
-typedef uint16_t PinBitArray;
+typedef uint8_t PinBitArray;
 
 /**
  * @brief ESP32 specific implementation Logic for the PinReader

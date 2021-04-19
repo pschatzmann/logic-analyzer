@@ -3,10 +3,13 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 
-#define MAX_CAPTURE_SIZE 10000
+#define MAX_CAPTURE_SIZE 800
 #define SERIAL_SPEED 9600
 #define SERIAL_TIMEOUT 500
 #define MAX_FREQ 50000
+#define MAX_FREQ_THRESHOLD 50000
+#define START_PIN 0
+#define PIN_COUNT sizeof(PinBitArray)*8
 
 // Software Serial for logging
 #define LOG soft_serial
@@ -20,7 +23,7 @@ namespace logic_analyzer {
 inline SoftwareSerial soft_serial(RXD2, TXD2); // RX, TX
 
 void setupLogger() {
-    LOG.begin(115200)
+    LOG.begin(115200);
 }
 
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
