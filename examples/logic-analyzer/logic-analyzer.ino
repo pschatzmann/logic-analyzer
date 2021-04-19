@@ -7,23 +7,19 @@
  */
 
 #include "Arduino.h"
-#include "network.h"
 #include "logic_analyzer.h"
-#include "config_esp32.h"
-#include "config_esp8266.h"
-#include "config_avr.h"
+
+using namespace logic_analyzer;  
 
 LogicAnalyzer logicAnalyzer;
 int pinStart=4;
 int numberOfPins=8;
-int32_t maxCaptureSize=MAX_CAPTURE_SIZE;
 
 void setup() {
-    LOG_SETUP;
+    LOG_SETUP; // setup logger as defined in config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.setCaptureFrequency(MAX_FREQ);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), maxCaptureSize, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {

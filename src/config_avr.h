@@ -3,36 +3,37 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 
-#define PINS_TYPE uint8_t  // Select based on the number of pins and start pin to be recorded
-#define MAX_CAPTURE_SIZE 10000
-
 // Software Serial for logging
+#define LOG soft_serial
 #define RXD2 12
 #define TXD2 13
-#define LOG soft_serial
 #define LOG_SETUP soft_serial.begin(115200)
 
+#define MAX_CAPTURE_SIZE 10000
 #define SERIAL_SPEED 9600
 #define SERIAL_TIMEOUT 500
 #define MAX_FREQ 50000
-using namespace logic_analyzer;	
 
 namespace logic_analyzer {
 
-SoftwareSerial soft_serial(RXD2, TXD2); // RX, TX
+/// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
+typedef uint8_t PinBitArray;
+
+/// Define output
+inline SoftwareSerial soft_serial(RXD2, TXD2); // RX, TX
 
 /**
  * @brief AVR specific implementation Logic for the abstract PinReaderAbstract
  * 
  */
-class PinReader : public PinReaderAbstract {
+class PinReader  {
     public:
         PinReader(int startPin){
           this->start_pin = startPin;
         }
 
         /// reads all pins and provides the result as bitmask -  PORTD:pins 0 to 7 / PORTB: pins 8 to 13 
-        virtual PinBitArray readAll() {
+        inline PinBitArray readAll() {
             uint16_t result = ((uint16_t)PORTB & B00111111) << 8 | PORTD;
             return result >> start_pin;
         }

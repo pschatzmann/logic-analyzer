@@ -6,24 +6,21 @@
  * See https://sigrok.org/wiki/Openbench_Logic_Sniffer#Short_Commands * 
  */
 
-
-#define PINS_TYPE uint8_t
-#define LOG Serial1
-
 #include "Arduino.h"
-#include "network.h"
 #include "logic_analyzer.h"
-#include "config_pico.h"
+
+using namespace logic_analyzer;  
 
 LogicAnalyzer logicAnalyzer;
 int pinStart=0;
 int numberOfPins=4;
 int16_t maxCaptureSize=10000;
+int32_t maxCaptureFreq=1000000;
 
 void setup() {
     Serial.begin(921600);
     Serial1.begin(115200);
-    logicAnalyzer.begin(Serial, new PinReader(numberOfPins), maxCaptureSize, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(numberOfPins),maxCaptureFreq, maxCaptureSize, pinStart, numberOfPins);
 }
 
 void loop() {

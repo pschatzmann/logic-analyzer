@@ -8,10 +8,8 @@
 #pragma once
 
 #include "Arduino.h"
-
-#ifndef PINS_TYPE
-#define PINS_TYPE uint8_t
-#endif
+#include "config.h"
+#include "network.h"
 
 #define LOG_BUFFER_SIZE 80
 
@@ -35,41 +33,22 @@ namespace logic_analyzer {
 /// Logic Analzyer Capturing Status
 enum Status {ARMED, TRIGGERED, STOPPED};
 
-
+/// Events
 enum Event {RESET, STATUS, CAPUTRE_SIZE, CAPTURE_FREQUNCY,TRIGGER_VALUES,TRIGGER_MASK, READ_DLEAY_COUNT, FLAGS};
 typedef void (*EventHandler)(Event event);
 
-/// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
-typedef  PINS_TYPE PinBitArray;
-
-
-/// provides the logger stream
-Stream *logger() {
-#ifdef LOG
-    return &LOG;
-#else
-    return nullptr;
-#endif
-}
-
-/// checks if loggin is active
-bool isLoggingActive() {
-    return logger() != nullptr;
-}
 
 /**
 *  Prints the content to the logger output stream
 */
 void printLog(const char* fmt, ...) {
 #ifdef LOG
-    if (isLoggingActive()){
-        char serial_printf_buffer[LOG_BUFFER_SIZE] = {0};
-        va_list args;
-        va_start(args,fmt);
-        vsnprintf(serial_printf_buffer,LOG_BUFFER_SIZE, fmt, args);
-        logger()->println(serial_printf_buffer);
-        va_end(args);
-    }
+    char serial_printf_buffer[LOG_BUFFER_SIZE] = {0};
+    va_list args;
+    va_start(args,fmt);
+    vsnprintf(serial_printf_buffer,LOG_BUFFER_SIZE, fmt, args);
+    LOG.println(serial_printf_buffer);
+    va_end(args);
 #endif
 }
 
@@ -81,33 +60,28 @@ void printLog(const char* fmt, ...) {
  */
 class Sump4ByteComandArg {
     public:
-        uint8_t uint8Values[5];
-        
+        /// Provides a pointer to the memory
+        uint8_t *getPtr() {
+            return uint8Values;
+        }
+
+        /// Provides a uint16_t value
         uint16_t get16(int idx) {
             return ntohs(uint16Values[idx]);
         }
-        uint16_t get32() {
+
+        /// Provides a uint32_t value
+        uint32_t get32() {
             return ntohl(uint32Value[0]);
         }
 
     protected:
+        uint8_t uint8Values[4];
         uint16_t* uint16Values = (uint16_t*) &uint8Values[0];
         uint32_t* uint32Value = (uint32_t*) &uint8Values[0];
 
 };
 
-
-/**
- * @brief Processor specific implementation Logic - abstract class
- * @author Phil Schatzmann
- * @copyright GPLv3
- */
-class PinReaderAbstract {
-    public:
-        /// reads status of all pins from processor
-        virtual PinBitArray readAll() = 0;
-
-};
 
 /**
  * @brief Data is captured in a ring buffer. If the buffer is full we overwrite the oldest entries....
@@ -129,7 +103,7 @@ class RingBuffer {
          }
 
         /// adds an entry - if there is no more space we overwrite the oldest value
-        void write(PinBitArray value){
+        inline void write(PinBitArray value){
             if (ignore_count > 0) {
                 ignore_count--;
                 return;
@@ -177,7 +151,7 @@ class RingBuffer {
         }
 
         /// returns the number of available entries
-        int available() {
+        inline int available() {
             return available_count;
         }
 
@@ -219,10 +193,11 @@ class LogicAnalyzer {
         }
 
         /// starts the processing
-        void begin(Stream &procesingStream, PinReaderAbstract *impl_ptr, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false){
+        void begin(Stream &procesingStream, PinReader *impl_ptr,uint32_t maxCaptureFreq,  uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false){
             printLog("begin");
             this->setStream(procesingStream);
-            this->max_capure_size = maxCaptureSize;
+            this->max_frequecy_value = maxCaptureFreq;
+            this->max_capture_size = maxCaptureSize;
             this->read_count = maxCaptureSize;
             this->delay_count = maxCaptureSize;
             this->impl_ptr = impl_ptr;
@@ -256,7 +231,7 @@ class LogicAnalyzer {
         }
 
         /// starts the capturing of the data
-        virtual void capture(bool is_dump=true) {
+        virtual void capture(bool is_max_speed=false, bool is_dump=true) {
             printLog("capture(trigger)");
             // waitring for trigger
             if (trigger_mask) {
@@ -284,27 +259,64 @@ class LogicAnalyzer {
             } 
 
             // Capture
-            if (is_continuous_capture){
-                printLog("contuinous capturing");
-                while(status == TRIGGERED){
-                    long end_us = delay_time_us + micros();
-                    captureSample();   
-                    long delay = end_us - micros();
-                    if (delay>0) delayMicroseconds(delay);
+            if (is_max_speed){
+                if (is_continuous_capture){
+                    captureAllContinousMaxSpeed();
+                } else {
+                    captureAllMaxSpeed();
+                    setStatus(STOPPED);
+                    printLog("capture-done: %lu",buffer_ptr->available());
+                    if (is_dump) dumpData();
                 }
-            } else {
-                printLog("captureing %ld entries",read_count);
-                while(status == TRIGGERED && buffer_ptr->available() < read_count ){
-                    long end_us = delay_time_us + micros();
-                    captureSample();   
-                    long delay = end_us - micros();
-                    if (delay>0) delayMicroseconds(delay);
+            } else { 
+                if (is_continuous_capture){
+                    captureAllContinous();
+                } else {
+                    captureAll();
+                    setStatus(STOPPED);
+                    printLog("capture-done: %lu",buffer_ptr->available());
+                    if (is_dump) dumpData();
                 }
-                setStatus(STOPPED);
-                printLog("capture-done: %lu",buffer_ptr->available());
-                if (is_dump) dumpData();
             }
 
+        }
+
+        /// Generic Capturing of requested number of examples
+        void captureAll() {
+            printLog("captureing %ld entries",read_count);
+            while(status == TRIGGERED && buffer_ptr->available() < read_count ){
+                long end_us = delay_time_us + micros();
+                captureSampleFast();   
+                long delay = end_us - micros();
+                if (delay>0) delayMicroseconds(delay);
+            }
+        }
+
+        /// Capturing of requested number of examples at maximum speed
+        void captureAllMaxSpeed() {
+            printLog("captureing %ld entries",read_count);
+            while(status == TRIGGERED && buffer_ptr->available() < read_count ){
+                captureSampleFast();   
+            }
+        }
+
+        /// Continuous capturing at the requested speed
+        void captureAllContinous() {
+            printLog("contuinous capturing");
+            while(status == TRIGGERED){
+                long end_us = delay_time_us + micros();
+                captureSampleFastContinuous();   
+                long delay = end_us - micros();
+                if (delay>0) delayMicroseconds(delay);
+            }
+        }
+
+        /// Continuous capturing at max speed
+        void captureAllContinousMaxSpeed() {
+            printLog("contuinous capturing with max speed");
+            while(status == TRIGGERED){
+                captureSampleFastContinuous();   
+            }
         }
 
         /// process the next available command - if any
@@ -394,7 +406,7 @@ class LogicAnalyzer {
         /// Resets the status and buffer
         void reset(){
             setStatus(STOPPED);
-            memset(buffer_ptr->data_ptr(),0x00, max_capure_size*sizeof(PinBitArray));
+            memset(buffer_ptr->data_ptr(),0x00, max_capture_size*sizeof(PinBitArray));
             buffer_ptr->clear();
             raiseEvent(RESET);
         }
@@ -402,20 +414,21 @@ class LogicAnalyzer {
 
     protected:
         bool is_continuous_capture = false; // => continous capture
-        uint32_t max_capure_size;
+        uint32_t max_capture_size;
         int trigger_pos = -1;
         int read_count = 0;
         int delay_count = 0;
         int pin_start = 0;
         int pin_numbers = 0;
-        uint64_t frequecy_value = 10000000;  // in 0.001 hz
+        uint64_t frequecy_value;  // in hz
+        uint64_t max_frequecy_value;  // in hz
         uint64_t delay_time_us;
         uint64_t sump_reset_igorne_timeout=0;
         Stream *stream_ptr;
         Status status;
         PinBitArray trigger_mask = 0;
         PinBitArray trigger_values = 0;
-        PinReaderAbstract *impl_ptr = nullptr;
+        PinReader *impl_ptr = nullptr;
         RingBuffer* buffer_ptr = nullptr;
         const char* description = "ARDUINO";
         const char* device_id = "1ALS";
@@ -457,7 +470,7 @@ class LogicAnalyzer {
         /// gets the next 4 byte command
         Sump4ByteComandArg &commandExt() {
             delay(10);
-            stream_ptr->readBytes(cmd4.uint8Values, 4);
+            stream_ptr->readBytes(cmd4.getPtr(), 4);
             return cmd4;
         }
 
@@ -484,7 +497,7 @@ class LogicAnalyzer {
         }
 
         /// captures all pins 
-        PinBitArray captureSample() {
+        inline PinBitArray captureSample() {
             // actual state
             PinBitArray actual = impl_ptr->readAll();
 
@@ -495,6 +508,18 @@ class LogicAnalyzer {
                 buffer_ptr->write(actual);
             } 
             return actual;          
+        }
+
+        /// captures all pins and writes it to the buffer
+        inline void captureSampleFast() {
+            // actual state
+            buffer_ptr->write(impl_ptr->readAll());            
+        }
+
+        /// captures all pins and writes it to output stream
+        inline void captureSampleFastContinuous() {
+            // actual state
+            write(impl_ptr->readAll());            
         }
 
         /// Provides the result of the 4 byte command
@@ -508,7 +533,7 @@ class LogicAnalyzer {
             Sump4ByteComandArg cmd = getSump4ByteComandArg(); 
             switch(sizeof(PinBitArray)) {
                 case 1:
-                    return (PinBitArray) cmd.uint8Values[0];
+                    return (PinBitArray) cmd.getPtr()[0];
                 case 2:
                     return (PinBitArray) cmd.get16(0);
                 default:
@@ -559,7 +584,7 @@ class LogicAnalyzer {
             // number of probes 
             write(0x20, pin_numbers);
             // sample memory 
-            write(0x21, max_capure_size);
+            write(0x21, max_capture_size);
             // sample rate e.g. (4MHz) 
             write(0x23, frequecy_value);
             // protocol version & end
@@ -600,7 +625,7 @@ class LogicAnalyzer {
                 case SUMP_ARM:
                     printLog("->SUMP_ARM");
                     setStatus(ARMED);
-                    capture();
+                    capture(frequecy_value >= max_frequecy_value); // if frequecy_value >= max_frequecy_value -> capture at max speed
                     break;
 
                 /*
@@ -653,8 +678,8 @@ class LogicAnalyzer {
                 case SUMP_SET_READ_DELAY_COUNT: {
                         printLog("->SUMP_SET_READ_DELAY_COUNT");
                         Sump4ByteComandArg cmd = getSump4ByteComandArg();
-                        read_count = min((uint32_t)cmd.get16(0), max_capure_size);
-                        delay_count = min((uint32_t)cmd.get16(1),max_capure_size);
+                        read_count = min((uint32_t)cmd.get16(0), max_capture_size);
+                        delay_count = min((uint32_t)cmd.get16(1),max_capture_size);
                         printLog("--> read_count: %d", read_count);
                         printLog("--> delay_count: %d", delay_count);
                         raiseEvent(READ_DLEAY_COUNT);
@@ -665,7 +690,7 @@ class LogicAnalyzer {
                 case SUMP_SET_FLAGS: {
                         printLog("->SUMP_SET_FLAGS");
                         Sump4ByteComandArg cmd =  getSump4ByteComandArg();
-                        is_continuous_capture = ((cmd.uint8Values[1] & 0B1000000) != 0);
+                        is_continuous_capture = ((cmd.getPtr()[1] & 0B1000000) != 0);
                         printLog("--> is_continuous_capture: %d\n", is_continuous_capture);
                         raiseEvent(FLAGS);
 
