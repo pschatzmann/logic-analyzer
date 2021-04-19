@@ -27,7 +27,7 @@ namespace logic_analyzer {
 typedef uint16_t PinBitArray;
 
 /**
- * @brief ESP32 specific implementation Logic for the abstract PinReaderAbstract
+ * @brief ESP32 specific implementation Logic for the PinReader
  * 
  */
 class PinReader {

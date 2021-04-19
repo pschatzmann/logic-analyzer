@@ -23,7 +23,7 @@ typedef uint8_t PinBitArray;
 inline SoftwareSerial soft_serial(RXD2, TXD2); // RX, TX
 
 /**
- * @brief AVR specific implementation Logic for the abstract PinReaderAbstract
+ * @brief AVR specific implementation Logic for the PinReader
  * 
  */
 class PinReader  {

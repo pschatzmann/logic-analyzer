@@ -22,7 +22,7 @@ typedef uint16_t PinBitArray;
 
 
 /**
- * @brief ESP8266 specific implementation Logic for the abstract PinReaderAbstract
+ * @brief ESP8266 specific implementation Logic for PinReader
  * 
  */
 class PinReader  {

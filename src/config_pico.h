@@ -18,7 +18,7 @@ namespace logic_analyzer {
 typedef uint16_t PinBitArray;
 
 /**
- * @brief Pico specific implementation Logic for the abstract PinReaderAbstract
+ * @brief Pico specific implementation Logic for the PinReader
  * 
  */
 class PinReader  {
