@@ -12,29 +12,9 @@ using namespace logic_analyzer;
 
 LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=START_PIN;
-int numberOfPins=sizeof(PinBitArray)*8;
+int numberOfPins=PIN_COUNT;
 
 uint32_t frequencies[] = { 50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000 };
-
-void setup() {
-    Serial.begin(115200);  
-    Serial.setTimeout(SERIAL_TIMEOUT);
-    Serial.println("setup");
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
-
-    printLine();
-    testSingleSample();
-    testBufferSize();
-    testFrequencyMaxSpeed();
-
-    for(auto &f : frequencies){
-        testFrequency(f);
-    }
-    printLine();
-
-    testPins();
-
-}
 
 void printLine() {
     Serial.println("--------------------------");
@@ -111,7 +91,24 @@ void testPins() {
     printLine();
 }
 
+void setup() {
+    Serial.begin(115200);  
+    Serial.setTimeout(SERIAL_TIMEOUT);
+    Serial.println("setup");
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+
+    printLine();
+    testSingleSample();
+    testBufferSize();
+    testFrequencyMaxSpeed();
+
+    for(auto &f : frequencies){
+        testFrequency(f);
+    }
+    printLine();
+
+    testPins();
+}
 
 void loop() {
-    
 }

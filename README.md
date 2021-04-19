@@ -26,14 +26,14 @@ The basic Arduino Sketch for a logic-analyzer is quite simple. We basically just
 using namespace logic_analyzer;  
 
 LogicAnalyzer<PinBitArray> logicAnalyzer;
-int pinStart=4;
-int numberOfPins=8;
+int pinStart=START_PIN;
+int numberOfPins=PIN_COUNT;
 
 void setup() {
     setupLogger(); // as defined in processor specific config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
@@ -68,5 +68,5 @@ I have tested the functionality with the following processors:
 
 # Limitations / Potential Improvements
 
-The baisc implementation is using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview.
-In order to support this we would need to extend the functionality to run the capturing on one core and the command handling on the second core.
+The basic implementation is using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview.
+In order to support this, we would need to extend the functionality to run the capturing on one core and the command handling on the second core.

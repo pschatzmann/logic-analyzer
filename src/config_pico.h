@@ -16,6 +16,7 @@
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 500000
+#define MAX_FREQ_THRESHOLD 500000
 #define START_PIN 4
 #define PIN_COUNT sizeof(PinBitArray)*8
 

@@ -11,6 +11,7 @@
 #include "config.h"
 #include "network.h"
 
+// Max numbers of logged characters in a line
 #define LOG_BUFFER_SIZE 80
 
 // Supported Commands
@@ -180,7 +181,11 @@ class RingBuffer {
 
 
 /**
- * @brief Main Logic Analyzer API using the SUMP Protocol
+ * @brief Main Logic Analyzer API using the SUMP Protocol.
+ * When you try to connect to the Logic Analzyer - SUMP calls the following requests
+ * 1) RESET, 2) ID and then 3) GET_METADATA: This is used to populate the Device!
+ * All other requests are called when you click on the capture button.
+ * 
  * @author Phil Schatzmann
  * @copyright GPLv3
  */
@@ -289,7 +294,7 @@ class LogicAnalyzer {
                 buffer_ptr->clear();
             } 
 
-            // Capture
+            // Start Capture
             if (is_max_speed){
                 if (is_continuous_capture){
                     captureAllContinousMaxSpeed();
@@ -346,7 +351,7 @@ class LogicAnalyzer {
             }
         }
 
-        /// captures all pins - used by trigger
+        /// captures all pins - used by the trigger
         T captureSample() {
             // actual state
             T actual = impl_ptr->readAll();
@@ -362,19 +367,16 @@ class LogicAnalyzer {
 
         /// captures all pins and writes it to the buffer
         void captureSampleFast() {
-            // actual state
             buffer_ptr->write(impl_ptr->readAll());            
         }
 
         /// captures all pins and writes it to output stream
         void captureSampleFastContinuous() {
-            // actual state
             write(impl_ptr->readAll());            
         }
 
         /// process the next available command - if any
         void processCommand(){
-            //printLog("processCommand");
             if (hasCommand()){
                 int cmd = command();
                 printLog("processCommand %d", cmd);
@@ -660,6 +662,15 @@ class LogicAnalyzer {
                     break;
 
                 /*
+                * We return a description of our capabilities.
+                * Check the function's comments below.
+                */
+                case SUMP_GET_METADATA:
+                    printLog("->SUMP_GET_METADATA");
+                    sendMetadata();
+                    break;
+
+                /*
                 * Captures the data
                 */
                 case SUMP_ARM:
@@ -735,15 +746,6 @@ class LogicAnalyzer {
                         raiseEvent(FLAGS);
 
                     }
-                    break;
-
-                /*
-                * We return a description of our capabilities.
-                * Check the function's comments below.
-                */
-                case SUMP_GET_METADATA:
-                    printLog("->SUMP_GET_METADATA");
-                    sendMetadata();
                     break;
 
                 /* ignore any unrecognized bytes. */

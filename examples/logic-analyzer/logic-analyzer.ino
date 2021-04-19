@@ -12,8 +12,8 @@
 using namespace logic_analyzer;  
 
 LogicAnalyzer<PinBitArray> logicAnalyzer;
-int pinStart=4;
-int numberOfPins=8;
+int pinStart=START_PIN;
+int numberOfPins=PIN_COUNT;
 
 void setup() {
     setupLogger(); // as defined in processor specific config
