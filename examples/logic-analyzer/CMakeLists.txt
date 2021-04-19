@@ -12,7 +12,7 @@ FetchContent_Declare( arduino GIT_REPOSITORY https://github.com/pschatzmann/pico
 FetchContent_MakeAvailable(arduino)
 
 project(logic-analyzer)
-add_definitions(-DPICO -DARDUINO=183)
+add_definitions(-DARDUINO_ARCH_RP2040 -DPICO -DARDUINO=183)
 
 # Compile Arduino Sketch
 set(ARDUINO_SKETCH ${CMAKE_CURRENT_BINARY_DIR}/logic-analyzer.cpp)

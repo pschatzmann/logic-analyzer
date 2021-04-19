@@ -8,8 +8,9 @@
 
 #pragma once
 
-#ifdef PICO
+#ifdef ARDUINO_ARCH_RP2040
 #include "Arduino.h"
+#include <stdarg.h>     /* va_list, va_start, va_arg, va_end */
 
 // processor specific settings
 #define MAX_CAPTURE_SIZE 10000
@@ -23,10 +24,7 @@
 // Use Serial1 for logging
 #ifndef LOG
 #define LOG Serial1
-#define RXD2 16
-#define TXD2 17
 #endif
-
 
 namespace logic_analyzer {
 
@@ -34,9 +32,8 @@ namespace logic_analyzer {
 typedef uint16_t PinBitArray;
 
 void setupLogger() {
-    LOG.begin(115200, SERIAL_8N1, RXD2, TXD2);
+    LOG.begin(115200);
 }
-
 
 /**
  * @brief Pico specific implementation Logic for the PinReader
@@ -57,7 +54,6 @@ class PinReader  {
     private:
         int start_pin;
 };
-
 
 }
 

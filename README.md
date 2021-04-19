@@ -54,7 +54,7 @@ void loop() {
 
 
 
-# Supported Archtectures
+# Supported Boards
 
 I have tested the functionality with the following processors:
 
