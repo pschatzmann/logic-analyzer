@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sump4bytecomandarg_51',['Sump4ByteComandArg',['../classlogic__analyzer_1_1_sump4_byte_comand_arg.html',1,'logic_analyzer']]]
+  ['ringbuffer_58',['RingBuffer',['../classlogic__analyzer_1_1_ring_buffer.html',1,'logic_analyzer']]]
 ];

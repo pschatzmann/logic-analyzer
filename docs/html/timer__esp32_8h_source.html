@@ -77,7 +77,7 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">typedef</span> void (* repeating_timer_callback_t )(<span class="keywordtype">void</span>* obj);</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">class </span>UserCallback {</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_user_callback.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlogic__analyzer_1_1_user_callback.html">UserCallback</a> {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keywordtype">void</span> setup(repeating_timer_callback_t my_callback, <span class="keywordtype">void</span> *user_data ){</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;      this-&gt;my_callback = my_callback;</div>
@@ -94,9 +94,9 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;};</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>TimerCallback {</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_timer_callback.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlogic__analyzer_1_1_timer_callback.html">TimerCallback</a> {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      TimerCallback() {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      <a class="code" href="classlogic__analyzer_1_1_timer_callback.html">TimerCallback</a>() {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;          timerMux = portMUX_INITIALIZER_UNLOCKED;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;          handler_task = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      }</div>
@@ -125,11 +125,11 @@ $(function() {
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;} timerCallbackArray[4];</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">class </span>TimerAlarmRepeating {</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_timer_alarm_repeating.html">   67</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlogic__analyzer_1_1_timer_alarm_repeating.html">TimerAlarmRepeating</a> {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">enum</span> TimeUnit {MS, US};</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        TimerAlarmRepeating(<span class="keywordtype">int</span> <span class="keywordtype">id</span>=0){</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classlogic__analyzer_1_1_timer_alarm_repeating.html">TimerAlarmRepeating</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>=0){</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          <span class="keywordflow">if</span> (<span class="keywordtype">id</span>&lt;4) {</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            this-&gt;timer_id = id;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            handler_task = <span class="keyword">nullptr</span>;</div>
@@ -143,13 +143,13 @@ $(function() {
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;          }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        ~TimerAlarmRepeating(){</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        ~<a class="code" href="classlogic__analyzer_1_1_timer_alarm_repeating.html">TimerAlarmRepeating</a>(){</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            stop();</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> complexHandler(<span class="keywordtype">void</span> *param) {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;          UserCallback* cb = (UserCallback*) param;</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a3d6821d032f01b5e30e30f640051dc35">   93</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a3d6821d032f01b5e30e30f640051dc35">complexHandler</a>(<span class="keywordtype">void</span> *param) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;          <a class="code" href="classlogic__analyzer_1_1_user_callback.html">UserCallback</a>* cb = (<a class="code" href="classlogic__analyzer_1_1_user_callback.html">UserCallback</a>*) param;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;          uint32_t thread_notification;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;          <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
@@ -162,7 +162,7 @@ $(function() {
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;          }</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordtype">bool</span> start(repeating_timer_callback_t callback_f, uint64_t time, TimeUnit unit = TimerAlarmRepeating::MS, <span class="keywordtype">void</span> *user_data=<span class="keyword">nullptr</span>){</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a1612d5bcb900059833f77a3ceb383bc3">  110</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a1612d5bcb900059833f77a3ceb383bc3">start</a>(repeating_timer_callback_t callback_f, uint64_t time, TimeUnit unit = TimerAlarmRepeating::MS, <span class="keywordtype">void</span> *user_data=<span class="keyword">nullptr</span>){</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            uint64_t timeUs;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="comment">// we record the callback method and user data</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            user_callback.setup(callback_f, user_data);</div>
@@ -182,7 +182,7 @@ $(function() {
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            timerAttachInterrupt(adc_timer, current_timer_callback, <span class="keyword">true</span>);</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            timerAlarmWrite(adc_timer, timeUs, <span class="keyword">true</span>);</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            timerAlarmEnable(adc_timer);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            xTaskCreate(complexHandler, <span class="stringliteral">&quot;TimerAlarmRepeatingTask&quot;</span>, configMINIMAL_STACK_SIZE+10000, &amp;user_callback, 1, &amp;handler_task);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            xTaskCreate(<a class="code" href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a3d6821d032f01b5e30e30f640051dc35">complexHandler</a>, <span class="stringliteral">&quot;TimerAlarmRepeatingTask&quot;</span>, configMINIMAL_STACK_SIZE+10000, &amp;user_callback, 1, &amp;handler_task);</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="comment">// setup the timercallback</span></div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            timerCallbackArray[timer_id].setup(handler_task);</div>
@@ -211,6 +211,11 @@ $(function() {
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_timer_alarm_repeating_html"><div class="ttname"><a href="classlogic__analyzer_1_1_timer_alarm_repeating.html">logic_analyzer::TimerAlarmRepeating</a></div><div class="ttdoc">Repeating Timer functions for simple scheduling of repeated execution. The basic logic is taken from ...</div><div class="ttdef"><b>Definition:</b> timer_esp32.h:67</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_timer_alarm_repeating_html_a1612d5bcb900059833f77a3ceb383bc3"><div class="ttname"><a href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a1612d5bcb900059833f77a3ceb383bc3">logic_analyzer::TimerAlarmRepeating::start</a></div><div class="ttdeci">bool start(repeating_timer_callback_t callback_f, uint64_t time, TimeUnit unit=TimerAlarmRepeating::MS, void *user_data=nullptr)</div><div class="ttdef"><b>Definition:</b> timer_esp32.h:110</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_timer_alarm_repeating_html_a3d6821d032f01b5e30e30f640051dc35"><div class="ttname"><a href="classlogic__analyzer_1_1_timer_alarm_repeating.html#a3d6821d032f01b5e30e30f640051dc35">logic_analyzer::TimerAlarmRepeating::complexHandler</a></div><div class="ttdeci">static void complexHandler(void *param)</div><div class="ttdef"><b>Definition:</b> timer_esp32.h:93</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_timer_callback_html"><div class="ttname"><a href="classlogic__analyzer_1_1_timer_callback.html">logic_analyzer::TimerCallback</a></div><div class="ttdef"><b>Definition:</b> timer_esp32.h:32</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_user_callback_html"><div class="ttname"><a href="classlogic__analyzer_1_1_user_callback.html">logic_analyzer::UserCallback</a></div><div class="ttdef"><b>Definition:</b> timer_esp32.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

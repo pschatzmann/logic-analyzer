@@ -12,5 +12,6 @@ var searchData=
   ['clear_12',['clear',['../classlogic__analyzer_1_1_ring_buffer.html#a917c93bf153d364880487e23d229a9f0',1,'logic_analyzer::RingBuffer::clear()'],['../classlogic__analyzer_1_1_ring_buffer.html#a51110d9da928604f49f5532dd900942a',1,'logic_analyzer::RingBuffer::clear(int count)']]],
   ['command_13',['command',['../classlogic__analyzer_1_1_logic_analyzer.html#a53c609d87a7da1572aaa6c09dde2f540',1,'logic_analyzer::LogicAnalyzer']]],
   ['commandext_14',['commandExt',['../classlogic__analyzer_1_1_logic_analyzer.html#a8112cf4dc8e16861326bb3371ba27f95',1,'logic_analyzer::LogicAnalyzer']]],
-  ['commandextpinbitarray_15',['commandExtPinBitArray',['../classlogic__analyzer_1_1_logic_analyzer.html#a5f10d18137797e13267412fb136cfe9c',1,'logic_analyzer::LogicAnalyzer']]]
+  ['commandextpinbitarray_15',['commandExtPinBitArray',['../classlogic__analyzer_1_1_logic_analyzer.html#a5f10d18137797e13267412fb136cfe9c',1,'logic_analyzer::LogicAnalyzer']]],
+  ['complexhandler_16',['complexHandler',['../classlogic__analyzer_1_1_timer_alarm_repeating.html#a3d6821d032f01b5e30e30f640051dc35',1,'logic_analyzer::TimerAlarmRepeating']]]
 ];

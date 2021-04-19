@@ -91,13 +91,13 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">inline</span> SoftwareSerial soft_serial(RXD2, TXD2); <span class="comment">// RX, TX</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>PinReader  {</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pin_reader.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlogic__analyzer_1_1_pin_reader.html">PinReader</a>  {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        PinReader(<span class="keywordtype">int</span> startPin){</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classlogic__analyzer_1_1_pin_reader.html">PinReader</a>(<span class="keywordtype">int</span> startPin){</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;          this-&gt;start_pin = startPin;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">inline</span> PinBitArray readAll() {</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pin_reader.html#a257c100c5275fa375fc8289f8e62b8d0">   36</a></span>&#160;        <span class="keyword">inline</span> PinBitArray <a class="code" href="classlogic__analyzer_1_1_pin_reader.html#a257c100c5275fa375fc8289f8e62b8d0">readAll</a>() {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            uint16_t result = ((uint16_t)PORTB &amp; B00111111) &lt;&lt; 8 | PORTD;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordflow">return</span> result &gt;&gt; start_pin;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
@@ -111,6 +111,8 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pin_reader_html"><div class="ttname"><a href="classlogic__analyzer_1_1_pin_reader.html">logic_analyzer::PinReader</a></div><div class="ttdoc">AVR specific implementation Logic for the PinReader.</div><div class="ttdef"><b>Definition:</b> config_avr.h:29</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pin_reader_html_a257c100c5275fa375fc8289f8e62b8d0"><div class="ttname"><a href="classlogic__analyzer_1_1_pin_reader.html#a257c100c5275fa375fc8289f8e62b8d0">logic_analyzer::PinReader::readAll</a></div><div class="ttdeci">PinBitArray readAll()</div><div class="ttdoc">reads all pins and provides the result as bitmask - PORTD:pins 0 to 7 / PORTB: pins 8 to 13</div><div class="ttdef"><b>Definition:</b> config_avr.h:36</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
