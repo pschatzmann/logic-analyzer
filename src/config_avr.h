@@ -3,27 +3,34 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 
-// Software Serial for logging
-#define LOG soft_serial
-#define RXD2 12
-#define TXD2 13
-#define LOG_SETUP soft_serial.begin(115200)
-
 #define MAX_CAPTURE_SIZE 10000
 #define SERIAL_SPEED 9600
 #define SERIAL_TIMEOUT 500
 #define MAX_FREQ 50000
 
-namespace logic_analyzer {
+// Software Serial for logging
+#define LOG soft_serial
+#define RXD2 12
+#define TXD2 13
 
-/// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
-typedef uint8_t PinBitArray;
+
+namespace logic_analyzer {
 
 /// Define output
 inline SoftwareSerial soft_serial(RXD2, TXD2); // RX, TX
 
+void setupLogger() {
+    LOG.begin(115200)
+}
+
+/// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
+typedef uint8_t PinBitArray;
+
+
 /**
  * @brief AVR specific implementation Logic for the PinReader
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  * 
  */
 class PinReader  {

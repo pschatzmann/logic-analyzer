@@ -10,7 +10,7 @@
 
 using namespace logic_analyzer;  
 
-LogicAnalyzer logicAnalyzer;
+LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=4;
 int numberOfPins=8;
 int32_t maxCaptureSize=1000;
@@ -54,10 +54,9 @@ void testFrequency(uint32_t frq){
 
 void testFrequencyMaxSpeed(){
     Serial.print("testing max speed ");
-    Serial.print(frq);
     logicAnalyzer.reset();
     uint64_t start = millis();
-    logicAnayzer.captureAllMaxSpeed();
+    logicAnalyzer.captureAllMaxSpeed();
     uint64_t end = millis();
 
     uint32_t measured_freq = maxCaptureSize * 1000 / (end - start);

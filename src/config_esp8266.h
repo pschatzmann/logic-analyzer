@@ -12,17 +12,21 @@
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 500000
 
-// no logging
-#define LOG_SETUP ;
 
 namespace logic_analyzer {
 
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
 typedef uint16_t PinBitArray;
 
+// no logging
+void setupLogger() {
+}
+
 
 /**
  * @brief ESP8266 specific implementation Logic for PinReader
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  * 
  */
 class PinReader  {

@@ -88,11 +88,12 @@ class Sump4ByteComandArg {
  * @author Phil Schatzmann
  * @copyright GPLv3
  */
+template <class T> 
 class RingBuffer {
     public:
         RingBuffer(int size){
             this->size_count = size+1;
-            data = new PinBitArray[this->size_count];
+            data = new T[this->size_count];
             if (data==nullptr){
                 printLog("Requested capture size is too big");
             }
@@ -103,7 +104,7 @@ class RingBuffer {
          }
 
         /// adds an entry - if there is no more space we overwrite the oldest value
-        inline void write(PinBitArray value){
+        inline void write(T value){
             if (ignore_count > 0) {
                 ignore_count--;
                 return;
@@ -120,8 +121,8 @@ class RingBuffer {
         }
 
         /// reads the next available entry from the buffer
-        PinBitArray read() {
-            PinBitArray result = 0;
+        T read() {
+            T result = 0;
             if (available_count>0){
                 result = data[read_pos++];
                 if (read_pos>size_count){
@@ -160,7 +161,7 @@ class RingBuffer {
             return size_count;
         }
 
-        PinBitArray *data_ptr(){
+        T *data_ptr(){
             return data;
         }
 
@@ -170,7 +171,7 @@ class RingBuffer {
         int write_pos = 0;
         int read_pos = 0;
         int ignore_count = 0;
-        PinBitArray *data;
+        T *data;
 };
 
 
@@ -179,6 +180,7 @@ class RingBuffer {
  * @author Phil Schatzmann
  * @copyright GPLv3
  */
+template <class T> 
 class LogicAnalyzer {
     public:
         /// Default Constructor
@@ -203,7 +205,7 @@ class LogicAnalyzer {
             this->impl_ptr = impl_ptr;
             this->pin_start = pinStart;
             this->pin_numbers = numberOfPins;
-            this->buffer_ptr = new RingBuffer(maxCaptureSize);
+            this->buffer_ptr = new RingBuffer<T>(maxCaptureSize);
 
             // by default the pins are in read mode - so it is usually not really necesarry to set the mode to input
             if (setup_pins){
@@ -330,24 +332,24 @@ class LogicAnalyzer {
         }
 
         /// provides the trigger values
-        PinBitArray triggerValues() {
+        T triggerValues() {
             return trigger_values;
         }
 
         /// defines the trigger values
-        void setTriggerValues(PinBitArray values){
+        void setTriggerValues(T values){
             trigger_values = values;
             printLog("--> setTriggerValues: %u", (uint32_t) values);
             raiseEvent(TRIGGER_VALUES);
         } 
 
         /// provides the trigger mask
-        PinBitArray triggerMask() {
+        T triggerMask() {
             return trigger_mask;
         }
 
         /// defines the trigger mask
-        void setTriggerMask(PinBitArray values){
+        void setTriggerMask(T values){
             trigger_mask = values;
             printLog("--> setTriggerValues: %u", (uint32_t) values);
             raiseEvent(TRIGGER_MASK);
@@ -406,12 +408,24 @@ class LogicAnalyzer {
         /// Resets the status and buffer
         void reset(){
             setStatus(STOPPED);
-            memset(buffer_ptr->data_ptr(),0x00, max_capture_size*sizeof(PinBitArray));
+            memset(buffer_ptr->data_ptr(),0x00, max_capture_size*sizeof(T));
             buffer_ptr->clear();
             raiseEvent(RESET);
         }
 
+        /// captures all pins 
+        T captureSample() {
+            // actual state
+            T actual = impl_ptr->readAll();
 
+            // buffer single capture cycle
+            if (is_continuous_capture) {
+                write(actual);
+            } else if (status==TRIGGERED) {
+                buffer_ptr->write(actual);
+            } 
+            return actual;          
+        }
     protected:
         bool is_continuous_capture = false; // => continous capture
         uint32_t max_capture_size;
@@ -426,10 +440,10 @@ class LogicAnalyzer {
         uint64_t sump_reset_igorne_timeout=0;
         Stream *stream_ptr;
         Status status;
-        PinBitArray trigger_mask = 0;
-        PinBitArray trigger_values = 0;
+        T trigger_mask = 0;
+        T trigger_values = 0;
         PinReader *impl_ptr = nullptr;
-        RingBuffer* buffer_ptr = nullptr;
+        RingBuffer<T>* buffer_ptr = nullptr;
         const char* description = "ARDUINO";
         const char* device_id = "1ALS";
         const char* firmware_version = "\x020.13";
@@ -475,7 +489,7 @@ class LogicAnalyzer {
         }
 
         /// writes the status of all activated pins to the capturing device
-        void write(PinBitArray bits) {
+        void write(T bits) {
             // write 4 bytes
             stream_ptr->write(htonl(bits));
         }
@@ -496,19 +510,7 @@ class LogicAnalyzer {
             stream().flush();
         }
 
-        /// captures all pins 
-        inline PinBitArray captureSample() {
-            // actual state
-            PinBitArray actual = impl_ptr->readAll();
 
-            // buffer single capture cycle
-            if (is_continuous_capture) {
-                write(actual);
-            } else if (status==TRIGGERED) {
-                buffer_ptr->write(actual);
-            } 
-            return actual;          
-        }
 
         /// captures all pins and writes it to the buffer
         inline void captureSampleFast() {
@@ -529,15 +531,15 @@ class LogicAnalyzer {
         }
 
         /// Provides the command as PinBitArray
-        PinBitArray commandExtPinBitArray() {
+        T commandExtPinBitArray() {
             Sump4ByteComandArg cmd = getSump4ByteComandArg(); 
-            switch(sizeof(PinBitArray)) {
+            switch(sizeof(T)) {
                 case 1:
-                    return (PinBitArray) cmd.getPtr()[0];
+                    return (T) cmd.getPtr()[0];
                 case 2:
-                    return (PinBitArray) cmd.get16(0);
+                    return (T) cmd.get16(0);
                 default:
-                    return (PinBitArray) cmd.get32();
+                    return (T) cmd.get32();
             }  
         }
 

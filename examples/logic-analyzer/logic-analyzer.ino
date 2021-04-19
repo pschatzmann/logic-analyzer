@@ -11,12 +11,12 @@
 
 using namespace logic_analyzer;  
 
-LogicAnalyzer logicAnalyzer;
+LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=4;
 int numberOfPins=8;
 
 void setup() {
-    LOG_SETUP; // setup logger as defined in config
+    setupLogger(); // as defined in processor specific config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
     logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_CAPTURE_SIZE, pinStart, numberOfPins);

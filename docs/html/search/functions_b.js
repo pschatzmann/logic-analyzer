@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['triggermask_108',['triggerMask',['../classlogic__analyzer_1_1_logic_analyzer.html#ab0605b4da237df275ee6c7542b4d7fd2',1,'logic_analyzer::LogicAnalyzer']]],
-  ['triggervalues_109',['triggerValues',['../classlogic__analyzer_1_1_logic_analyzer.html#a0a524209693c398e7233da92e6e52ae3',1,'logic_analyzer::LogicAnalyzer']]]
+  ['triggermask_98',['triggerMask',['../classlogic__analyzer_1_1_logic_analyzer.html#a4395f968df47b61defede239cf92d3c0',1,'logic_analyzer::LogicAnalyzer']]],
+  ['triggervalues_99',['triggerValues',['../classlogic__analyzer_1_1_logic_analyzer.html#a663956db783622ba4ad2cd88d275eaad',1,'logic_analyzer::LogicAnalyzer']]]
 ];

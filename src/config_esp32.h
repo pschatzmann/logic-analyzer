@@ -18,16 +18,22 @@
 #define LOG Serial1
 #define RXD2 16
 #define TXD2 17
-#define LOG_SETUP Serial1.begin(115200, SERIAL_8N1, RXD2, TXD2)
 #endif
 
 namespace logic_analyzer {
+
+void setupLogger() {
+    LOG.begin(115200, SERIAL_8N1, RXD2, TXD2);
+}
+
 
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
 typedef uint16_t PinBitArray;
 
 /**
  * @brief ESP32 specific implementation Logic for the PinReader
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  * 
  */
 class PinReader {

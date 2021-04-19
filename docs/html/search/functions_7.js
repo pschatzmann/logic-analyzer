@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logicanalyzer_87',['LogicAnalyzer',['../classlogic__analyzer_1_1_logic_analyzer.html#ab7a073d7e4da72c284aa0817cdf29934',1,'logic_analyzer::LogicAnalyzer']]]
+  ['logicanalyzer_78',['LogicAnalyzer',['../classlogic__analyzer_1_1_logic_analyzer.html#a1e11e44de91b59479b6216aacd6bc2ff',1,'logic_analyzer::LogicAnalyzer']]]
 ];
