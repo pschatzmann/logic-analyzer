@@ -11,7 +11,7 @@ include(FetchContent)
 FetchContent_Declare( arduino GIT_REPOSITORY https://github.com/pschatzmann/pico-arduino.git  GIT_TAG  main)
 FetchContent_MakeAvailable(arduino)
 
-project(logic-analyzer C CXX ASM)
+project(logic-analyzer)
 add_definitions(-DPICO -DARDUINO=183)
 
 # Compile Arduino Sketch

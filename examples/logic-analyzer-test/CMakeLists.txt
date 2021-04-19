@@ -11,16 +11,16 @@ include(FetchContent)
 FetchContent_Declare( arduino GIT_REPOSITORY https://github.com/pschatzmann/pico-arduino.git  GIT_TAG  main)
 FetchContent_MakeAvailable(arduino)
 
-project(logic-analyzer C CXX ASM)
+project(logic-analyzer-test)
 add_definitions(-DPICO -DARDUINO=183)
 
 # Compile Arduino Sketch
 set(ARDUINO_SKETCH ${CMAKE_CURRENT_BINARY_DIR}/logic-analyzer-test.cpp)
 file(GENERATE OUTPUT ${ARDUINO_SKETCH} INPUT ${CMAKE_CURRENT_SOURCE_DIR}/logic-analyzer-test.ino )
-add_executable(logic-analyzer ${ARDUINO_SKETCH})
-target_include_directories(logic-analyzer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../../src")
+add_executable(logic-analyzer-test ${ARDUINO_SKETCH})
+target_include_directories(logic-analyzer-test PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../../src")
 
 # Pull in our arduino library
-target_link_libraries(logic-analyzer arduino pico_stdlib hardware_uart)
+target_link_libraries(logic-analyzer-test arduino pico_stdlib hardware_uart)
 # create map/bin/hex/uf2 file etc.
-pico_add_extra_outputs(logic-analyzer)
+pico_add_extra_outputs(logic-analyzer-test)
