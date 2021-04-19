@@ -2,31 +2,25 @@
 # -- author Phil Schatzmann
 # -- copyright GPLv3
 
-cmake_minimum_required(VERSION 3.19.2)
+cmake_minimum_required(VERSION 3.12)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
-
-# PICO initialization
-set(PICO_SDK_PATH $ENV{PICO_SDK_PATH})
-include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
 # Install pico-arduino
 include(FetchContent)
 FetchContent_Declare( arduino GIT_REPOSITORY https://github.com/pschatzmann/pico-arduino.git  GIT_TAG  main)
 FetchContent_MakeAvailable(arduino)
 
-project(logic-analyzer-pico CXX)
-
+project(logic-analyzer C CXX ASM)
 add_definitions(-DPICO -DARDUINO=183)
 
 # Compile Arduino Sketch
-set(ARDUINO_SKETCH logic-analyzer-test.ino)
-add_definitions("-x c++")
-set_source_files_properties(${ARDUINO_SKETCH} PROPERTIES LANGUAGE CXX)
+set(ARDUINO_SKETCH ${CMAKE_CURRENT_BINARY_DIR}/logic-analyzer-test.cpp)
+file(GENERATE OUTPUT ${ARDUINO_SKETCH} INPUT ${CMAKE_CURRENT_SOURCE_DIR}/logic-analyzer-test.ino )
 add_executable(logic-analyzer ${ARDUINO_SKETCH})
-target_include_directories(logic-analyzer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../src")
+target_include_directories(logic-analyzer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../../src")
 
 # Pull in our arduino library
-target_link_libraries(logic-analyzer arduino)
+target_link_libraries(logic-analyzer arduino pico_stdlib hardware_uart)
 # create map/bin/hex/uf2 file etc.
 pico_add_extra_outputs(logic-analyzer)
