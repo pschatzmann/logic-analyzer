@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pinreaderabstract_43',['PinReaderAbstract',['../classlogic__analyzer_1_1_pin_reader_abstract.html',1,'logic_analyzer']]]
+  ['ringbuffer_50',['RingBuffer',['../classlogic__analyzer_1_1_ring_buffer.html',1,'logic_analyzer']]]
 ];

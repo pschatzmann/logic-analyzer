@@ -90,18 +90,34 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab9edc2b4f038ffc2bd21d7a0e26ca41b">~LogicAnalyzer</a> ()</td></tr>
 <tr class="memdesc:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bd1107b97e5e40e0f77b24296915b5d"><td class="memItemLeft" align="right" valign="top"><a id="a8bd1107b97e5e40e0f77b24296915b5d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a8bd1107b97e5e40e0f77b24296915b5d">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_pin_reader_abstract.html">PinReaderAbstract</a> *impl_ptr, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false)</td></tr>
-<tr class="memdesc:a8bd1107b97e5e40e0f77b24296915b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the processing <br /></td></tr>
-<tr class="separator:a8bd1107b97e5e40e0f77b24296915b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c94cf51fb020d582a05c4b9c93446c2"><td class="memItemLeft" align="right" valign="top"><a id="a9c94cf51fb020d582a05c4b9c93446c2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a9c94cf51fb020d582a05c4b9c93446c2">begin</a> (Stream &amp;procesingStream, PinReader *impl_ptr, uint32_t maxCaptureFreq, uint32_t maxCaptureSize, int pinStart=0, int numberOfPins=8, bool setup_pins=false)</td></tr>
+<tr class="memdesc:a9c94cf51fb020d582a05c4b9c93446c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the processing <br /></td></tr>
+<tr class="separator:a9c94cf51fb020d582a05c4b9c93446c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23b4860b98b6a511c311123608b66574"><td class="memItemLeft" align="right" valign="top"><a id="a23b4860b98b6a511c311123608b66574"></a>
 Stream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a23b4860b98b6a511c311123608b66574">stream</a> ()</td></tr>
 <tr class="memdesc:a23b4860b98b6a511c311123608b66574"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides command output stream of capturing divice <br /></td></tr>
 <tr class="separator:a23b4860b98b6a511c311123608b66574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b598067a359defcd4bdc85c1782fe8e"><td class="memItemLeft" align="right" valign="top"><a id="a4b598067a359defcd4bdc85c1782fe8e"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a4b598067a359defcd4bdc85c1782fe8e">capture</a> (bool is_dump=true)</td></tr>
-<tr class="memdesc:a4b598067a359defcd4bdc85c1782fe8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the capturing of the data <br /></td></tr>
-<tr class="separator:a4b598067a359defcd4bdc85c1782fe8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f320e4d5a5d93351dbbe205bb06a996"><td class="memItemLeft" align="right" valign="top"><a id="a3f320e4d5a5d93351dbbe205bb06a996"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a3f320e4d5a5d93351dbbe205bb06a996">capture</a> (bool is_max_speed=false, bool is_dump=true)</td></tr>
+<tr class="memdesc:a3f320e4d5a5d93351dbbe205bb06a996"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the capturing of the data <br /></td></tr>
+<tr class="separator:a3f320e4d5a5d93351dbbe205bb06a996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a636ef74ed956892e5fa225d1261db580"><td class="memItemLeft" align="right" valign="top"><a id="a636ef74ed956892e5fa225d1261db580"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a636ef74ed956892e5fa225d1261db580">captureAll</a> ()</td></tr>
+<tr class="memdesc:a636ef74ed956892e5fa225d1261db580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic Capturing of requested number of examples. <br /></td></tr>
+<tr class="separator:a636ef74ed956892e5fa225d1261db580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91b3bbb19091345f3943038187797fc0"><td class="memItemLeft" align="right" valign="top"><a id="a91b3bbb19091345f3943038187797fc0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a91b3bbb19091345f3943038187797fc0">captureAllMaxSpeed</a> ()</td></tr>
+<tr class="memdesc:a91b3bbb19091345f3943038187797fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Capturing of requested number of examples at maximum speed. <br /></td></tr>
+<tr class="separator:a91b3bbb19091345f3943038187797fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d782d6e32ad05ad6595de4f2d840880"><td class="memItemLeft" align="right" valign="top"><a id="a0d782d6e32ad05ad6595de4f2d840880"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a0d782d6e32ad05ad6595de4f2d840880">captureAllContinous</a> ()</td></tr>
+<tr class="memdesc:a0d782d6e32ad05ad6595de4f2d840880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continuous capturing at the requested speed. <br /></td></tr>
+<tr class="separator:a0d782d6e32ad05ad6595de4f2d840880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74b3bf610cce15701a3c07470b41ca16"><td class="memItemLeft" align="right" valign="top"><a id="a74b3bf610cce15701a3c07470b41ca16"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a74b3bf610cce15701a3c07470b41ca16">captureAllContinousMaxSpeed</a> ()</td></tr>
+<tr class="memdesc:a74b3bf610cce15701a3c07470b41ca16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continuous capturing at max speed. <br /></td></tr>
+<tr class="separator:a74b3bf610cce15701a3c07470b41ca16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8ffc9a1687042b7f825b29ebb7332dc"><td class="memItemLeft" align="right" valign="top"><a id="ab8ffc9a1687042b7f825b29ebb7332dc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab8ffc9a1687042b7f825b29ebb7332dc">processCommand</a> ()</td></tr>
 <tr class="memdesc:ab8ffc9a1687042b7f825b29ebb7332dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">process the next available command - if any <br /></td></tr>
@@ -205,6 +221,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a22350630d8d9eaf31f2bf14413c51d43">captureSample</a> ()</td></tr>
 <tr class="memdesc:a22350630d8d9eaf31f2bf14413c51d43"><td class="mdescLeft">&#160;</td><td class="mdescRight">captures all pins <br /></td></tr>
 <tr class="separator:a22350630d8d9eaf31f2bf14413c51d43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abab89cfd450481eeea67d1bc5cbf8f7f"><td class="memItemLeft" align="right" valign="top"><a id="abab89cfd450481eeea67d1bc5cbf8f7f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#abab89cfd450481eeea67d1bc5cbf8f7f">captureSampleFast</a> ()</td></tr>
+<tr class="memdesc:abab89cfd450481eeea67d1bc5cbf8f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">captures all pins and writes it to the buffer <br /></td></tr>
+<tr class="separator:abab89cfd450481eeea67d1bc5cbf8f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cc4d0e27b64500e38846b9c94c245d9"><td class="memItemLeft" align="right" valign="top"><a id="a5cc4d0e27b64500e38846b9c94c245d9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a5cc4d0e27b64500e38846b9c94c245d9">captureSampleFastContinuous</a> ()</td></tr>
+<tr class="memdesc:a5cc4d0e27b64500e38846b9c94c245d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">captures all pins and writes it to output stream <br /></td></tr>
+<tr class="separator:a5cc4d0e27b64500e38846b9c94c245d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c1504897a133e5400164d15b2605cb0"><td class="memItemLeft" align="right" valign="top"><a id="a8c1504897a133e5400164d15b2605cb0"></a>
 <a class="el" href="classlogic__analyzer_1_1_sump4_byte_comand_arg.html">Sump4ByteComandArg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a8c1504897a133e5400164d15b2605cb0">getSump4ByteComandArg</a> ()</td></tr>
 <tr class="memdesc:a8c1504897a133e5400164d15b2605cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the result of the 4 byte command. <br /></td></tr>
@@ -229,9 +253,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ab7ed6aeb2a498e360a2d8ac8bc694955"><td class="memItemLeft" align="right" valign="top"><a id="ab7ed6aeb2a498e360a2d8ac8bc694955"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_continuous_capture</b> = false</td></tr>
 <tr class="separator:ab7ed6aeb2a498e360a2d8ac8bc694955"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab180f43a240fb8e8daeecf8c9cba02f5"><td class="memItemLeft" align="right" valign="top"><a id="ab180f43a240fb8e8daeecf8c9cba02f5"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_capure_size</b></td></tr>
-<tr class="separator:ab180f43a240fb8e8daeecf8c9cba02f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4f64a983d6934319007cb49563d60a6"><td class="memItemLeft" align="right" valign="top"><a id="ab4f64a983d6934319007cb49563d60a6"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_capture_size</b></td></tr>
+<tr class="separator:ab4f64a983d6934319007cb49563d60a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b35d8b763765b7546c2e889343131aa"><td class="memItemLeft" align="right" valign="top"><a id="a5b35d8b763765b7546c2e889343131aa"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_pos</b> = -1</td></tr>
 <tr class="separator:a5b35d8b763765b7546c2e889343131aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,8 +272,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pin_start</b> = 0</td>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pin_numbers</b> = 0</td></tr>
 <tr class="separator:a504dae71de577b27058d92162ab19d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49106e8a0e9049740137c44b1b7bfe7a"><td class="memItemLeft" align="right" valign="top"><a id="a49106e8a0e9049740137c44b1b7bfe7a"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>frequecy_value</b> = 10000000</td></tr>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>frequecy_value</b></td></tr>
 <tr class="separator:a49106e8a0e9049740137c44b1b7bfe7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a975c268a418d5b946f4090597563a851"><td class="memItemLeft" align="right" valign="top"><a id="a975c268a418d5b946f4090597563a851"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_value</b></td></tr>
+<tr class="separator:a975c268a418d5b946f4090597563a851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a1517455f70822d5d8fcea612bbe0cd"><td class="memItemLeft" align="right" valign="top"><a id="a9a1517455f70822d5d8fcea612bbe0cd"></a>
 uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>delay_time_us</b></td></tr>
 <tr class="separator:a9a1517455f70822d5d8fcea612bbe0cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -268,9 +295,9 @@ PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_mask</
 <tr class="memitem:abc82b94f0fafa6945a599cbd8b44d1a1"><td class="memItemLeft" align="right" valign="top"><a id="abc82b94f0fafa6945a599cbd8b44d1a1"></a>
 PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_values</b> = 0</td></tr>
 <tr class="separator:abc82b94f0fafa6945a599cbd8b44d1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02a018d238f6071b8a6c041178388bb5"><td class="memItemLeft" align="right" valign="top"><a id="a02a018d238f6071b8a6c041178388bb5"></a>
-<a class="el" href="classlogic__analyzer_1_1_pin_reader_abstract.html">PinReaderAbstract</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>impl_ptr</b> = nullptr</td></tr>
-<tr class="separator:a02a018d238f6071b8a6c041178388bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a6b2f22057c2d882401380c497f036"><td class="memItemLeft" align="right" valign="top"><a id="a27a6b2f22057c2d882401380c497f036"></a>
+PinReader *&#160;</td><td class="memItemRight" valign="bottom"><b>impl_ptr</b> = nullptr</td></tr>
+<tr class="separator:a27a6b2f22057c2d882401380c497f036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa048e558705b54e7b7e7f91342a6337f"><td class="memItemLeft" align="right" valign="top"><a id="aa048e558705b54e7b7e7f91342a6337f"></a>
 <a class="el" href="classlogic__analyzer_1_1_ring_buffer.html">RingBuffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_ptr</b> = nullptr</td></tr>
 <tr class="separator:aa048e558705b54e7b7e7f91342a6337f"><td class="memSeparator" colspan="2">&#160;</td></tr>
