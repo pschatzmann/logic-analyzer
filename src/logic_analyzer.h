@@ -260,7 +260,13 @@ class LogicAnalyzer {
         }
 
         /// starts the capturing of the data
-        virtual void capture(bool is_max_speed=false, bool is_dump=true) {
+        void capture(){
+            // if frequecy_value >= max_frequecy_value -> capture at max speed
+            capture(frequecy_value >= max_frequecy_threshold, true); 
+        }
+
+        /// starts the capturing of the data
+        void capture(bool is_max_speed, bool is_dump=true) {
             printLog("capture(trigger)");
             // waiting for trigger
             if (trigger_mask) {
@@ -484,8 +490,13 @@ class LogicAnalyzer {
             logger_ptr = &logger;
         }
 
+        void setCaptureOnArm(bool capture){
+            is_capture_on_arm = capture;
+        }
+
     protected:
         bool is_continuous_capture = false; // => continous capture
+        bool is_capture_on_arm = true;
         uint32_t max_capture_size;
         int trigger_pos = -1;
         int read_count = 0;
@@ -674,7 +685,9 @@ class LogicAnalyzer {
                 case SUMP_ARM:
                     printLog("->SUMP_ARM");
                     setStatus(ARMED);
-                    capture(frequecy_value >= max_frequecy_threshold); // if frequecy_value >= max_frequecy_value -> capture at max speed
+                    if (is_capture_on_arm){
+                        capture(); 
+                    }
                     break;
 
                 /*
