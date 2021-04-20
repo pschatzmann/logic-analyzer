@@ -6,24 +6,26 @@
  * See https://sigrok.org/wiki/Openbench_Logic_Sniffer#Short_Commands * 
  */
 
-#ifndef PICO
-#error "This sketch is only works with the arduino-pico framwork"
+#ifndef ESP32
+#error "This sketch is only for ESP32"
 #endif
-
 
 #include "Arduino.h"
 #include "logic_analyzer.h"
-#include "pico/multicore.h"
-#include "hardware/watchdog.h"
+
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 13 // pin number is specific to your esp32 board
+#endif
 
 using namespace logic_analyzer;  
 
 LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
+TaskHandle_t task;
 
 // when the status is changed to armed we start the capture
-void captureHandler(){
+void captureHandler(void* ptr){
     // we use the led to indicate the capturing
     pinMode(LED_BUILTIN, OUTPUT);
 
@@ -34,8 +36,7 @@ void captureHandler(){
             logicAnalyzer.capture();
             digitalWrite(LED_BUILTIN, LOW);
         }
-        // feed the dog
-        watchdog_update();
+        delay(1);
     }
 }
 
@@ -49,7 +50,11 @@ void setup() {
     logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     // launch the capture handler on core 1
-    multicore_launch_core1(captureHandler);
+    int stack = 10000;
+    int priority = 0;
+    int core = 1;
+    xTaskCreatePinnedToCore(captureHandler, "CaptureTask", stack, NULL, priority, &task, core); 
+
 }
 
 void loop() {
