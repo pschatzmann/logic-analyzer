@@ -2,7 +2,7 @@
  * @file logic_analyzer-pico.ino
  * @author Phil Schatzmann
  * @copyright GPLv3
- * @brief Arduino Sketch for the sigrok LogicAnalyzer for the Rasperry Pico using the SUMP protocol
+ * @brief Arduino Sketch for the sigrok LogicAnalyzer for the ESP32 using the SUMP protocol
  * See https://sigrok.org/wiki/Openbench_Logic_Sniffer#Short_Commands * 
  */
 
