@@ -67,6 +67,13 @@ void loop() {
     - Select the Device - __"Arduino"__ which should be available and confirm with OK
 
 
+## Installation
+
+You can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
+```
+cd  ~/Documents/Arduino/libraries
+git clone pschatzmann/logic-analyzer.git
+
 
 # Supported Boards
 
