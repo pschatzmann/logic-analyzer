@@ -32,25 +32,26 @@
 namespace logic_analyzer {
 
 /// Logic Analzyer Capturing Status
-enum Status {ARMED, TRIGGERED, STOPPED};
+enum Status : uint8_t {ARMED, TRIGGERED, STOPPED};
 
 /// Events
-enum Event {RESET, STATUS, CAPUTRE_SIZE, CAPTURE_FREQUNCY,TRIGGER_VALUES,TRIGGER_MASK, READ_DLEAY_COUNT, FLAGS};
+enum Event : uint8_t {RESET, STATUS, CAPUTRE_SIZE, CAPTURE_FREQUNCY,TRIGGER_VALUES,TRIGGER_MASK, READ_DLEAY_COUNT, FLAGS};
 typedef void (*EventHandler)(Event event);
 
 
+Stream *logger_ptr = nullptr;
 /**
 *  Prints the content to the logger output stream
 */
 void printLog(const char* fmt, ...) {
-#ifdef LOG
-    char serial_printf_buffer[LOG_BUFFER_SIZE] = {0};
-    va_list args;
-    va_start(args,fmt);
-    vsnprintf(serial_printf_buffer,LOG_BUFFER_SIZE, fmt, args);
-    LOG.println(serial_printf_buffer);
-    va_end(args);
-#endif
+    if (logger_ptr!=nullptr) {
+        char serial_printf_buffer[LOG_BUFFER_SIZE] = {0};
+        va_list args;
+        va_start(args,fmt);
+        vsnprintf(serial_printf_buffer,LOG_BUFFER_SIZE, fmt, args);
+        logger_ptr->println(serial_printf_buffer);
+        va_end(args);
+    }
 }
 
 /**
@@ -193,7 +194,7 @@ template <class T>
 class LogicAnalyzer {
     public:
         /// Default Constructor
-        LogicAnalyzer() {
+        LogicAnalyzer() {            
             printLog("LogicAnalyzer");
         }
 
@@ -239,11 +240,6 @@ class LogicAnalyzer {
             // set initial status
             setStatus(STOPPED);
     
-            // setup LED
-            #ifdef LED_BUILTIN
-            pinMode(LED_BUILTIN, OUTPUT); 
-            #endif
-
             printLog("begin-end");
 
         }
@@ -261,9 +257,6 @@ class LogicAnalyzer {
         void setStatus(Status status){
             this->status_value = status;
             raiseEvent(STATUS);
-            #ifdef LED_BUILTIN
-            digitalWrite(LED_BUILTIN, this->status_value!=STOPPED);   // turn the LED on if not stopped
-            #endif
         }
 
         /// starts the capturing of the data
@@ -486,6 +479,11 @@ class LogicAnalyzer {
             return *buffer_ptr;
         }
 
+        /// Defines the logging Stream
+        void setLogger(Stream &logger){
+            logger_ptr = &logger;
+        }
+
     protected:
         bool is_continuous_capture = false; // => continous capture
         uint32_t max_capture_size;
@@ -501,7 +499,7 @@ class LogicAnalyzer {
         uint64_t delay_time_us;
         uint64_t sump_reset_igorne_timeout=0;
         Stream *stream_ptr;
-        Status status_value;
+        volatile Status status_value;
         T trigger_mask = 0;
         T trigger_values = 0;
         PinReader *impl_ptr = nullptr;

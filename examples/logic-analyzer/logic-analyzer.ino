@@ -16,12 +16,15 @@ int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 
 void setup() {
+#ifdef LOG    
     setupLogger(); // as defined in processor specific config
+    logicAnalyzer.setLogger(LOG);
+#endif    
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
     logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
-    logicAnalyzer.processCommand();
+    if (Serial) logicAnalyzer.processCommand();
 }

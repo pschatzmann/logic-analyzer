@@ -6,6 +6,7 @@
  */
 
 #include "Arduino.h"
+#define LOG Serial
 #include "logic_analyzer.h"
 
 using namespace logic_analyzer;  
@@ -93,6 +94,8 @@ void testPins() {
 
 void setup() {
     Serial.begin(115200);  
+    // wait for Serial to be ready
+    while(!Serial);
     Serial.setTimeout(SERIAL_TIMEOUT);
     Serial.println("setup");
     logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);

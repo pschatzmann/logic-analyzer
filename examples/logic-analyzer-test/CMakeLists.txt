@@ -19,6 +19,7 @@ set(ARDUINO_SKETCH ${CMAKE_CURRENT_BINARY_DIR}/logic-analyzer-test.cpp)
 file(GENERATE OUTPUT ${ARDUINO_SKETCH} INPUT ${CMAKE_CURRENT_SOURCE_DIR}/logic-analyzer-test.ino )
 add_executable(logic-analyzer-test ${ARDUINO_SKETCH})
 target_include_directories(logic-analyzer-test PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../../src")
+pico_enable_stdio_usb(logic-analyzer-test  1)
 
 # Pull in our arduino library
 target_link_libraries(logic-analyzer-test arduino pico_stdlib hardware_uart)

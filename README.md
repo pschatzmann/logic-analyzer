@@ -4,16 +4,21 @@ Recently, when I started to research the topic of [Logic Analyzers](https://en.w
 
 There are quite a few logic analyzer projects with a similar goal:
 
-- https://github.com/gillham/logic_analyzer
-- https://github.com/gamblor21/rp2040-logic-analyzer/
-- https://github.com/EUA/ESP32_LogicAnalyzer
-- https://github.com/Ebiroll/esp32_sigrok
+- [gillham/logic_analyzer](https://github.com/gillham/logic_analyzer)
+- [gamblor21/rp2040-logic-analyzer](https://github.com/gamblor21/rp2040-logic-analyzer)
+- [EUA/ESP32_LogicAnalyzer](https://github.com/EUA/ESP32_LogicAnalyzer)
+- [Ebiroll/esp32_sigrok](https://github.com/Ebiroll/esp32_sigrok)
 
 Howerver all of them are geared for __one specific architecture__ and therfore are __not portable__.
 
 I wanted to come up with a better design and provide a [basic C++ Library](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) that implements the [SUMP protocol](https://www.sump.org/projects/analyzer/protocol/) and clearly separates the generic functionality from the processor specific in order to support an __easy rollout to new architectures__: The only common precondition is the Arduino API. 
 
-To come up with an optimized implementation for a specific board you just need to implement a specifig config.h and optionally you can also subclass LogicAnalyzer and overwirte e.g. your custom capture method...
+To come up with an basic implementation for a specific board you just need to implement a specific config. I am currently providing implementations for
+
+- AVR Processors
+- ESP32
+- ESP8266
+- Raspberry Pico
 
 # An Example Processor Configuration File
 
@@ -85,9 +90,9 @@ I have tested the functionality with the following processors:
 |ESP32                   |   2463700 |      100000 |    8 |
 |ESP8266                 |   1038680 |       50000 |    4 |
 |AVR Processors (Nano)   |    109170 |         500 |    8 |
+|Raspberry Pico          |   2203225 |      100000 |    8 |
 
 
-# Limitations / Potential Improvements
+# Summary
 
-The basic implementation is using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview.
-In order to support this, we would need to extend the functionality to run the capturing on one core and the command handling on the second core.
+The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort!
