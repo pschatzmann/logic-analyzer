@@ -11,11 +11,6 @@
 #define START_PIN 16
 #define PIN_COUNT sizeof(PinBitArray)*8
 
-// led pin number is specific to your esp32 board
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 2 
-#endif
-
 // Use Serial1 for logging
 #ifndef LOG
 #define LOG Serial1
