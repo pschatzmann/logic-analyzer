@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arduino_20logic_20analyzer_106',['Arduino Logic Analyzer',['../index.html',1,'']]]
+  ['a_20flexible_20arduino_20sump_20logic_20analyzer_20library_118',['A flexible Arduino SUMP Logic Analyzer Library',['../index.html',1,'']]]
 ];

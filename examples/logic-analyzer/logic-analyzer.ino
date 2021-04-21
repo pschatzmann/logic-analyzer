@@ -11,9 +11,12 @@
 
 using namespace logic_analyzer;  
 
-LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
+
+LogicAnalyzer logicAnalyzer;
+Capture capture(logicAnalyzer.state());
+
 
 void setup() {
 #ifdef LOG    
@@ -22,7 +25,7 @@ void setup() {
 #endif    
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {

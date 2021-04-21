@@ -19,9 +19,11 @@
 
 using namespace logic_analyzer;  
 
-LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
+
+LogicAnalyzer logicAnalyzer;
+Capture capture(logicAnalyzer.state());
 TaskHandle_t task;
 
 // when the status is changed to armed we start the capture
@@ -47,7 +49,7 @@ void setup() {
     logicAnalyzer.setCaptureOnArm(false);
 
     // begin LogicAnalyzer
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     // launch the capture handler on core 1
     int stack = 10000;

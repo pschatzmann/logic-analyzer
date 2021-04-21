@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iscontinuouscapture_81',['isContinuousCapture',['../classlogic__analyzer_1_1_logic_analyzer.html#a4a0fd4415ed934a13d658fef035b2d05',1,'logic_analyzer::LogicAnalyzer']]]
+  ['iscontinuouscapture_90',['isContinuousCapture',['../classlogic__analyzer_1_1_logic_analyzer.html#aab071906756a14d9a3aebc61b53d461d',1,'logic_analyzer::LogicAnalyzer']]]
 ];

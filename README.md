@@ -35,7 +35,9 @@ Here is the [config_esp32.h](https://github.com/pschatzmann/logic-analyzer/blob/
 
 # The Arduino Sketch
 
-The basic Arduino Sketch for the __logic-analyzer__ is quite simple. We just need to call the __begin method__ on a [LogicAnalyzer](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_logic_analyzer.html) object and add the __command handler__ in the loop(). The provided implementation just uses the default values which are defined in the config:
+The basic Arduino Sketch for the __logic-analyzer__ is quite simple. We just need create a [LogicAnalyzer](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_logic_analyzer.html) and a [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) object.
+In the setup we call the __begin method__ on the LogicAnalyzer object which provides all mandatory parameters. The provided implementation just uses the default values which are defined in the config.
+Finally we add the __command handler__ in the loop():
 
 
 ```
@@ -44,19 +46,20 @@ The basic Arduino Sketch for the __logic-analyzer__ is quite simple. We just nee
 
 using namespace logic_analyzer;  
 
-LogicAnalyzer<PinBitArray> logicAnalyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
+LogicAnalyzer logicAnalyzer;
+Capture capture(logicAnalyzer.state());
+
 
 void setup() {
-    setupLogger(); // as defined in processor specific config
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.begin(Serial, new PinReader(pinStart), MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
-    logicAnalyzer.processCommand();
+    if (Serial) logicAnalyzer.processCommand();
 }
 ```
 
