@@ -14,8 +14,7 @@ using namespace logic_analyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 LogicAnalyzer logicAnalyzer;
-PinReader reader(pinStart);
-Capture capture(reader, logicAnalyzer.state());
+Capture capture;
 
 uint32_t frequencies[] = { 50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000 };
 
@@ -33,7 +32,7 @@ void testSingleSample() {
     Serial.print("Caputre Single Sample: ");
     logicAnalyzer.reset();
     logicAnalyzer.setStatus(TRIGGERED);
-    logicAnalyzer.captureSampleFast();
+    capture.captureSampleFast();
     Serial.println(logicAnalyzer.available());
     printLine();
   
@@ -46,7 +45,7 @@ void testFrequency(uint32_t frq){
     logicAnalyzer.setCaptureFrequency(frq);
     logicAnalyzer.setStatus(TRIGGERED);
     uint64_t start = micros();
-    logicAnalyzer.captureAll(); // captures maxCaptureSize samples w/o dump
+    capture.captureAll(); // captures maxCaptureSize samples w/o dump
     uint64_t end = micros();
 
     float measured_freq = 1000000.0 * logicAnalyzer.available()  / (end - start);
@@ -62,7 +61,7 @@ void testFrequencyMaxSpeed(){
     logicAnalyzer.reset();
     logicAnalyzer.setStatus(TRIGGERED);
     uint64_t start = micros();
-    logicAnalyzer.captureAllMaxSpeed();
+    capture.captureAllMaxSpeed();
     uint64_t end = micros();
 
     float measured_freq = 1000000.0 * logicAnalyzer.available()  / (end - start);
@@ -82,7 +81,7 @@ void testPins() {
     for (int pin=pinStart;pin<pinStart+numberOfPins;pin++){
         pinMode(pin, OUTPUT);
         digitalWrite(pin, HIGH);
-        PinBitArray result = logicAnalyzer.captureSample();
+        PinBitArray result = capture.captureSample();
         digitalWrite(pin, LOW);
 
         Serial.print("Pin ");

@@ -198,7 +198,7 @@ class LogicAnalyzerState {
     protected:
         volatile Status status_value;
         bool is_continuous_capture = false; // => continous capture
-        uint32_t max_capture_size;
+        uint32_t max_capture_size = 1000;
         int trigger_pos = -1;
         int read_count = 0;
         int delay_count = 0;
@@ -235,26 +235,49 @@ class LogicAnalyzerState {
  */
 class AbstractCapture {
     public:
-        AbstractCapture(LogicAnalyzerState &state){
+        /// Default Constructor
+        AbstractCapture(){
+        }
+
+        /// Destructor
+        ~AbstractCapture(){
+            if (this->pin_reader_ptr!=nullptr) {
+                delete this->pin_reader_ptr;
+            }
+        }
+
+        /// Assigns the state
+        void setState(LogicAnalyzerState &state) {
             this->state_ptr = &state;
             this->buffer_ptr = state.buffer_ptr;
-            this->pin_reader_ptr = new PinReader(state.pin_start);
+            if (state.buffer_ptr==nullptr){
+                printLog("The buffer is not available! - did you call LogicAnalyzer.begin() ?");
+                state.buffer_ptr = new RingBuffer(state.max_capture_size);
+            }
+            if (state.stream_ptr==nullptr){
+                printLog("The command stream is not available! - did you call LogicAnalyzer.begin() ?");
+                state.stream_ptr = &Serial;
+
+            }
+            if (this->pin_reader_ptr==nullptr){
+                this->pin_reader_ptr = new PinReader(state.pin_start);
+            }
         }
 
-        ~AbstractCapture(){
-            delete this->pin_reader_ptr;
-        }
-
+        /// Captures the data and dumps the result
         virtual void capture() = 0;
 
+        /// Provides the State
         LogicAnalyzerState &state() {
             return *state_ptr;
         }
 
+        /// Provides access to the SUMP command stream
         Stream &stream() {
             return *(state_ptr->stream_ptr);
         }
 
+        /// Provides access to the PinReader
         PinReader &pinReader() {
             return *pin_reader_ptr;
         }
@@ -298,9 +321,10 @@ class AbstractCapture {
  * @author Phil Schatzmann
  * @copyright GPLv3
  */
-class Capture : public AbstractCapture{
+class Capture : public AbstractCapture {
     public:
-        Capture(LogicAnalyzerState &state) : AbstractCapture(state){
+        /// Default Constructor
+        Capture() : AbstractCapture(){
         }
 
         /// starts the capturing of the data
@@ -460,8 +484,9 @@ class LogicAnalyzer {
          */
         void begin(Stream &procesingStream, AbstractCapture *capture, uint32_t maxCaptureFreq, uint32_t maxCaptureFreqThreshold,  uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false){
             printLog("begin");
-            this->setStream(procesingStream);
+            setStream(procesingStream);
             this->capture_ptr = capture;
+
             la_state.max_frequecy_value = maxCaptureFreq;
             la_state.max_frequecy_threshold = maxCaptureFreqThreshold;
             la_state.max_capture_size = maxCaptureSize;
@@ -470,6 +495,11 @@ class LogicAnalyzer {
             la_state.pin_start = pinStart;
             la_state.pin_numbers = numberOfPins;
             la_state.buffer_ptr = new RingBuffer(maxCaptureSize);
+
+            // assign state to capture 
+            if (capture!=nullptr) {
+                capture->setState(la_state);
+            }
 
             // by default the pins are in read mode - so it is usually not really necesarry to set the mode to input
             if (setup_pins){
@@ -643,7 +673,7 @@ class LogicAnalyzer {
 
         /// gets the next 1 byte command
         uint8_t command() {
-            int command = la_state.stream_ptr->read();
+            int command = stream().read();
             return command;
         }
 
@@ -736,7 +766,6 @@ class LogicAnalyzer {
          *  Proposess the SUMP commands
          */
         void processCommand(int cmd){
-            if (la_state.buffer_ptr==nullptr) return;
 
             switch (cmd) {
                 /**

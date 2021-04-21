@@ -15,7 +15,7 @@ int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 
 LogicAnalyzer logicAnalyzer;
-Capture capture(logicAnalyzer.state());
+Capture capture;
 
 
 void setup() {

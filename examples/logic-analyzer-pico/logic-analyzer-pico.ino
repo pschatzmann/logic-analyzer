@@ -20,9 +20,8 @@ using namespace logic_analyzer;
 
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
-
 LogicAnalyzer logicAnalyzer;
-Capture capture(logicAnalyzer.state());
+Capture capture;
 
 // when the status is changed to armed we start the capture
 void captureHandler(){

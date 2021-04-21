@@ -23,7 +23,7 @@ int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 
 LogicAnalyzer logicAnalyzer;
-Capture capture(logicAnalyzer.state());
+Capture capture;
 TaskHandle_t task;
 
 // when the status is changed to armed we start the capture
