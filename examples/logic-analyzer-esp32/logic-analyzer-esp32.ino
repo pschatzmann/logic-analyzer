@@ -35,7 +35,7 @@ void captureHandler(void* ptr){
         if (logicAnalyzer.status() == ARMED){
             // start capture
             digitalWrite(LED_BUILTIN, HIGH);
-            logicAnalyzer.capture();
+            capture.capture();
             digitalWrite(LED_BUILTIN, LOW);
         }
         delay(1);
@@ -43,13 +43,19 @@ void captureHandler(void* ptr){
 }
 
 void setup() {
+    // setup logger
+    Serial1.begin(115200, SERIAL_8N1, 16, 17);
+    logicAnalyzer.setLogger(LOG);
+
+    // Setup Serial
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
+    
     // switch off automatic capturing on arm command
     logicAnalyzer.setCaptureOnArm(false);
 
     // begin LogicAnalyzer
-    logicAnalyzer.begin(Serial, capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     // launch the capture handler on core 1
     int stack = 10000;

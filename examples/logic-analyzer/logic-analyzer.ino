@@ -19,10 +19,6 @@ Capture capture;
 
 
 void setup() {
-#ifdef LOG    
-    setupLogger(); // as defined in processor specific config
-    logicAnalyzer.setLogger(LOG);
-#endif    
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
     logicAnalyzer.begin(Serial, capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);

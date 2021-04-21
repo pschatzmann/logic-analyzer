@@ -63,6 +63,15 @@ void loop() {
 }
 ```
 
+# Logging
+
+You can actvate the logging by assigning a Stream to the LogicAnalyzer object by calling logicAnalyzer.setLogger():
+```
+// setup logger
+Serial1.begin(115200, SERIAL_8N1, 16, 17);
+logicAnalyzer.setLogger(Serial1);
+```
+
 
 # Connecting to Pulseview
 
@@ -90,7 +99,7 @@ I have tested the functionality with the following processors:
 
 |Processor               | Max Freq  | Max Samples | Pins |
 |------------------------|-----------|-------------|------|
-|ESP32                   |   2463700 |      100000 |    8 |
+|ESP32                   |   2940052 |      100000 |    8 |
 |ESP8266                 |   1038680 |       50000 |    4 |
 |AVR Processors (Nano)   |    109170 |         500 |    8 |
 |Raspberry Pico          |   2203225 |      100000 |    8 |

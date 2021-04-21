@@ -45,7 +45,7 @@ enum Event : uint8_t {RESET, STATUS, CAPUTRE_SIZE, CAPTURE_FREQUNCY,TRIGGER_VALU
 typedef void (*EventHandler)(Event event);
 
 /// Logger Stream
-inline Stream *logger_ptr = nullptr;
+Stream *logger_ptr = nullptr;
 
 ///  Prints the content to the logger output stream
 inline void printLog(const char* fmt, ...) {

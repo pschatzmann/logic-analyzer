@@ -6,23 +6,13 @@
 #define MAX_CAPTURE_SIZE 100000
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
-#define MAX_FREQ 3167764
-#define MAX_FREQ_THRESHOLD 889400
+#define MAX_FREQ 2940052
+#define MAX_FREQ_THRESHOLD 869900
 #define START_PIN 16
 #define PIN_COUNT sizeof(PinBitArray)*8
 
-// Use Serial1 for logging
-#ifndef LOG
-#define LOG Serial1
-#define RXD2 16
-#define TXD2 17
-#endif
 
 namespace logic_analyzer {
-
-void setupLogger() {
-    LOG.begin(115200, SERIAL_8N1, RXD2, TXD2);
-}
 
 
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.

@@ -21,11 +21,6 @@ namespace logic_analyzer {
 /// Define the datatype for PinBitArray: usually it is a uint8_t, but we could use uint16_t or uint32_t as well.
 typedef uint8_t PinBitArray;
 
-// no logging
-void setupLogger() {
-  ESP.wdtDisable();
-}
-
 
 /**
  * @brief ESP8266 specific implementation Logic for PinReader
