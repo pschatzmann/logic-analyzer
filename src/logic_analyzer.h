@@ -38,7 +38,7 @@ class LogicAnalyzer;
 
 
 /// Logic Analzyer Capturing Status
-enum Status : uint8_t {ARMED, TRIGGERED, STOPPED};
+enum Status : uint8_t {STOPPED, ARMED, TRIGGERED};
 
 /// Events
 enum Event : uint8_t {RESET, STATUS, CAPUTRE_SIZE, CAPTURE_FREQUNCY,TRIGGER_VALUES,TRIGGER_MASK, READ_DLEAY_COUNT, FLAGS};
@@ -74,12 +74,12 @@ class Sump4ByteComandArg {
 
         /// Provides a uint16_t value
         uint16_t get16(int idx) {
-            return ntohs(uint16Values[idx]);
+            return uint16Values[idx];
         }
 
         /// Provides a uint32_t value
         uint32_t get32() {
-            return ntohl(uint32Value[0]);
+            return uint32Value[0];
         }
 
     protected:
@@ -97,7 +97,7 @@ class Sump4ByteComandArg {
 class RingBuffer {
     public:
         RingBuffer(size_t size){
-            this->size_count = size;
+            this->size_count = size + 10;
             data = new PinBitArray[this->size_count];
             if (data==nullptr){
                 printLog("Requested capture size is too big");
@@ -184,7 +184,7 @@ class RingBuffer {
 };
 
 /**
- * @brief Common State information for the Logic Analyzer
+ * @brief Common State information for the Logic Analyzer - provides event handling on State change.
  * @author Phil Schatzmann
  * @copyright GPLv3
  */
@@ -204,10 +204,10 @@ class LogicAnalyzerState {
         int delay_count = 0;
         int pin_start = 0;
         int pin_numbers = 0;
-        uint64_t frequecy_value;  // in hz
-        uint64_t max_frequecy_value;  // in hz
-        uint64_t max_frequecy_threshold;  // in hz
-        uint64_t delay_time_us;
+        uint32_t frequecy_value;  // in hz
+        uint32_t max_frequecy_value;  // in hz
+        uint32_t max_frequecy_threshold;  // in hz
+        uint32_t delay_time_us;
         PinBitArray trigger_mask = 0;
         PinBitArray trigger_values = 0;
         Sump4ByteComandArg cmd4;
@@ -217,6 +217,7 @@ class LogicAnalyzerState {
 
         /// Defines the actual status
         void setStatus(Status status){
+            printLog("setStatus %d", status);
             status_value = status;
             raiseEvent(STATUS);
         }
@@ -288,9 +289,9 @@ class AbstractCapture {
         }
 
     protected:
-        LogicAnalyzerState *state_ptr;
+        LogicAnalyzerState *state_ptr = nullptr;
         RingBuffer *buffer_ptr = nullptr;
-        PinReader *pin_reader_ptr;
+        PinReader *pin_reader_ptr = nullptr;
 
         /// writes the status of all activated pins to the capturing device
         void write(PinBitArray bits) {
@@ -312,6 +313,7 @@ class AbstractCapture {
                 stream().write((uint8_t*)&value, sizeof(uint32_t));
             }
             stream().flush();
+            printLog("dumpData-end");
         }
        
 };
@@ -329,13 +331,15 @@ class Capture : public AbstractCapture {
 
         /// starts the capturing of the data
         virtual void capture(){
-            // if frequecy_value >= max_frequecy_value -> capture at max speed
+            printLog("capture");
+           // if frequecy_value >= max_frequecy_value -> capture at max speed
             capture(state().frequecy_value >= state().max_frequecy_threshold); 
+            printLog("capture-end");
         }
 
         /// Generic Capturing of requested number of examples into the buffer
         void captureAll() {
-            printLog("captureing %ld entries", state_ptr->read_count);
+            printLog("captureAll %ld entries", state_ptr->read_count);
             while(state_ptr->status_value == TRIGGERED && buffer_ptr->available() < state_ptr->read_count ){
                 captureSampleFast();   
                 delayMicroseconds(state_ptr->delay_time_us);
@@ -344,7 +348,7 @@ class Capture : public AbstractCapture {
 
         /// Capturing of requested number of examples into the buffer at maximum speed 
         void captureAllMaxSpeed() {
-            printLog("captureing %ld entries",state_ptr->read_count);
+            printLog("captureAllMaxSpeed %ld entries",state_ptr->read_count);
             while(state_ptr->status_value == TRIGGERED && buffer_ptr->available() < state_ptr->read_count ){
                 captureSampleFast();
             }
@@ -352,7 +356,7 @@ class Capture : public AbstractCapture {
 
         /// Continuous capturing at the requested speed
         void captureAllContinous() {
-            printLog("contuinous capturing");
+            printLog("captureAllContinous");
             while(state_ptr->status_value == TRIGGERED){
                 captureSampleFastContinuous();   
                 delayMicroseconds(state_ptr->delay_time_us);
@@ -361,7 +365,7 @@ class Capture : public AbstractCapture {
 
         /// Continuous capturing at max speed
         void captureAllContinousMaxSpeed() {
-            printLog("contuinous capturing with max speed");
+            printLog("captureAllContinousMaxSpeed");
             while(state_ptr->status_value == TRIGGERED){
                 captureSampleFastContinuous();   
             }
@@ -521,6 +525,7 @@ class LogicAnalyzer {
             return *(la_state.stream_ptr);
         }
 
+        /// provides the actual Status
         Status status() {
             return la_state.status_value;
         }
@@ -619,11 +624,11 @@ class LogicAnalyzer {
         }
 
         /// Resets the status and buffer
-        void reset(){
+        void clear(){
+            printLog("clear");
             setStatus(STOPPED);
             memset(la_state.buffer_ptr->data_ptr(),0x00, la_state.max_capture_size*sizeof(PinBitArray));
             la_state.buffer_ptr->clear();
-            raiseEvent(RESET);
         }
 
         /// returns the max buffer size
@@ -636,7 +641,7 @@ class LogicAnalyzer {
             return la_state.buffer_ptr->available();
         }
 
-        /// Defines the logging Stream
+        /// Activate the logging by defining the logging output Stream
         void setLogger(Stream &logger){
             logger_ptr = &logger;
         }
@@ -651,12 +656,17 @@ class LogicAnalyzer {
             return la_state;
         }
 
+        /// Defines the Description
+        void setDescription(char* name) {
+            description = name;
+        }
+
     protected:
         bool is_capture_on_arm = true;
         uint64_t sump_reset_igorne_timeout=0;
         AbstractCapture *capture_ptr = nullptr;
         LogicAnalyzerState la_state;
-        const char* description = "ARDUINO";
+        char* description = "ARDUINO";
         const char* device_id = "1ALS";
         const char* firmware_version = "\x020.13";
         const char* protocol_version = "\x041\x002";
@@ -700,15 +710,9 @@ class LogicAnalyzer {
             stream().flush();
         }
 
-        /// Provides the result of the 4 byte command
-        Sump4ByteComandArg getSump4ByteComandArg() {
-            Sump4ByteComandArg result = commandExt();
-            return result;
-        }
-
         /// Provides the command as PinBitArray
         PinBitArray commandExtPinBitArray() {
-            Sump4ByteComandArg cmd = getSump4ByteComandArg(); 
+            Sump4ByteComandArg cmd = commandExt(); 
             switch(sizeof(PinBitArray)) {
                 case 1:
                     return (PinBitArray) cmd.getPtr()[0];
@@ -738,9 +742,9 @@ class LogicAnalyzer {
         * For 500KHz, delay = (199 + 1) / 100 which gives us a 2 microsecond delay.
         *
         */
-        void setupDelay(unsigned long divider) {
+        void setupDelay(uint32_t divider) {
             // calculate frequency
-            setCaptureFrequency(100000000l / (divider + 1));
+            setCaptureFrequency(100000000UL / (divider+1));
         }
 
         /**
@@ -756,7 +760,7 @@ class LogicAnalyzer {
             // sample memory 
             write(0x21, la_state.max_capture_size);
             // sample rate e.g. (4MHz) 
-            write(0x23, la_state.frequecy_value);
+            write(0x23, la_state.max_frequecy_value);
             // protocol version & end
             stream().write(protocol_version, strlen(protocol_version)+1);
             stream().flush();
@@ -774,8 +778,11 @@ class LogicAnalyzer {
                 case SUMP_RESET:
                     // debounce reset
                     if (millis()>sump_reset_igorne_timeout){
-                        printLog("->SUMP_RESET");
+                        printLog("=>SUMP_RESET");
+                        setStatus(STOPPED);
+                        clear();
                         sump_reset_igorne_timeout = millis()+ 500;
+                        raiseEvent(RESET);
                     }
                     break;
 
@@ -783,7 +790,7 @@ class LogicAnalyzer {
                  * Asks for device identification. The device will respond with four bytes. 
                  */
                 case SUMP_ID:
-                    printLog("->SUMP_ID");
+                    printLog("=>SUMP_ID");
                     this->stream().write(device_id, 4);
                     this->stream().flush();
                     break;
@@ -793,7 +800,7 @@ class LogicAnalyzer {
                 * Check the function's comments below.
                 */
                 case SUMP_GET_METADATA:
-                    printLog("->SUMP_GET_METADATA");
+                    printLog("=>SUMP_GET_METADATA");
                     sendMetadata();
                     break;
 
@@ -801,7 +808,9 @@ class LogicAnalyzer {
                 * Captures the data
                 */
                 case SUMP_ARM:
-                    printLog("->SUMP_ARM");
+                    printLog("=>SUMP_ARM");
+                    // clear current data
+                    clear();
                     setStatus(ARMED);
                     if (capture_ptr!=nullptr && is_capture_on_arm){
                         capture_ptr->capture(); 
@@ -813,7 +822,7 @@ class LogicAnalyzer {
                 * we can just use it directly as our trigger mask.
                 */
                 case SUMP_TRIGGER_MASK:
-                    printLog("->SUMP_TRIGGER_MASK");
+                    printLog("=>SUMP_TRIGGER_MASK");
                     setTriggerMask(commandExtPinBitArray());
                     break;
 
@@ -822,15 +831,15 @@ class LogicAnalyzer {
                 * defines whether we're looking for it to be high or low.
                 */
                 case SUMP_TRIGGER_VALUES:
-                    printLog("->SUMP_TRIGGER_VALUES");
+                    printLog("=>SUMP_TRIGGER_VALUES");
                     setTriggerValues(commandExtPinBitArray());
                     break;
 
 
                 /* read the rest of the command bytes but ignore them. */
                 case SUMP_TRIGGER_CONFIG: 
-                    printLog("->SUMP_TRIGGER_CONFIG");
-                    getSump4ByteComandArg();                     
+                    printLog("=>SUMP_TRIGGER_CONFIG");
+                    commandExt();                     
                     break;
 
                 /*
@@ -838,8 +847,8 @@ class LogicAnalyzer {
                 * so that << 16 doesn't end up as zero.
                 */
                 case SUMP_SET_DIVIDER: {
-                        printLog("->SUMP_SET_DIVIDER");
-                        Sump4ByteComandArg cmd = getSump4ByteComandArg();
+                        printLog("=>SUMP_SET_DIVIDER");
+                        Sump4ByteComandArg cmd = commandExt();
                         uint32_t divider = cmd.get32();
                         printLog("-divider: %lu\n", divider);
                         setupDelay(divider);
@@ -857,10 +866,10 @@ class LogicAnalyzer {
                 * samples from before the trigger fired.
                 */
                 case SUMP_SET_READ_DELAY_COUNT: {
-                        printLog("->SUMP_SET_READ_DELAY_COUNT");
-                        Sump4ByteComandArg cmd = getSump4ByteComandArg();
-                        la_state.read_count = min((uint32_t)cmd.get16(0), la_state.max_capture_size);
-                        la_state.delay_count = min((uint32_t)cmd.get16(1),la_state.max_capture_size);
+                        Sump4ByteComandArg cmd = commandExt();
+                        printLog("=>SUMP_SET_READ_DELAY_COUNT %02X %02X",cmd.get16(0),cmd.get16(1));
+                        la_state.read_count = (cmd.get16(0)+1) * 4;
+                        la_state.delay_count = (cmd.get16(1)+1) * 4;
                         printLog("--> read_count: %d", la_state.read_count);
                         printLog("--> delay_count: %d", la_state.delay_count);
                         raiseEvent(READ_DLEAY_COUNT);
@@ -869,8 +878,8 @@ class LogicAnalyzer {
 
                 /* read the rest of the command bytes and check if RLE is enabled. */
                 case SUMP_SET_FLAGS: {
-                        printLog("->SUMP_SET_FLAGS");
-                        Sump4ByteComandArg cmd =  getSump4ByteComandArg();
+                        printLog("=>SUMP_SET_FLAGS");
+                        Sump4ByteComandArg cmd =  commandExt();
                         la_state.is_continuous_capture = ((cmd.getPtr()[1] & 0B1000000) != 0);
                         printLog("--> is_continuous_capture: %d\n", la_state.is_continuous_capture);
                         raiseEvent(FLAGS);
@@ -880,7 +889,7 @@ class LogicAnalyzer {
 
                 /* ignore any unrecognized bytes. */
                 default:
-                    printLog("->UNHANDLED command: %d", cmd);
+                    printLog("=>UNHANDLED command: %d", cmd);
                     break;
                 
             };

@@ -3,13 +3,14 @@
 #include "Arduino.h"
 
 // processor specific settings
-#define MAX_CAPTURE_SIZE 100000
+#define MAX_CAPTURE_SIZE 65535  // Max number supported by SUMP
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 2940052
 #define MAX_FREQ_THRESHOLD 869900
 #define START_PIN 16
 #define PIN_COUNT sizeof(PinBitArray)*8
+#define DESCRIPTION "Arduino-ESP32"
 
 
 namespace logic_analyzer {

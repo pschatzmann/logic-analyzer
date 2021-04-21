@@ -117,6 +117,11 @@ The Arduino Sketch</h1>
 <div class="line">    if (Serial) logicAnalyzer.processCommand();</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+Logging</h1>
+<p>You can actvate the logging by assigning a Stream to the LogicAnalyzer object by calling logicAnalyzer.setLogger(): </p><div class="fragment"><div class="line">// setup logger</div>
+<div class="line">Serial1.begin(115200, SERIAL_8N1, 16, 17);</div>
+<div class="line">logicAnalyzer.setLogger(Serial1);</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
 Connecting to Pulseview</h1>
 <ul>
 <li>Start the Arduino __"logic-analyzer"__ Sketch</li>
@@ -129,18 +134,18 @@ Connecting to Pulseview</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Installation</h1>
 <p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/logic-analyzer.git</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Supported Boards</h1>
 <p>I have tested the functionality with the following processors:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Processor   </th><th class="markdownTableHeadNone">Max Freq   </th><th class="markdownTableHeadNone">Max Samples   </th><th class="markdownTableHeadNone">Pins    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">ESP32   </td><td class="markdownTableBodyNone">2463700   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8    </td></tr>
+<td class="markdownTableBodyNone">ESP32   </td><td class="markdownTableBodyNone">2940052   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">ESP8266   </td><td class="markdownTableBodyNone">1038680   </td><td class="markdownTableBodyNone">50000   </td><td class="markdownTableBodyNone">4    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -148,7 +153,7 @@ Supported Boards</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone">2203225   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Summary</h1>
 <p>The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort! </p>
 </div></div><!-- PageDoc -->

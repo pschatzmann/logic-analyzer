@@ -43,10 +43,9 @@ void captureHandler(){
 void setup() {
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    // switch off automatic capturing on arm command
-    logicAnalyzer.setCaptureOnArm(false);
 
-    // begin LogicAnalyzer
+    logicAnalyzer.setDescription(DESCRIPTION);
+    logicAnalyzer.setCaptureOnArm(false);
     logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     // launch the capture handler on core 1

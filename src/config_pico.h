@@ -13,13 +13,14 @@
 #include <stdarg.h>     /* va_list, va_start, va_arg, va_end */
 
 // processor specific settings
-#define MAX_CAPTURE_SIZE 100000
+#define MAX_CAPTURE_SIZE 65535  // Max number supported by SUMP
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 2203225
 #define MAX_FREQ_THRESHOLD 661400
 #define START_PIN 4
 #define PIN_COUNT sizeof(PinBitArray)*8
+#define DESCRIPTION "Arduino-Pico"
 
 namespace logic_analyzer {
 

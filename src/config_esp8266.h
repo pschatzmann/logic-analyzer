@@ -14,6 +14,7 @@
 #define MAX_FREQ_THRESHOLD 533200
 #define START_PIN 12
 #define PIN_COUNT 4
+#define DESCRIPTION "Arduino-ESP8266"
 
 
 namespace logic_analyzer {

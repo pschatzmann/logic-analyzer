@@ -10,6 +10,7 @@
 #define MAX_FREQ_THRESHOLD 100000
 #define START_PIN 0
 #define PIN_COUNT sizeof(PinBitArray)*8
+#define DESCRIPTION "Arduino-AVR"
 
 // Software Serial for logging
 #define LOG soft_serial
