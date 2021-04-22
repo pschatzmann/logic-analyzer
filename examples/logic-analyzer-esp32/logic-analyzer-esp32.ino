@@ -33,7 +33,6 @@ void captureHandler(void* ptr){
     // we use the led to indicate the capturing
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, LOW);
-    uint64_t timeout;
 
     while(true){
         if (logicAnalyzer.status() == ARMED){
@@ -45,11 +44,7 @@ void captureHandler(void* ptr){
             digitalWrite(LED_BUILTIN, LOW);
             enableCore0WDT();
         }
-        delay(50);
-        if (millis()>timeout){
-            Serial2.println("ping...");
-            timeout = millis()+10000;
-        }
+        delay(10);
     }
 }
 
@@ -81,5 +76,5 @@ void setup() {
 
 void loop() {
     if (Serial) logicAnalyzer.processCommand();
-    delay(50);
+    delay(1);
 }

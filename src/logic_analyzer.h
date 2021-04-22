@@ -12,7 +12,14 @@
 #include "network.h"
 
 // Max numbers of logged characters in a line
+#ifndef LOG_BUFFER_SIZE
 #define LOG_BUFFER_SIZE 80
+#endif 
+
+// Max size of buffered print
+#ifndef DUMP_RECORD_SIZE
+#define DUMP_RECORD_SIZE 1024
+#endif
 
 // Supported Commands
 #define SUMP_RESET 0x00
@@ -137,6 +144,18 @@ class RingBuffer {
                 available_count--;
             }
             return result;
+        }
+
+        /// 1 SUMP record has 4 bytes - We privide the requested number of buffered values in the output format
+        size_t readBuffer(uint32_t *result, size_t read_len){
+            size_t result_len;
+            for (size_t j=0; j<read_len; j++){
+                result[j] = read();
+                if (available()==0){
+                    return j+1;
+                }
+            }
+            return read_len;
         }
 
         /// clears all entries
@@ -306,12 +325,18 @@ class AbstractCapture {
 
         /// dumps the caputred data to the recording device
         void dumpData() {
-            printLog("dumpData: %lu",buffer_ptr->available());
-            if (buffer_ptr==nullptr) return;
-            while(buffer_ptr->available()>0){
-                uint32_t value = buffer_ptr->read();
-                stream().write((uint8_t*)&value, sizeof(uint32_t));
+            if (buffer_ptr==nullptr) {
+                printLog("dumpData: failed because buffer_ptr==nullptr");
+                return;
             }
+            printLog("dumpData: %lu",buffer_ptr->available());
+            // buffered write 
+            uint32_t tmp[DUMP_RECORD_SIZE];
+            while(buffer_ptr->available()){
+                size_t len = buffer_ptr->readBuffer(tmp, DUMP_RECORD_SIZE);
+                stream().write((const char *)tmp, len);
+            }
+            // flush final records - for backward compatibility 
             stream().flush();
             printLog("dumpData-end");
         }
@@ -332,7 +357,16 @@ class Capture : public AbstractCapture {
         /// starts the capturing of the data
         virtual void capture(){
             printLog("capture");
-           // if frequecy_value >= max_frequecy_value -> capture at max speed
+            // no capture if request is well above max rate
+            if (state_ptr->frequecy_value > state_ptr->max_frequecy_value + (state_ptr->max_frequecy_value/2)){
+                setStatus(STOPPED);
+                // Send some dummy data to stop pulseview
+                write(0);
+                printLog("The frequency %u is not supported!", state_ptr->frequecy_value );
+                return;
+            }
+
+            // if frequecy_value >= max_frequecy_value -> capture at max speed
             capture(state().frequecy_value >= state().max_frequecy_threshold); 
             printLog("capture-end");
         }
@@ -398,20 +432,17 @@ class Capture : public AbstractCapture {
     protected:
         /// starts the capturing of the data
         void capture(bool is_max_speed) {
-            printLog("capture(trigger)");
+            printLog("capture is_max_speed: %s", is_max_speed ? "true":"false");
             // waiting for trigger
             if (state_ptr->trigger_mask) {
                 printLog("waiting for trigger");
                 while ((state_ptr->trigger_values ^ captureSample()) & state_ptr->trigger_mask)
                     ;
-                printLog("triggered");
-                setStatus(TRIGGERED);
-            } else {
-                setStatus(TRIGGERED);
-            }
+            } 
+            setStatus(TRIGGERED);
+            printLog("triggered");
 
             // remove unnecessary entries from buffer based on delayCount & readCount
-            printLog("capture(buffer)");
             long keep = state_ptr->read_count - state_ptr->delay_count;   
             if (keep > 0 && buffer_ptr->available()>keep)  {
                 printLog("keeping last %ld entries",keep);
@@ -430,18 +461,18 @@ class Capture : public AbstractCapture {
                     captureAllContinousMaxSpeed();
                 } else {
                     captureAllMaxSpeed();
-                    setStatus(STOPPED);
-                    printLog("capture-done: %lu",buffer_ptr->available());
                     dumpData();
+                    printLog("capture-done: %lu",buffer_ptr->available());
+                    setStatus(STOPPED);
                 }
             } else { 
                 if (state_ptr->is_continuous_capture){
                     captureAllContinous();
                 } else {
                     captureAll();
-                    setStatus(STOPPED);
-                    printLog("capture-done: %lu",buffer_ptr->available());
                     dumpData();
+                    printLog("capture-done: %lu",buffer_ptr->available());
+                    setStatus(STOPPED);
                 }
             }
         }
@@ -668,7 +699,7 @@ class LogicAnalyzer {
         LogicAnalyzerState la_state;
         char* description = "ARDUINO";
         const char* device_id = "1ALS";
-        const char* firmware_version = "\x020.13";
+        const char* firmware_version = "01.0";
         const char* protocol_version = "\x041\x002";
 
         /// Defines the command stream to Pulseview capturing divice
@@ -755,12 +786,13 @@ class LogicAnalyzer {
         void sendMetadata() {
             printLog("sendMetadata");
             write(0x01, description);
+            write(0x02, firmware_version);
             // number of probes 
             write(0x20, la_state.pin_numbers);
             // sample memory 
             write(0x21, la_state.max_capture_size);
-            // sample rate e.g. (4MHz) 
-            write(0x23, la_state.max_frequecy_value);
+            // sample rate - We do not provide the real max sample rate since this does not have any impact on the gui and provides wrong results!
+            //write(0x23, la_state.max_frequecy_value);
             // protocol version & end
             stream().write(protocol_version, strlen(protocol_version)+1);
             stream().flush();
