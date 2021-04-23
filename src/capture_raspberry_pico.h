@@ -27,7 +27,7 @@ class PicoCapturePIO : public AbstractCapture {
         /// starts the capturing of the data
         virtual void capture(){
             start();
-            print_capture_buf();
+            dump();
         }
 
         /// Used to test the speed
@@ -64,7 +64,7 @@ class PicoCapturePIO : public AbstractCapture {
         bool abort = false;
         unsigned long start_time;
 
-
+        /// starts the processing
         void start() {
             // Get SUMP values 
             abort = false;
@@ -81,62 +81,18 @@ class PicoCapturePIO : public AbstractCapture {
             pinMode(LED_BUILTIN, OUTPUT);
             digitalWrite(LED_BUILTIN, HIGH);
 
-            logic_analyser_init();
-            logic_analyser_arm();
+            arm();
         }
 
+        /// determines the divider value 
         float divider(uint32_t frequecy_value_hz){
             float result = 133000000.0f / float(frequecy_value_hz);
             log("divider: %f", result);
             return result;
         }
 
-        void logic_analyser_arm() {
-            log("Arming trigger");
-            pio_sm_set_enabled(pio, sm, false);
-            // Need to clear _input shift counter_, as well as FIFO, because there may be
-            // partial ISR contents left over from a previous run. sm_restart does this.
-            pio_sm_clear_fifos(pio, sm);
-            pio_sm_restart(pio, sm);
-
-            dma_channel_config c = dma_channel_get_default_config(dma_chan);
-            channel_config_set_read_increment(&c, false);
-            channel_config_set_write_increment(&c, true);
-            channel_config_set_transfer_data_size(&c, transferSize());
-            channel_config_set_dreq(&c, pio_get_dreq(pio, sm, false));
-
-            dma_channel_configure(dma_chan, &c,
-                logicAnalyzer().buffer().data_ptr(),        // Destination pointer
-                &pio->rxf[sm],      // Source pointer
-                n_samples, // Number of transfers
-                true                // Start immediately
-            );
-
-            /// TODO proper trigger support
-            ///pio_sm_exec(pio, sm, pio_encode_wait_gpio(trigger_level, trigger_pin));
-            start_time = micros();
-            pio_sm_set_enabled(pio, sm, true);
-        }
-
-        dma_channel_transfer_size transferSize() {
-            switch(sizeof(PinBitArray)){
-                case 1:
-                    return DMA_SIZE_8;
-                case 2:
-                    return DMA_SIZE_16;
-                case 4:
-                    return DMA_SIZE_32;
-                default:
-                    return DMA_SIZE_32;
-            }
-        }
-
-
-        uint bit_count() {
-            return sizeof(PinBitArray) * 8;
-        }
-
-        void logic_analyser_init() {
+        /// intitialize the PIO
+        void arm() {
             log("Init trigger");
             // Load a program to capture n pins. This is just a single `in pins, n`
             // instruction with a wrap.
@@ -160,10 +116,57 @@ class PicoCapturePIO : public AbstractCapture {
             sm_config_set_in_shift(&c, true, true, bit_count());
             sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);
             pio_sm_init(pio, sm, offset, &c);
+
+            /// arms the logic analyzer
+            log("Arming trigger");
+            pio_sm_set_enabled(pio, sm, false);
+            // Need to clear _input shift counter_, as well as FIFO, because there may be
+            // partial ISR contents left over from a previous run. sm_restart does this.
+            pio_sm_clear_fifos(pio, sm);
+            pio_sm_restart(pio, sm);
+
+            dma_channel_config dma_config = dma_channel_get_default_config(dma_chan);
+            channel_config_set_read_increment(&dma_config, false);
+            channel_config_set_write_increment(&dma_config, true);
+            channel_config_set_transfer_data_size(&dma_config, transferSize(sizeof(PinBitArray)));
+            channel_config_set_dreq(&dma_config, pio_get_dreq(pio, sm, false));
+
+            dma_channel_configure(dma_chan, &dma_config,
+                logicAnalyzer().buffer().data_ptr(),        // Destination pointer
+                &pio->rxf[sm],      // Source pointer
+                n_samples, // Number of transfers
+                true                // Start immediately
+            );
+
+            /// TODO proper trigger support
+            ///pio_sm_exec(pio, sm, pio_encode_wait_gpio(trigger_level, trigger_pin));
+            start_time = micros();
+            pio_sm_set_enabled(pio, sm, true);
+        }
+
+        /// Determines the dma channel tranfer size
+        dma_channel_transfer_size transferSize(int bytes) {
+            switch(bytes){
+                case 1:
+                    return DMA_SIZE_8;
+                case 2:
+                    return DMA_SIZE_16;
+                case 4:
+                    return DMA_SIZE_32;
+                default:
+                    return DMA_SIZE_32;
+            }
         }
 
 
-        void print_capture_buf() {
+        /// determines the number of bits 
+        uint bit_count() {
+            return sizeof(PinBitArray) * 8;
+        }
+
+
+        /// Dumps the result to PuleView (SUMP software)
+        void dump() {
             // wait for result an print it
             dma_channel_wait_for_finish_blocking(dma_chan);
             digitalWrite(LED_BUILTIN, LOW);

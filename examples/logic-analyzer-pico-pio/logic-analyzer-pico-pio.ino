@@ -17,8 +17,8 @@ LogicAnalyzer logicAnalyzer;
 PicoCapturePIO capture;
 
 // Use Event handler to cancel capturing
-void onEvent(Event event)) {
-    if (event == STATUS && logicAnalyzer.state() == STOPPED ){
+void onEvent(Event event) {
+    if (event == STATUS && logicAnalyzer.status() == STOPPED ){
         capture.cancel();
     }
 }
@@ -29,7 +29,8 @@ void setup() {
 
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);
-    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+
+    logicAnalyzer.begin(Serial, &capture, 0, 1000000, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
