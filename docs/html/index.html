@@ -122,6 +122,20 @@ Logging</h1>
 <div class="line">Serial1.begin(115200, SERIAL_8N1, 16, 17);</div>
 <div class="line">logicAnalyzer.setLogger(Serial1);</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+Custom Capturing</h1>
+<p>I am providing a default implementation for the capturing with the <a href="https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html">Capture</a> class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:</p>
+<div class="fragment"><div class="line">class YourFastCapture : public AbstractCapture {</div>
+<div class="line">    public:</div>
+<div class="line">        /// Default Constructor</div>
+<div class="line">        YourFastCapture() : AbstractCapture(){</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        /// starts the capturing of the data</div>
+<div class="line">        virtual void capture(){</div>
+<div class="line">            /// your implementation</div>
+<div class="line">        }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Connecting to Pulseview</h1>
 <ul>
 <li>Start the Arduino __"logic-analyzer"__ Sketch</li>
@@ -134,11 +148,11 @@ Connecting to Pulseview</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Installation</h1>
 <p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/logic-analyzer.git</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Supported Boards</h1>
 <p>I have tested the functionality with the following processors:</p>
 <table class="markdownTable">
@@ -153,9 +167,11 @@ Supported Boards</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone">2203225   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<p>Please note, that SUMP currently supports only max 65535 samples.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Summary</h1>
-<p>The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort! </p>
+<p>The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort!</p>
+<p>Please check out the <a href="https://github.com/pschatzmann/logic-analyzer/tree/main/examples">examples directory</a> for some dedicated implementations. And if you come up with your own implementation, please share it with the community... </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

@@ -66,6 +66,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
@@ -75,17 +76,23 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Common State information for the Logic Analyzer.  
+<p>Common State information for the Logic Analyzer - provides event handling on State change.  
  <a href="classlogic__analyzer_1_1_logic_analyzer_state.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="logic__analyzer_8h_source.html">logic_analyzer.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
 <tr class="memitem:a8ce3d71ed39f680e327d0c01a8453fe1"><td class="memItemLeft" align="right" valign="top"><a id="a8ce3d71ed39f680e327d0c01a8453fe1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer_state.html#a8ce3d71ed39f680e327d0c01a8453fe1">setStatus</a> (Status status)</td></tr>
 <tr class="memdesc:a8ce3d71ed39f680e327d0c01a8453fe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the actual status. <br /></td></tr>
 <tr class="separator:a8ce3d71ed39f680e327d0c01a8453fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a986f47903aabb662cdb5dec934bf3da1"><td class="memItemLeft" align="right" valign="top"><a id="a986f47903aabb662cdb5dec934bf3da1"></a>
+Stream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>stream</b> ()</td></tr>
+<tr class="separator:a986f47903aabb662cdb5dec934bf3da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa8850ded7e07c89cefca61cb958cc11f"><td class="memItemLeft" align="right" valign="top"><a id="aa8850ded7e07c89cefca61cb958cc11f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer_state.html#aa8850ded7e07c89cefca61cb958cc11f">raiseEvent</a> (Event event)</td></tr>
 <tr class="memdesc:aa8850ded7e07c89cefca61cb958cc11f"><td class="mdescLeft">&#160;</td><td class="mdescRight">raises an event <br /></td></tr>
@@ -117,18 +124,18 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pin_start</b> = 0</td>
 <tr class="memitem:a69b905924efce2a518d58bc65e9fff8b"><td class="memItemLeft" align="right" valign="top"><a id="a69b905924efce2a518d58bc65e9fff8b"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pin_numbers</b> = 0</td></tr>
 <tr class="separator:a69b905924efce2a518d58bc65e9fff8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a663c9160b4cf1d780ecb125f33f59a15"><td class="memItemLeft" align="right" valign="top"><a id="a663c9160b4cf1d780ecb125f33f59a15"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>frequecy_value</b></td></tr>
-<tr class="separator:a663c9160b4cf1d780ecb125f33f59a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a746d9b8bb4fa5533c91daa0fac06b9e9"><td class="memItemLeft" align="right" valign="top"><a id="a746d9b8bb4fa5533c91daa0fac06b9e9"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_value</b></td></tr>
-<tr class="separator:a746d9b8bb4fa5533c91daa0fac06b9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a7a325cfbafabe35f10ef75769fb185"><td class="memItemLeft" align="right" valign="top"><a id="a4a7a325cfbafabe35f10ef75769fb185"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_threshold</b></td></tr>
-<tr class="separator:a4a7a325cfbafabe35f10ef75769fb185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23c8b227928fcf029a769143372a40ed"><td class="memItemLeft" align="right" valign="top"><a id="a23c8b227928fcf029a769143372a40ed"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>delay_time_us</b></td></tr>
-<tr class="separator:a23c8b227928fcf029a769143372a40ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a17a15eb6d1d9d62cba0f3d67293e25"><td class="memItemLeft" align="right" valign="top"><a id="a3a17a15eb6d1d9d62cba0f3d67293e25"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>frequecy_value</b></td></tr>
+<tr class="separator:a3a17a15eb6d1d9d62cba0f3d67293e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cee2a04145e5c74cb9d81af4e7381b0"><td class="memItemLeft" align="right" valign="top"><a id="a9cee2a04145e5c74cb9d81af4e7381b0"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_value</b></td></tr>
+<tr class="separator:a9cee2a04145e5c74cb9d81af4e7381b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28da171f5dd709aeae4df4e443ba181f"><td class="memItemLeft" align="right" valign="top"><a id="a28da171f5dd709aeae4df4e443ba181f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_threshold</b></td></tr>
+<tr class="separator:a28da171f5dd709aeae4df4e443ba181f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab53dec73ac6c1efeb85948d9b1b4f7ff"><td class="memItemLeft" align="right" valign="top"><a id="ab53dec73ac6c1efeb85948d9b1b4f7ff"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>delay_time_us</b></td></tr>
+<tr class="separator:ab53dec73ac6c1efeb85948d9b1b4f7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42aba51d83ae53ad4532d2ed8f0deb30"><td class="memItemLeft" align="right" valign="top"><a id="a42aba51d83ae53ad4532d2ed8f0deb30"></a>
 PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_mask</b> = 0</td></tr>
 <tr class="separator:a42aba51d83ae53ad4532d2ed8f0deb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,12 +145,6 @@ PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_values
 <tr class="memitem:af5064e144fcfb0d04bda5186b925cdc2"><td class="memItemLeft" align="right" valign="top"><a id="af5064e144fcfb0d04bda5186b925cdc2"></a>
 <a class="el" href="classlogic__analyzer_1_1_sump4_byte_comand_arg.html">Sump4ByteComandArg</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cmd4</b></td></tr>
 <tr class="separator:af5064e144fcfb0d04bda5186b925cdc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a905fce4b4c6aa53f02182c127346d57c"><td class="memItemLeft" align="right" valign="top"><a id="a905fce4b4c6aa53f02182c127346d57c"></a>
-Stream *&#160;</td><td class="memItemRight" valign="bottom"><b>stream_ptr</b></td></tr>
-<tr class="separator:a905fce4b4c6aa53f02182c127346d57c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe6b928a2c181a5268c4f5db18877ba1"><td class="memItemLeft" align="right" valign="top"><a id="afe6b928a2c181a5268c4f5db18877ba1"></a>
-<a class="el" href="classlogic__analyzer_1_1_ring_buffer.html">RingBuffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_ptr</b> = nullptr</td></tr>
-<tr class="separator:afe6b928a2c181a5268c4f5db18877ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c1603ccdabf08ee35abd61ae3567106"><td class="memItemLeft" align="right" valign="top"><a id="a1c1603ccdabf08ee35abd61ae3567106"></a>
 EventHandler&#160;</td><td class="memItemRight" valign="bottom"><b>eventHandler</b> = nullptr</td></tr>
 <tr class="separator:a1c1603ccdabf08ee35abd61ae3567106"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,7 +162,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Capture</b></td></tr
 <tr class="separator:a14c7e591c8290828f0e0beea5f89b9fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Common State information for the Logic Analyzer. </p>
+<div class="textblock"><p>Common State information for the Logic Analyzer - provides event handling on State change. </p>
 <dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GPLv3 </dd></dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
