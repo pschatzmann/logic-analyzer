@@ -36,11 +36,11 @@ void setup() {
     Serial.setTimeout(SERIAL_TIMEOUT);
             pinMode(LED_BUILTIN, OUTPUT);
 
-
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);
 
-    logicAnalyzer.begin(Serial, &capture, 0, 1000000, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, 0, 3759034, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    capture.testPWMSignal();
 }
 
 void loop() {

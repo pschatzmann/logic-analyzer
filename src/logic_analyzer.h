@@ -299,6 +299,8 @@ class LogicAnalyzerState {
  */
 class AbstractCapture {
     public:
+         friend class LogicAnalyzer;
+
         /// Default Constructor
         AbstractCapture(){
         }
@@ -307,10 +309,7 @@ class AbstractCapture {
         ~AbstractCapture(){
         }
 
-        virtual void setLogicAnalyzer(LogicAnalyzer &la){
-            logic_analyzer_ptr = &la;
-        }
-
+        /// Provides access to the LogicAnalyzer
         LogicAnalyzer &logicAnalyzer() {
             return *logic_analyzer_ptr;
         }
@@ -320,6 +319,7 @@ class AbstractCapture {
             return *(pin_reader_ptr);
         }
 
+        /// Sets the status
         void setStatus(Status status){
             la_state.setStatus(status);
         }
@@ -330,6 +330,10 @@ class AbstractCapture {
 
     protected:
         LogicAnalyzer *logic_analyzer_ptr = nullptr;
+
+        virtual void setLogicAnalyzer(LogicAnalyzer &la){
+            logic_analyzer_ptr = &la;
+        }
 
 };
 
