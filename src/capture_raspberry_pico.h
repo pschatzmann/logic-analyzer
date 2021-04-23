@@ -55,8 +55,7 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// Starts a test PWM signal and pin 1 and pin 2
         void testPWMSignal() {
-            printf("Starting PWM example\n");
-            // PWM example: -----------------------------------------------------------
+            log("Starting PWM example");
             gpio_set_function(pin_base, GPIO_FUNC_PWM);
             gpio_set_function(pin_base + 1, GPIO_FUNC_PWM);
             // Topmost value of 3: count from 0 to 3 and then wrap, so period is 4 cycles
@@ -70,7 +69,6 @@ class PicoCapturePIO : public AbstractCapture {
                     (3 << PWM_CH0_CC_B_LSB);
             // Enable this PWM slice
             pwm_hw->slice[0].csr = PWM_CH0_CSR_EN_BITS;
-            // ------------------------------------------------------------------------
         }
 
 
