@@ -8,7 +8,7 @@
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 2940052
 #define MAX_FREQ_THRESHOLD 869900
-#define START_PIN 16
+#define START_PIN 19
 #define PIN_COUNT sizeof(PinBitArray)*8
 #define DESCRIPTION "Arduino-ESP32"
 

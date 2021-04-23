@@ -8,6 +8,7 @@
 #include "Arduino.h"
 #define LOG Serial
 #include "logic_analyzer.h"
+#include "capture_raspberry_pico.h"
 
 using namespace logic_analyzer;  
 
@@ -30,7 +31,7 @@ void testBufferSize() {
 
 void testSingleSample() {
     Serial.print("Caputre Single Sample: ");
-    logicAnalyzer.reset();
+    logicAnalyzer.clear();
     logicAnalyzer.setStatus(TRIGGERED);
     capture.captureSampleFast();
     Serial.println(logicAnalyzer.available());
@@ -41,7 +42,7 @@ void testSingleSample() {
 void testFrequency(uint32_t frq){
     Serial.print("testing ");
     Serial.print(frq);
-    logicAnalyzer.reset();
+    logicAnalyzer.clear();
     logicAnalyzer.setCaptureFrequency(frq);
     logicAnalyzer.setStatus(TRIGGERED);
     uint64_t start = micros();
@@ -58,7 +59,7 @@ void testFrequency(uint32_t frq){
 
 void testFrequencyMaxSpeed(){
     Serial.println("testing max speed ");
-    logicAnalyzer.reset();
+    logicAnalyzer.clear();
     logicAnalyzer.setStatus(TRIGGERED);
     uint64_t start = micros();
     capture.captureAllMaxSpeed();
@@ -77,7 +78,7 @@ void testFrequencyMaxSpeed(){
 }
 
 void testPins() {
-    logicAnalyzer.reset();
+    logicAnalyzer.clear();
     for (int pin=pinStart;pin<pinStart+numberOfPins;pin++){
         pinMode(pin, OUTPUT);
         digitalWrite(pin, HIGH);
@@ -93,25 +94,48 @@ void testPins() {
     printLine();
 }
 
+void testPIO() {
+#ifdef ARDUINO_ARCH_RP2040
+    PicoCapturePIO picoCapture;
+    logicAnalyzer.begin(Serial, &picoCapture, MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+
+    Serial.println("testing PIO");
+    logicAnalyzer.clear();
+    logicAnalyzer.setStatus(TRIGGERED);
+    uint64_t run_time_us = picoCapture.testCapture(1.0);
+
+    float measured_freq = 1000000.0 * MAX_CAPTURE_SIZE  / run_time_us;
+
+    Serial.print("time us:");
+    Serial.println((double) (end - start));
+
+    Serial.print("max speed: ");
+    Serial.println(measured_freq);
+    printLine();    
+#endif    
+}
+
 void setup() {
     Serial.begin(115200);  
     // wait for Serial to be ready
     while(!Serial);
     Serial.setTimeout(SERIAL_TIMEOUT);
     Serial.println("setup");
+    //logicAnalyzer.setLogger(Serial);
     logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     printLine();
-    testSingleSample();
+    testPins();
     testBufferSize();
-    testFrequencyMaxSpeed();
+    testSingleSample();
 
     for(auto &f : frequencies){
         testFrequency(f);
     }
     printLine();
 
-    testPins();
+    testFrequencyMaxSpeed();
+    testPIO();
 }
 
 void loop() {

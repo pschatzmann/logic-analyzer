@@ -72,6 +72,22 @@ Serial1.begin(115200, SERIAL_8N1, 16, 17);
 logicAnalyzer.setLogger(Serial1);
 ```
 
+# Custom Capturing
+I am providing a default implementation for the capturing with the [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:
+
+```
+class YourFastCapture : public AbstractCapture {
+    public:
+        /// Default Constructor
+        YourFastCapture() : AbstractCapture(){
+        }
+
+        /// starts the capturing of the data
+        virtual void capture(){
+            /// your implementation
+        }
+}
+```
 
 # Connecting to Pulseview
 
@@ -104,7 +120,10 @@ I have tested the functionality with the following processors:
 |AVR Processors (Nano)   |    109170 |         500 |    8 |
 |Raspberry Pico          |   2203225 |      100000 |    8 |
 
+Please note, that SUMP currently supports only max 65535 samples.
 
 # Summary
 
 The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort!
+
+Please check out the [examples directory](https://github.com/pschatzmann/logic-analyzer/tree/main/examples) for some dedicated implementations. And if you come up with your own implementation, please share it with the community...

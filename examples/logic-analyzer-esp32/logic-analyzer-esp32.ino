@@ -38,11 +38,9 @@ void captureHandler(void* ptr){
         if (logicAnalyzer.status() == ARMED){
             // start capture
             Serial2.println("capturing...");
-            disableCore0WDT();
             digitalWrite(LED_BUILTIN, HIGH);
             capture.capture();
             digitalWrite(LED_BUILTIN, LOW);
-            enableCore0WDT();
         }
         delay(10);
     }
