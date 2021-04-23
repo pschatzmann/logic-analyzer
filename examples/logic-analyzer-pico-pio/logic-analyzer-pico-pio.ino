@@ -18,14 +18,24 @@ PicoCapturePIO capture;
 
 // Use Event handler to cancel capturing
 void onEvent(Event event) {
-    if (event == STATUS && logicAnalyzer.status() == STOPPED ){
-        capture.cancel();
+    if (event == STATUS) {
+        switch (logicAnalyzer.status()) {
+            case ARMED:
+                digitalWrite(LED_BUILTIN, LOW);
+                break;
+            case STOPPED:
+                capture.cancel();
+                digitalWrite(LED_BUILTIN, LOW);
+                break;
+        }
     }
 }
 
 void setup() {
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
+            pinMode(LED_BUILTIN, OUTPUT);
+
 
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);

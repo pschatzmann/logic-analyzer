@@ -16,6 +16,8 @@ namespace logic_analyzer {
 /**
  * @brief First version of Capture implementation for Raspberry Pico using the PIO. Based on 
  * https://github.com/raspberrypi/pico-examples/blob/master/pio/logic_analyser/logic_analyser.c
+ * @author Phil Schatzmann
+ * @copyright GPLv3
  * 
  */
 class PicoCapturePIO : public AbstractCapture {
@@ -26,8 +28,21 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// starts the capturing of the data
         virtual void capture(){
+            log("capture");
             start();
             dump();
+            // signal end of processing
+            setStatus(STOPPED);
+        }
+
+        /// cancels the capturing which is ccurrently in progress
+        void cancel() {
+            log("cancel");
+            if (!abort){
+                abort = true;
+                pio_sm_set_enabled(pio,  sm,  false);
+                dma_channel_abort(dma_chan);
+            }
         }
 
         /// Used to test the speed
@@ -39,15 +54,7 @@ class PicoCapturePIO : public AbstractCapture {
         }
 
 
-        /// cancels the capturing which is ccurrently in progress
-        void cancel() {
-            if (!abort){
-                abort = true;
-                pio_sm_set_enabled(pio,  sm,  false);
-                dma_channel_abort(dma_chan);
-            }
-        }
- 
+
     protected:
         PIO pio = pio0;
         uint sm = 0;
@@ -77,9 +84,6 @@ class PicoCapturePIO : public AbstractCapture {
             // of the way. This should only be needed if you are pushing things up to
             // >16bits/clk here, i.e. if you need to saturate the bus completely.
             bus_ctrl_hw->priority = BUSCTRL_BUS_PRIORITY_DMA_W_BITS | BUSCTRL_BUS_PRIORITY_DMA_R_BITS;
-
-            pinMode(LED_BUILTIN, OUTPUT);
-            digitalWrite(LED_BUILTIN, HIGH);
 
             arm();
         }
@@ -128,13 +132,13 @@ class PicoCapturePIO : public AbstractCapture {
             dma_channel_config dma_config = dma_channel_get_default_config(dma_chan);
             channel_config_set_read_increment(&dma_config, false);
             channel_config_set_write_increment(&dma_config, true);
-            channel_config_set_transfer_data_size(&dma_config, transferSize(sizeof(PinBitArray)));
+            channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_32);
             channel_config_set_dreq(&dma_config, pio_get_dreq(pio, sm, false));
 
             dma_channel_configure(dma_chan, &dma_config,
                 logicAnalyzer().buffer().data_ptr(),        // Destination pointer
                 &pio->rxf[sm],      // Source pointer
-                n_samples, // Number of transfers
+                n_samples /4 * sizeof(PinBitArray),          // Number of transfers
                 true                // Start immediately
             );
 
@@ -169,7 +173,6 @@ class PicoCapturePIO : public AbstractCapture {
         void dump() {
             // wait for result an print it
             dma_channel_wait_for_finish_blocking(dma_chan);
-            digitalWrite(LED_BUILTIN, LOW);
 
             // process result
             if (!abort){
