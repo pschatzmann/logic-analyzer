@@ -53,6 +53,25 @@ class PicoCapturePIO : public AbstractCapture {
             return micros() - start_time;
         }
 
+        /// Starts a test PWM signal and pin 1 and pin 2
+        void testPWMSignal() {
+            printf("Starting PWM example\n");
+            // PWM example: -----------------------------------------------------------
+            gpio_set_function(pin_base, GPIO_FUNC_PWM);
+            gpio_set_function(pin_base + 1, GPIO_FUNC_PWM);
+            // Topmost value of 3: count from 0 to 3 and then wrap, so period is 4 cycles
+            pwm_hw->slice[0].top = 3;
+            // Divide frequency by two to slow things down a little
+            pwm_hw->slice[0].div = 4 << PWM_CH0_DIV_INT_LSB;
+            // Set channel A to be high for 1 cycle each period (duty cycle 1/4) and
+            // channel B for 3 cycles (duty cycle 3/4)
+            pwm_hw->slice[0].cc =
+                    (1 << PWM_CH0_CC_A_LSB) |
+                    (3 << PWM_CH0_CC_B_LSB);
+            // Enable this PWM slice
+            pwm_hw->slice[0].csr = PWM_CH0_CSR_EN_BITS;
+            // ------------------------------------------------------------------------
+        }
 
 
     protected:
@@ -80,11 +99,6 @@ class PicoCapturePIO : public AbstractCapture {
             n_samples = logicAnalyzer().readCount();
             divider_value = divider(logicAnalyzer().captureFrequency());
 
-            // Grant high bus priority to the DMA, so it can shove the processors out
-            // of the way. This should only be needed if you are pushing things up to
-            // >16bits/clk here, i.e. if you need to saturate the bus completely.
-            bus_ctrl_hw->priority = BUSCTRL_BUS_PRIORITY_DMA_W_BITS | BUSCTRL_BUS_PRIORITY_DMA_R_BITS;
-
             arm();
         }
 
@@ -98,6 +112,12 @@ class PicoCapturePIO : public AbstractCapture {
         /// intitialize the PIO
         void arm() {
             log("Init trigger");
+
+            // Grant high bus priority to the DMA, so it can shove the processors out
+            // of the way. This should only be needed if you are pushing things up to
+            // >16bits/clk here, i.e. if you need to saturate the bus completely.
+            bus_ctrl_hw->priority = BUSCTRL_BUS_PRIORITY_DMA_W_BITS | BUSCTRL_BUS_PRIORITY_DMA_R_BITS;
+
             // Load a program to capture n pins. This is just a single `in pins, n`
             // instruction with a wrap.
             uint16_t capture_prog_instr = pio_encode_in(pio_pins, pin_count);
