@@ -11,7 +11,7 @@ There are quite a few logic analyzer projects with a similar goal:
 
 Howerver all of them are geared for __one specific architecture__ and therfore are __not portable__.
 
-I wanted to come up with a better design and provide a [basic C++ Library](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) that implements the [SUMP protocol](https://www.sump.org/projects/analyzer/protocol/) and clearly separates the generic functionality from the processor specific in order to support an __easy rollout to new architectures__: The only common precondition is the Arduino API. 
+I wanted to come up with a better design and provide a [simple Arduino C++ Library](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) that implements the [SUMP protocol](https://www.sump.org/projects/analyzer/protocol/) and clearly separates the generic functionality from the processor specific in order to support an __easy rollout to new architectures__: The only common precondition is the Arduino API. 
 
 To come up with an basic implementation for a specific board you just need to implement a specific config. I am currently providing implementations for
 
@@ -99,7 +99,6 @@ logicAnalyzer.setEventHandler(&onEvent);
 
 ```
 
-
 # Custom Capturing
 
 I am providing a default implementation for the capturing with the [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:
@@ -117,6 +116,10 @@ class YourFastCapture : public AbstractCapture {
         }
 }
 ```
+# Class Documentation
+
+The complete [generated class documentation](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) can be found on Github.
+
 
 # Connecting to Pulseview
 
@@ -150,6 +153,7 @@ I have tested the functionality with the following processors:
 |Raspberry Pico          |   2203225 |      100000 |    8 |
 
 Please note, that SUMP currently supports only max 65535 samples.
+
 
 # Summary
 
