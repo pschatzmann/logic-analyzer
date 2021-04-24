@@ -24,7 +24,7 @@ int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 
 LogicAnalyzer logicAnalyzer;
-Capture capture;
+Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD, );
 TaskHandle_t task;
 
 // when the status is changed to armed we start the capture
@@ -57,7 +57,7 @@ void setup() {
 
     logicAnalyzer.setDescription(DESCRIPTION);
     logicAnalyzer.setCaptureOnArm(false); 
-    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     // launch the capture handler on core 1
     int stack = 10000;

@@ -23,7 +23,8 @@ namespace logic_analyzer {
 class PicoCapturePIO : public AbstractCapture {
     public:
         /// Default Constructor
-        PicoCapturePIO() {
+        PicoCapturePIO(uint32_t maxCaptureFreq) {
+            max_frequecy_value = maxCaptureFreq;
         }
 
         /// starts the capturing of the data
@@ -75,11 +76,12 @@ class PicoCapturePIO : public AbstractCapture {
         bool abort = false;
         unsigned long start_time;
         bool generate_test = false;
+        uint32_t max_frequecy_value;  // in hz
 
         /// starts the processing
         void start() {
             // if we are well above the limit we do not capture at all
-            if (logicAnalyzer().captureFrequency () > logicAnalyzer().maxCaptureFrequency() + (logicAnalyzer().maxCaptureFrequency()/2)){
+            if (logicAnalyzer().captureFrequency() > (1.5 * max_frequecy_value)){
                 setStatus(STOPPED);
                 // Send some dummy data to stop pulseview
                 write(0);
@@ -120,7 +122,7 @@ class PicoCapturePIO : public AbstractCapture {
         /// determines the divider value 
         float divider(uint32_t frequecy_value_hz){
             // 1.0 => maxCaptureFrequency()
-            float result = static_cast<float>(logicAnalyzer().maxCaptureFrequency()) / static_cast<float>(frequecy_value_hz);
+            float result = static_cast<float>(max_frequecy_value) / static_cast<float>(frequecy_value_hz);
             log("divider: %f", result);
             return result < 1.0 ? 1.0 : result;
         }

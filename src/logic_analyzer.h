@@ -274,8 +274,6 @@ class LogicAnalyzerState {
         int pin_start = 0;
         int pin_numbers = 0;
         uint32_t frequecy_value;  // in hz
-        uint32_t max_frequecy_value;  // in hz
-        uint32_t max_frequecy_threshold;  // in hz
         uint32_t delay_time_us;
         PinBitArray trigger_mask = 0;
         PinBitArray trigger_values = 0;
@@ -345,14 +343,16 @@ class AbstractCapture {
 class Capture : public AbstractCapture {
     public:
         /// Default Constructor
-        Capture() : AbstractCapture(){
+        Capture(uint32_t maxCaptureFreq, uint32_t maxCaptureFreqThreshold  ) : AbstractCapture(){
+            max_frequecy_value = maxCaptureFreq;
+            max_frequecy_threshold = maxCaptureFreqThreshold;
         }
 
         /// starts the capturing of the data
         virtual void capture(){
             log("capture");
             // no capture if request is well above max rate
-            if (la_state.frequecy_value > la_state.max_frequecy_value + (la_state.max_frequecy_value/2)){
+            if (la_state.frequecy_value > max_frequecy_value + (max_frequecy_value/2)){
                 setStatus(STOPPED);
                 // Send some dummy data to stop pulseview
                 write(0);
@@ -361,7 +361,7 @@ class Capture : public AbstractCapture {
             }
 
             // if frequecy_value >= max_frequecy_value -> capture at max speed
-            capture(la_state.frequecy_value >= la_state.max_frequecy_threshold); 
+            capture(la_state.frequecy_value >= max_frequecy_threshold); 
             log("capture-end");
         }
 
@@ -427,6 +427,8 @@ class Capture : public AbstractCapture {
 
 
     protected:
+        uint32_t max_frequecy_value;  // in hz
+        uint32_t max_frequecy_threshold;  // in hz
 
         /// starts the capturing of the data
         void capture(bool is_max_speed) {
@@ -537,14 +539,11 @@ class LogicAnalyzer {
          * @param numberOfPins Number of subsequent pins to capture
          * @param setup_pins Change the pin mode to input 
          */
-        void begin(Stream &procesingStream, AbstractCapture *capture, uint32_t maxCaptureFreq, uint32_t maxCaptureFreqThreshold,  uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false){
+        void begin(Stream &procesingStream, AbstractCapture *capture, uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false){
             log("begin");
             stream_ptr = &procesingStream;
             this->capture_ptr = capture;
 
-            la_state.max_frequecy_value = maxCaptureFreq;
-            la_state.max_frequecy_threshold = maxCaptureFreqThreshold;
-            la_state.max_capture_size = maxCaptureSize;
             la_state.read_count = maxCaptureSize;
             la_state.delay_count = maxCaptureSize;
             la_state.pin_start = pinStart;
@@ -662,11 +661,6 @@ class LogicAnalyzer {
         /// provides the caputring frequency
         uint64_t captureFrequency() {
             return la_state.frequecy_value;
-        }
-
-        /// provides the maximum capuring frequency
-        uint64_t maxCaptureFrequency() {
-            return la_state.max_frequecy_value;
         }
 
         /// Provides the delay time between measurements in microseconds 

@@ -21,7 +21,7 @@ using namespace logic_analyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 LogicAnalyzer logicAnalyzer;
-Capture capture;
+Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);
 
 // when the status is changed to armed we start the capture
 void captureHandler(){
@@ -46,7 +46,7 @@ void setup() {
 
     logicAnalyzer.setDescription(DESCRIPTION);
     logicAnalyzer.setCaptureOnArm(false);
-    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     // launch the capture handler on core 1
     multicore_launch_core1(captureHandler);

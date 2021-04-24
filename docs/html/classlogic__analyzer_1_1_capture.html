@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classlogic__analyzer_1_1_capture-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">logic_analyzer::Capture Class Reference</div>  </div>
@@ -90,10 +91,10 @@ Inheritance diagram for logic_analyzer::Capture:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0222f6e36ce456260069065351f9601e"><td class="memItemLeft" align="right" valign="top"><a id="a0222f6e36ce456260069065351f9601e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_capture.html#a0222f6e36ce456260069065351f9601e">Capture</a> ()</td></tr>
-<tr class="memdesc:a0222f6e36ce456260069065351f9601e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
-<tr class="separator:a0222f6e36ce456260069065351f9601e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad46732705fac247dcad53485fe9c529a"><td class="memItemLeft" align="right" valign="top"><a id="ad46732705fac247dcad53485fe9c529a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_capture.html#ad46732705fac247dcad53485fe9c529a">Capture</a> (uint32_t maxCaptureFreq, uint32_t maxCaptureFreqThreshold)</td></tr>
+<tr class="memdesc:ad46732705fac247dcad53485fe9c529a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:ad46732705fac247dcad53485fe9c529a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa01e1e14bc6a57ef1d70a7fe4f68078e"><td class="memItemLeft" align="right" valign="top"><a id="aa01e1e14bc6a57ef1d70a7fe4f68078e"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_capture.html#aa01e1e14bc6a57ef1d70a7fe4f68078e">capture</a> ()</td></tr>
 <tr class="memdesc:aa01e1e14bc6a57ef1d70a7fe4f68078e"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the capturing of the data <br /></td></tr>
@@ -167,8 +168,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLogicAnalyzer</b> (<a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html">LogicAnalyzer</a> &amp;la)</td></tr>
 <tr class="separator:aa9a3cd13ef9cbacc7122308af0336ba2 inherit pro_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a9f278ef62a9678beee3c2f515b0eb0d7"><td class="memItemLeft" align="right" valign="top"><a id="a9f278ef62a9678beee3c2f515b0eb0d7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_value</b></td></tr>
+<tr class="separator:a9f278ef62a9678beee3c2f515b0eb0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8068f83f1f3969e433deb9ba59541df"><td class="memItemLeft" align="right" valign="top"><a id="ad8068f83f1f3969e433deb9ba59541df"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_frequecy_threshold</b></td></tr>
+<tr class="separator:ad8068f83f1f3969e433deb9ba59541df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classlogic__analyzer_1_1_abstract_capture"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classlogic__analyzer_1_1_abstract_capture')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">logic_analyzer::AbstractCapture</a></td></tr>
 <tr class="memitem:ae63c5d0eb2afc136ea859d921323103a inherit pro_attribs_classlogic__analyzer_1_1_abstract_capture"><td class="memItemLeft" align="right" valign="top"><a id="ae63c5d0eb2afc136ea859d921323103a"></a>
 <a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html">LogicAnalyzer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>logic_analyzer_ptr</b> = nullptr</td></tr>

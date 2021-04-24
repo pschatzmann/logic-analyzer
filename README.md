@@ -49,13 +49,13 @@ using namespace logic_analyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 LogicAnalyzer logicAnalyzer;
-Capture capture;
+Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);
 
 
 void setup() {
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
-    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {
@@ -72,7 +72,36 @@ Serial1.begin(115200, SERIAL_8N1, 16, 17);
 logicAnalyzer.setLogger(Serial1);
 ```
 
+# Adding Additional Functionality
+
+An easy way to extend the functionalty is by adding an event handler. The following acts on a status change event by activating the LED dependent on the actual status:
+
+```
+// Use Event handler to control the LED
+void onEvent(Event event) {
+    if (event == STATUS) {
+        switch (logicAnalyzer.status()) {
+            case ARMED:
+                digitalWrite(LED_BUILTIN, LOW);
+                break;
+            case STOPPED:
+                digitalWrite(LED_BUILTIN, LOW);
+                break;
+        }
+    }
+}
+```
+
+and we can just activate it by calling:
+
+```
+logicAnalyzer.setEventHandler(&onEvent);
+
+```
+
+
 # Custom Capturing
+
 I am providing a default implementation for the capturing with the [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:
 
 ```

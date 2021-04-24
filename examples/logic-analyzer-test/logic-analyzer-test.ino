@@ -15,7 +15,7 @@ using namespace logic_analyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 LogicAnalyzer logicAnalyzer;
-Capture capture;
+Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);
 
 uint32_t frequencies[] = { 50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000 };
 
@@ -96,8 +96,8 @@ void testPins() {
 
 void testPIO() {
 #ifdef ARDUINO_ARCH_RP2040
-    PicoCapturePIO picoCapture;
-    logicAnalyzer.begin(Serial, &picoCapture, MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    PicoCapturePIO picoCapture(3759034);
+    logicAnalyzer.begin(Serial, &picoCapture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     Serial.println("testing PIO");
     logicAnalyzer.clear();
@@ -107,7 +107,7 @@ void testPIO() {
     float measured_freq = 1000000.0 * MAX_CAPTURE_SIZE  / run_time_us;
 
     Serial.print("time us:");
-    Serial.println((double) (end - start));
+    Serial.println((double) (run_time_us));
 
     Serial.print("max speed: ");
     Serial.println(measured_freq);
@@ -122,7 +122,7 @@ void setup() {
     Serial.setTimeout(SERIAL_TIMEOUT);
     Serial.println("setup");
     //logicAnalyzer.setLogger(Serial);
-    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD,  MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 
     printLine();
     testPins();

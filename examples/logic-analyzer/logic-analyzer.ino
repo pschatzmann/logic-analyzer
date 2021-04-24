@@ -14,14 +14,29 @@ using namespace logic_analyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 LogicAnalyzer logicAnalyzer;
-Capture capture;
+Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);
 
+// Use Event handler to control the LED
+void onEvent(Event event) {
+    if (event == STATUS) {
+        switch (logicAnalyzer.status()) {
+            case ARMED:
+                digitalWrite(LED_BUILTIN, LOW);
+                break;
+            case STOPPED:
+                digitalWrite(LED_BUILTIN, LOW);
+                break;
+        }
+    }
+}
 
 void setup() {
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
+
+    logicAnalyzer.setEventHandler(&onEvent);
     logicAnalyzer.setDescription(DESCRIPTION);
-    logicAnalyzer.begin(Serial, &capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
 void loop() {

@@ -14,7 +14,7 @@ using namespace logic_analyzer;
 int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 LogicAnalyzer logicAnalyzer;
-PicoCapturePIO capture;
+PicoCapturePIO capture(3759034);
 
 // Use Event handler to cancel capturing
 void onEvent(Event event) {
@@ -39,7 +39,7 @@ void setup() {
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);
 
-    logicAnalyzer.begin(Serial, &capture, 0, 3759034, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
+    logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
     capture.testPWMSignal();
 }
 

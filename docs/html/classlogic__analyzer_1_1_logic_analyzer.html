@@ -90,9 +90,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab9edc2b4f038ffc2bd21d7a0e26ca41b">~LogicAnalyzer</a> ()</td></tr>
 <tr class="memdesc:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad17d89e2f9942f7084082537f96fec08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ad17d89e2f9942f7084082537f96fec08">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">AbstractCapture</a> *<a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a95223e204c4c07e923f383e67045338e">capture</a>, uint32_t maxCaptureFreq, uint32_t maxCaptureFreqThreshold, uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false)</td></tr>
-<tr class="memdesc:ad17d89e2f9942f7084082537f96fec08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the processing.  <a href="classlogic__analyzer_1_1_logic_analyzer.html#ad17d89e2f9942f7084082537f96fec08">More...</a><br /></td></tr>
-<tr class="separator:ad17d89e2f9942f7084082537f96fec08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adec0a2bd30c51cd188a8782e1748ead4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#adec0a2bd30c51cd188a8782e1748ead4">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">AbstractCapture</a> *<a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a95223e204c4c07e923f383e67045338e">capture</a>, uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false)</td></tr>
+<tr class="memdesc:adec0a2bd30c51cd188a8782e1748ead4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the processing.  <a href="classlogic__analyzer_1_1_logic_analyzer.html#adec0a2bd30c51cd188a8782e1748ead4">More...</a><br /></td></tr>
+<tr class="separator:adec0a2bd30c51cd188a8782e1748ead4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e628f249c56af8136e515136ad9ba4c"><td class="memItemLeft" align="right" valign="top"><a id="a9e628f249c56af8136e515136ad9ba4c"></a>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>startPin</b> ()</td></tr>
 <tr class="separator:a9e628f249c56af8136e515136ad9ba4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,10 +155,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a46816a7383c23841fafc7f09d69c8027">captureFrequency</a> ()</td></tr>
 <tr class="memdesc:a46816a7383c23841fafc7f09d69c8027"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the caputring frequency <br /></td></tr>
 <tr class="separator:a46816a7383c23841fafc7f09d69c8027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cd10a0f0c8e3530faa1b1d05da5f9ed"><td class="memItemLeft" align="right" valign="top"><a id="a9cd10a0f0c8e3530faa1b1d05da5f9ed"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a9cd10a0f0c8e3530faa1b1d05da5f9ed">maxCaptureFrequency</a> ()</td></tr>
-<tr class="memdesc:a9cd10a0f0c8e3530faa1b1d05da5f9ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the maximum capuring frequency <br /></td></tr>
-<tr class="separator:a9cd10a0f0c8e3530faa1b1d05da5f9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec452a48687cc2ddd7e83c5aaf80a7cf"><td class="memItemLeft" align="right" valign="top"><a id="aec452a48687cc2ddd7e83c5aaf80a7cf"></a>
 uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#aec452a48687cc2ddd7e83c5aaf80a7cf">delayTimeUs</a> ()</td></tr>
 <tr class="memdesc:aec452a48687cc2ddd7e83c5aaf80a7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the delay time between measurements in microseconds. <br /></td></tr>
@@ -285,8 +281,8 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>protocol_vers
 <dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GPLv3 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad17d89e2f9942f7084082537f96fec08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad17d89e2f9942f7084082537f96fec08">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="adec0a2bd30c51cd188a8782e1748ead4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adec0a2bd30c51cd188a8782e1748ead4">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -305,18 +301,6 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>protocol_vers
           <td></td>
           <td class="paramtype"><a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">AbstractCapture</a> *&#160;</td>
           <td class="paramname"><em>capture</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>maxCaptureFreq</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>maxCaptureFreqThreshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

@@ -104,13 +104,13 @@ The Arduino Sketch</h1>
 <div class="line">int pinStart=START_PIN;</div>
 <div class="line">int numberOfPins=PIN_COUNT;</div>
 <div class="line">LogicAnalyzer logicAnalyzer;</div>
-<div class="line">Capture capture;</div>
+<div class="line">Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">void setup() {</div>
 <div class="line">    Serial.begin(SERIAL_SPEED);  </div>
 <div class="line">    Serial.setTimeout(SERIAL_TIMEOUT);</div>
-<div class="line">    logicAnalyzer.begin(Serial, &amp;capture, MAX_FREQ, MAX_FREQ_THRESHOLD, MAX_CAPTURE_SIZE, pinStart, numberOfPins);</div>
+<div class="line">    logicAnalyzer.begin(Serial, &amp;capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">void loop() {</div>
@@ -122,6 +122,24 @@ Logging</h1>
 <div class="line">Serial1.begin(115200, SERIAL_8N1, 16, 17);</div>
 <div class="line">logicAnalyzer.setLogger(Serial1);</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+Adding Additional Functionality</h1>
+<p>An easy way to extend the functionalty is by adding an event handler. The following acts on a status change event by activating the LED dependent on the actual status:</p>
+<div class="fragment"><div class="line">// Use Event handler to control the LED</div>
+<div class="line">void onEvent(Event event) {</div>
+<div class="line">    if (event == STATUS) {</div>
+<div class="line">        switch (logicAnalyzer.status()) {</div>
+<div class="line">            case ARMED:</div>
+<div class="line">                digitalWrite(LED_BUILTIN, LOW);</div>
+<div class="line">                break;</div>
+<div class="line">            case STOPPED:</div>
+<div class="line">                digitalWrite(LED_BUILTIN, LOW);</div>
+<div class="line">                break;</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>and we can just activate it by calling:</p>
+<div class="fragment"><div class="line">logicAnalyzer.setEventHandler(&amp;onEvent);</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Custom Capturing</h1>
 <p>I am providing a default implementation for the capturing with the <a href="https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html">Capture</a> class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:</p>
 <div class="fragment"><div class="line">class YourFastCapture : public AbstractCapture {</div>
@@ -135,7 +153,7 @@ Custom Capturing</h1>
 <div class="line">            /// your implementation</div>
 <div class="line">        }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Connecting to Pulseview</h1>
 <ul>
 <li>Start the Arduino __"logic-analyzer"__ Sketch</li>
@@ -148,11 +166,11 @@ Connecting to Pulseview</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Installation</h1>
 <p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/logic-analyzer.git</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
 Supported Boards</h1>
 <p>I have tested the functionality with the following processors:</p>
 <table class="markdownTable">
@@ -168,7 +186,7 @@ Supported Boards</h1>
 <td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone">2203225   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8   </td></tr>
 </table>
 <p>Please note, that SUMP currently supports only max 65535 samples.</p>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Summary</h1>
 <p>The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort!</p>
 <p>Please check out the <a href="https://github.com/pschatzmann/logic-analyzer/tree/main/examples">examples directory</a> for some dedicated implementations. And if you come up with your own implementation, please share it with the community... </p>
