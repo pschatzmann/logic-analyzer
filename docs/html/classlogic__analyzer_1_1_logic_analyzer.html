@@ -90,14 +90,16 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab9edc2b4f038ffc2bd21d7a0e26ca41b">~LogicAnalyzer</a> ()</td></tr>
 <tr class="memdesc:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:ab9edc2b4f038ffc2bd21d7a0e26ca41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec0a2bd30c51cd188a8782e1748ead4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#adec0a2bd30c51cd188a8782e1748ead4">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">AbstractCapture</a> *<a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a95223e204c4c07e923f383e67045338e">capture</a>, uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t numberOfPins=8, bool setup_pins=false)</td></tr>
+<tr class="memitem:adec0a2bd30c51cd188a8782e1748ead4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#adec0a2bd30c51cd188a8782e1748ead4">begin</a> (Stream &amp;procesingStream, <a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">AbstractCapture</a> *<a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a95223e204c4c07e923f383e67045338e">capture</a>, uint32_t maxCaptureSize, uint8_t pinStart=0, uint8_t <a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">numberOfPins</a>=8, bool setup_pins=false)</td></tr>
 <tr class="memdesc:adec0a2bd30c51cd188a8782e1748ead4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the processing.  <a href="classlogic__analyzer_1_1_logic_analyzer.html#adec0a2bd30c51cd188a8782e1748ead4">More...</a><br /></td></tr>
 <tr class="separator:adec0a2bd30c51cd188a8782e1748ead4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e628f249c56af8136e515136ad9ba4c"><td class="memItemLeft" align="right" valign="top"><a id="a9e628f249c56af8136e515136ad9ba4c"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>startPin</b> ()</td></tr>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">startPin</a> ()</td></tr>
+<tr class="memdesc:a9e628f249c56af8136e515136ad9ba4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the GPIO number of the start pin which is used for capturing. <br /></td></tr>
 <tr class="separator:a9e628f249c56af8136e515136ad9ba4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a64fd18dba327d7348dac2eacac7721"><td class="memItemLeft" align="right" valign="top"><a id="a8a64fd18dba327d7348dac2eacac7721"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>numberOfPins</b> ()</td></tr>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">numberOfPins</a> ()</td></tr>
+<tr class="memdesc:a8a64fd18dba327d7348dac2eacac7721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the number of subsequent GPIO pins which will be used for capturing. <br /></td></tr>
 <tr class="separator:a8a64fd18dba327d7348dac2eacac7721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23b4860b98b6a511c311123608b66574"><td class="memItemLeft" align="right" valign="top"><a id="a23b4860b98b6a511c311123608b66574"></a>
 Stream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a23b4860b98b6a511c311123608b66574">stream</a> ()</td></tr>
@@ -117,7 +119,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:ae9d11d03e812d939155c745f8e16a0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8ffc9a1687042b7f825b29ebb7332dc"><td class="memItemLeft" align="right" valign="top"><a id="ab8ffc9a1687042b7f825b29ebb7332dc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#ab8ffc9a1687042b7f825b29ebb7332dc">processCommand</a> ()</td></tr>
-<tr class="memdesc:ab8ffc9a1687042b7f825b29ebb7332dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">process the next available command - if any <br /></td></tr>
+<tr class="memdesc:ab8ffc9a1687042b7f825b29ebb7332dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">process the next available command - Call this function from your Arduino loop()! <br /></td></tr>
 <tr class="separator:ab8ffc9a1687042b7f825b29ebb7332dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a524209693c398e7233da92e6e52ae3"><td class="memItemLeft" align="right" valign="top"><a id="a0a524209693c398e7233da92e6e52ae3"></a>
 PinBitArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_logic_analyzer.html#a0a524209693c398e7233da92e6e52ae3">triggerValues</a> ()</td></tr>

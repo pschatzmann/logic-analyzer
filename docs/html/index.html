@@ -74,7 +74,7 @@ $(function() {
 <li><a href="https://github.com/Ebiroll/esp32_sigrok">Ebiroll/esp32_sigrok</a></li>
 </ul>
 <p>Howerver all of them are geared for <b>one specific architecture</b> and therfore are <b>not portable</b>.</p>
-<p>I wanted to come up with a better design and provide a <a href="https://pschatzmann.github.io/logic-analyzer/html/annotated.html">basic C++ Library</a> that implements the <a href="https://www.sump.org/projects/analyzer/protocol/">SUMP protocol</a> and clearly separates the generic functionality from the processor specific in order to support an <b>easy rollout to new architectures</b>: The only common precondition is the Arduino API.</p>
+<p>I wanted to come up with a better design and provide a <a href="https://pschatzmann.github.io/logic-analyzer/html/annotated.html">simple Arduino C++ Library</a> that implements the <a href="https://www.sump.org/projects/analyzer/protocol/">SUMP protocol</a> and clearly separates the generic functionality from the processor specific in order to support an <b>easy rollout to new architectures</b>: The only common precondition is the Arduino API.</p>
 <p>To come up with an basic implementation for a specific board you just need to implement a specific config. I am currently providing implementations for</p>
 <ul>
 <li>AVR Processors</li>
@@ -84,11 +84,9 @@ $(function() {
 </ul>
 <h1><a class="anchor" id="autotoc_md1"></a>
 An Example Processor Configuration File</h1>
-<p>The config file contains the following information:</p>
+<p>The config file must contains the following information:</p>
 <ul>
 <li>Defines for the <b>processor specific (resource) settings</b> (e.g. MAX_CAPTURE_SIZE, SERIAL_SPEED ...)</li>
-<li>Optionally the <b>logger</b></li>
-<li>The <b>setupLogger() method</b> which is used by the sketch (see next chapter)</li>
 <li>A <b>typedef of the PinBitArray</b> which defines the recorded data size</li>
 <li>An implementation of the <b>class PinReader</b> which reads all pins in one shot</li>
 </ul>
@@ -153,7 +151,10 @@ Custom Capturing</h1>
 <div class="line">            /// your implementation</div>
 <div class="line">        }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md6"></a>
+Class Documentation</h1>
+<p>The complete <a href="https://pschatzmann.github.io/logic-analyzer/html/annotated.html">generated class documentation</a> can be found on Github.</p>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Connecting to Pulseview</h1>
 <ul>
 <li>Start the Arduino __"logic-analyzer"__ Sketch</li>
@@ -166,11 +167,11 @@ Connecting to Pulseview</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Installation</h1>
 <p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/logic-analyzer.git</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
 Supported Boards</h1>
 <p>I have tested the functionality with the following processors:</p>
 <table class="markdownTable">
@@ -186,7 +187,7 @@ Supported Boards</h1>
 <td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone">2203225   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8   </td></tr>
 </table>
 <p>Please note, that SUMP currently supports only max 65535 samples.</p>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Summary</h1>
 <p>The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort!</p>
 <p>Please check out the <a href="https://github.com/pschatzmann/logic-analyzer/tree/main/examples">examples directory</a> for some dedicated implementations. And if you come up with your own implementation, please share it with the community... </p>

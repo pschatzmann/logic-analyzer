@@ -22,11 +22,9 @@ To come up with an basic implementation for a specific board you just need to im
 
 # An Example Processor Configuration File
 
-The config file contains the following information: 
+The config file must contains the following information: 
 
 - Defines for the __processor specific (resource) settings__ (e.g. MAX_CAPTURE_SIZE, SERIAL_SPEED ...)
-- Optionally the __logger__
-- The __setupLogger() method__ which is used by the sketch (see next chapter)
 - A __typedef of the PinBitArray__ which defines the recorded data size
 - An implementation of the __class PinReader__ which reads all pins in one shot 
 

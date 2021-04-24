@@ -576,10 +576,12 @@ class LogicAnalyzer {
             log("begin-end");
         }
 
+        /// Provides the GPIO number of the start pin which is used for capturing
         uint16_t startPin() {
             return la_state.pin_start;
         }
 
+        /// Provides the number of subsequent GPIO pins which will be used for capturing
         uint16_t numberOfPins() {
             return la_state.pin_numbers;
         }
@@ -604,7 +606,7 @@ class LogicAnalyzer {
             return *(buffer_ptr);
         }
 
-        /// process the next available command - if any
+        /// process the next available command - Call this function from your Arduino loop()!
         void processCommand(){
             if (hasCommand()){
                 int cmd = command();
