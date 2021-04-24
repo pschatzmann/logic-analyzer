@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['logicanalyzer_32',['LogicAnalyzer',['../classlogic__analyzer_1_1_logic_analyzer.html',1,'logic_analyzer::LogicAnalyzer'],['../classlogic__analyzer_1_1_logic_analyzer.html#ab7a073d7e4da72c284aa0817cdf29934',1,'logic_analyzer::LogicAnalyzer::LogicAnalyzer()']]],
-  ['logicanalyzer_33',['logicAnalyzer',['../classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977',1,'logic_analyzer::AbstractCapture']]],
-  ['logicanalyzerstate_34',['LogicAnalyzerState',['../classlogic__analyzer_1_1_logic_analyzer_state.html',1,'logic_analyzer']]]
+  ['iscontinuouscapture_34',['isContinuousCapture',['../classlogic__analyzer_1_1_logic_analyzer.html#aab071906756a14d9a3aebc61b53d461d',1,'logic_analyzer::LogicAnalyzer']]]
 ];

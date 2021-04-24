@@ -65,28 +65,24 @@ void write(PinBitArray bits) {
     // write 4 bytes
     stream_ptr->write(htonl(bits));
 }
-// writes a buffer of PinBitArray
+// writes a buffer of uint32_t values
 void write(uint32_t *buff, size_t n_samples) {
     stream_ptr->write((const char*)buff, n_samples * sizeof(uint32_t));
 }
 // writes a buffer of PinBitArray
 void write(PinBitArray *buff, size_t n_samples) {
-    if (sizeof(PinBitArray)==sizeof(uint32_t)) {
-        stream_ptr->write((const char*)buff, n_samples * sizeof(uint32_t));
-    } else {
-        // convert to uint32_t
-        uint32_t tmp[DUMP_RECORD_SIZE];
-        int idx = 0;
-        for (int j=0;j<n_samples;j++){
-            tmp[idx++] = buff[j];
-            if (idx==DUMP_RECORD_SIZE){
-                write(tmp, idx);
-                idx = 0;
-            }
-        }
-        if (idx>0){
+    // convert to uint32_t
+    uint32_t tmp[DUMP_RECORD_SIZE];
+    int idx = 0;
+    for (int j=0;j<n_samples;j++){
+        tmp[idx++] = htonl(buff[j]);
+        if (idx==DUMP_RECORD_SIZE){
             write(tmp, idx);
+            idx = 0;
         }
+    }
+    if (idx>0){
+        write(tmp, idx);
     }
 }
 
@@ -223,6 +219,11 @@ class RingBuffer {
             return available_count;
         }
 
+        /// Usualy you must not use this function. However for the RP PIO it is quite usefull to indicated that the buffer has been filled 
+        void setAvailable(size_t avail){
+            available_count = avail;
+        }
+
         /// returns the max buffer size
         size_t size() {
             return size_count;
@@ -322,8 +323,21 @@ class AbstractCapture {
             la_state.setStatus(status);
         }
 
+        /// Starts a test PWM signal on the indicated pin
+        void activateTestSignal(int testPin, float dutyCyclePercent=20.0) {
+            if (testPin>=0){
+                log("Starting PWM test signal");
+                pinMode(testPin, OUTPUT);
+                int value = dutyCyclePercent / 100.0 * 255.0;
+                analogWrite(testPin, value);
+            }
+        }
+
         /// Captures the data and dumps the result
         virtual void capture() = 0;
+
+        /// Used to masure the speed - capture into memory w/o dump!
+        virtual void captureAll() = 0;
 
 
     protected:

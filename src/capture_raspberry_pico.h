@@ -23,8 +23,7 @@ namespace logic_analyzer {
 class PicoCapturePIO : public AbstractCapture {
     public:
         /// Default Constructor
-        PicoCapturePIO(uint32_t maxCaptureFreq) {
-            max_frequecy_value = maxCaptureFreq;
+        PicoCapturePIO() {
         }
 
         /// starts the capturing of the data
@@ -34,6 +33,10 @@ class PicoCapturePIO : public AbstractCapture {
             dump();
             // signal end of processing
             setStatus(STOPPED);
+
+            log("Number of samples: %d", n_samples);
+            log("Time in us: %lu", run_time_us);
+            log("Measured capturing frequency in Hz is %f", frequencyMeasured());
         }
 
         /// cancels the capturing which is ccurrently in progress
@@ -47,16 +50,51 @@ class PicoCapturePIO : public AbstractCapture {
         }
 
         /// Used to test the speed
-        unsigned long testCapture(float divider=1.0f){
-            divider_value = divider;
+        virtual void captureAll(){
             start();
-            dma_channel_wait_for_finish_blocking(dma_chan);
-            return micros() - start_time;
+            waitForResult();
         }
 
-        /// Starts a test PWM signal and pin 1 and pin 2
-        void testPWMSignal() {
-            generate_test = true;
+        /// provides the runtime in microseconds from the capturing start to when the data is available
+        unsigned long runtimeUs(){
+            return run_time_us;
+        }
+
+        /// Provides the measured capturing frequency
+        float frequencyMeasured(){
+            float measured_freq = run_time_us == 0 ? 0 : 1000000.0 * n_samples  / run_time_us;
+            return measured_freq;
+        }
+
+        float maxFrequency() {
+            if (max_frequecy_value<=0.0) {
+                pin_base = logicAnalyzer().startPin();
+                pin_count = logicAnalyzer().numberOfPins();
+                n_samples = logicAnalyzer().readCount();
+                divider_value = 1.0;
+
+                // warm up
+                for (int j=0;j<2;j++){
+                    arm();
+                    dma_channel_wait_for_finish_blocking(dma_chan);
+                }
+
+                // measure
+                int repeat = 10;
+                float freqTotal = 0;
+                for (int j=0;j<repeat;j++){
+                    arm();
+                    dma_channel_wait_for_finish_blocking(dma_chan);
+                    run_time_us = micros() - start_time;
+                    freqTotal += frequencyMeasured();
+                }
+                max_frequecy_value = freqTotal / repeat;
+            }
+            return max_frequecy_value;
+        }
+
+        float divider() {
+            return divider_value;
         }
 
 
@@ -68,20 +106,23 @@ class PicoCapturePIO : public AbstractCapture {
         uint pin_base;
         uint pin_count; 
         uint32_t n_samples;
+        uint32_t n_transfers;
         size_t capture_size_words;
         uint trigger_pin;
         bool trigger_level;
         float divider_value;
         uint64_t frequecy_value;
+        float max_frequecy_value = -1.0;  // in hz
         bool abort = false;
         unsigned long start_time;
-        bool generate_test = false;
-        uint32_t max_frequecy_value;  // in hz
+        unsigned long run_time_us;
+        float test_duty_cycle;
+        int test_pin=-1;
 
         /// starts the processing
         void start() {
             // if we are well above the limit we do not capture at all
-            if (logicAnalyzer().captureFrequency() > (1.5 * max_frequecy_value)){
+            if (logicAnalyzer().captureFrequency() > (1.5 * maxFrequency())){
                 setStatus(STOPPED);
                 // Send some dummy data to stop pulseview
                 write(0);
@@ -94,35 +135,16 @@ class PicoCapturePIO : public AbstractCapture {
             pin_base = logicAnalyzer().startPin();
             pin_count = logicAnalyzer().numberOfPins();
             n_samples = logicAnalyzer().readCount();
-            divider_value = divider(logicAnalyzer().captureFrequency());
+            divider_value = calculateDivider(logicAnalyzer().captureFrequency());
 
-            if (generate_test) setupTestSignal();
             arm();
         }
 
-        /// generate pwm test signal
-        void setupTestSignal() {
-            log("Starting PWM test signal");
-            gpio_set_function(pin_base, GPIO_FUNC_PWM);
-            gpio_set_function(pin_base + 1, GPIO_FUNC_PWM);
-            // Topmost value of 3: count from 0 to 3 and then wrap, so period is 4 cycles
-            pwm_hw->slice[0].top = 3;
-            // Divide frequency by two to slow things down a little
-            pwm_hw->slice[0].div = 4 << PWM_CH0_DIV_INT_LSB;
-            // Set channel A to be high for 1 cycle each period (duty cycle 1/4) and
-            // channel B for 3 cycles (duty cycle 3/4)
-            pwm_hw->slice[0].cc =
-                    (1 << PWM_CH0_CC_A_LSB) |
-                    (3 << PWM_CH0_CC_B_LSB);
-            // Enable this PWM slice
-            pwm_hw->slice[0].csr = PWM_CH0_CSR_EN_BITS;
-           
-        }
 
         /// determines the divider value 
-        float divider(uint32_t frequecy_value_hz){
+        float calculateDivider(uint32_t frequecy_value_hz){
             // 1.0 => maxCaptureFrequency()
-            float result = static_cast<float>(max_frequecy_value) / static_cast<float>(frequecy_value_hz);
+            float result = static_cast<float>(maxFrequency()) / static_cast<float>(frequecy_value_hz) ;
             log("divider: %f", result);
             return result < 1.0 ? 1.0 : result;
         }
@@ -140,10 +162,11 @@ class PicoCapturePIO : public AbstractCapture {
             // instruction with a wrap.
             uint16_t capture_prog_instr = pio_encode_in(pio_pins, pin_count);
             struct pio_program capture_prog = {
-                    .instructions = &capture_prog_instr,
-                    .length = 1,
-                    .origin = -1
+                .instructions = &capture_prog_instr,
+                .length = 1,
+                .origin = -1
             };
+
             uint offset = pio_add_program(pio, &capture_prog);
 
             // Configure state machine to loop over this `in` instruction forever,
@@ -155,7 +178,7 @@ class PicoCapturePIO : public AbstractCapture {
             // Note that we may push at a < 32 bit threshold if pin_count does not
             // divide 32. We are using shift-to-right, so the sample data ends up
             // left-justified in the FIFO in this case, with some zeroes at the LSBs.
-            sm_config_set_in_shift(&c, true, true, bit_count());
+            sm_config_set_in_shift(&c, true, true, 32);
             sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);
             pio_sm_init(pio, sm, offset, &c);
 
@@ -173,15 +196,17 @@ class PicoCapturePIO : public AbstractCapture {
             channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_32);
             channel_config_set_dreq(&dma_config, pio_get_dreq(pio, sm, false));
 
+            n_transfers = n_samples /4 * sizeof(PinBitArray);
             dma_channel_configure(dma_chan, &dma_config,
                 logicAnalyzer().buffer().data_ptr(),        // Destination pointer
                 &pio->rxf[sm],      // Source pointer
-                n_samples /4 * sizeof(PinBitArray),          // Number of transfers
+                n_transfers,        // Number of transfers
                 true                // Start immediately
             );
 
             /// TODO proper trigger support
             ///pio_sm_exec(pio, sm, pio_encode_wait_gpio(trigger_level, trigger_pin));
+            run_time_us = 0;
             start_time = micros();
             pio_sm_set_enabled(pio, sm, true);
         }
@@ -206,12 +231,10 @@ class PicoCapturePIO : public AbstractCapture {
             return sizeof(PinBitArray) * 8;
         }
 
-
         /// Dumps the result to PuleView (SUMP software)
         void dump() {
             // wait for result an print it
-            dma_channel_wait_for_finish_blocking(dma_chan);
-
+            waitForResult();
             // process result
             if (!abort){
                 write(logicAnalyzer().buffer().data_ptr(), n_samples);
@@ -219,6 +242,12 @@ class PicoCapturePIO : public AbstractCapture {
                 // unblock pulseview
                 write(0);
             }
+        }
+
+        void waitForResult() {
+            dma_channel_wait_for_finish_blocking(dma_chan);
+            run_time_us = micros() - start_time;
+            logicAnalyzer().buffer().setAvailable(abort ? 0 : n_transfers * 4 / sizeof(PinBitArray));
         }
 
 };
