@@ -105,11 +105,12 @@ class PicoCapturePIO : public AbstractCapture {
             AbstractCapture::activateTestSignal(testPin, dutyCyclePercent);
         }
 
-        /// Starts a test PWM signal on the indicated pin with indicated frequency
+        /// Starts a test PWM signal on the indicated pin with indicated frequency and duty cycle
         void activateTestSignal(int testPin, float dutyCyclePercent, float frequency) {
             if (testPin>=0){
                 log("Starting PWM test signal with freq %f and duty %f %", frequency, dutyCyclePercent);
                 if (pwm_ptr!=nullptr){
+                    pwm_ptr->end(testPin);
                     delete pwm_ptr;
                 }
                 pwm_ptr = new PicoPWM(frequency, 100.0);
@@ -229,30 +230,31 @@ class PicoCapturePIO : public AbstractCapture {
 
             /// TODO proper trigger support
             ///pio_sm_exec(pio, sm, pio_encode_wait_gpio(trigger_level, trigger_pin));
+
             run_time_us = 0;
             start_time = micros();
             pio_sm_set_enabled(pio, sm, true);
         }
 
-        /// Determines the dma channel tranfer size
-        dma_channel_transfer_size transferSize(int bytes) {
-            switch(bytes){
-                case 1:
-                    return DMA_SIZE_8;
-                case 2:
-                    return DMA_SIZE_16;
-                case 4:
-                    return DMA_SIZE_32;
-                default:
-                    return DMA_SIZE_32;
-            }
-        }
+        // /// Determines the dma channel tranfer size
+        // dma_channel_transfer_size transferSize(int bytes) {
+        //     switch(bytes){
+        //         case 1:
+        //             return DMA_SIZE_8;
+        //         case 2:
+        //             return DMA_SIZE_16;
+        //         case 4:
+        //             return DMA_SIZE_32;
+        //         default:
+        //             return DMA_SIZE_32;
+        //     }
+        // }
 
 
-        /// determines the number of bits 
-        uint bit_count() {
-            return sizeof(PinBitArray) * 8;
-        }
+        // /// determines the number of bits 
+        // uint bit_count() {
+        //     return sizeof(PinBitArray) * 8;
+        // }
 
         /// Dumps the result to PuleView (SUMP software)
         void dump() {
@@ -263,7 +265,7 @@ class PicoCapturePIO : public AbstractCapture {
             if (!abort){
                 size_t count = logicAnalyzer().available();
                 write(logicAnalyzer().buffer().data_ptr(), count);
-                log("dump() - ended with %ul records", count);
+                log("dump() - ended with %u records", count);
             } else {
                 // unblock pulseview
                 write(0);
@@ -273,9 +275,12 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// Wait for result and update run_time_us and buffer available
         void waitForResult() {
+            log("waitForResult()");
             dma_channel_wait_for_finish_blocking(dma_chan);
             run_time_us = micros() - start_time;
-            logicAnalyzer().buffer().setAvailable(abort ? 0 : n_transfers * 4 / sizeof(PinBitArray));
+            size_t record_count = n_transfers * 4 / sizeof(PinBitArray);
+            logicAnalyzer().buffer().setAvailable(abort ? 0 : record_count);
+            log("waitForResult() -> result available with %u records",record_count);
         }
 
 };

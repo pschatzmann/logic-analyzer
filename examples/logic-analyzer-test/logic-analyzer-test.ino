@@ -10,12 +10,10 @@
 #include "logic_analyzer.h"
 #include "capture_raspberry_pico.h"
 
-
 #define REGULAR_TEST
 #ifdef ARDUINO_ARCH_RP2040
 #define TEST_PIO
 #endif
-
 
 using namespace logic_analyzer;  
 
@@ -83,9 +81,9 @@ float dutyCycle(LogicAnalyzer &logicAnalyzer, PinBitArray pinFilter) {
     logic_analyzer::RingBuffer *rb = &logicAnalyzer.buffer();
     while(rb->available()){
         PinBitArray ba = rb->read();
-        Serial.print(ba, BIN);
-        Serial.print(" ");
-        if (ba & pinFilter > 0){
+        //Serial.print(ba, BIN);
+        //Serial.print(" ");
+        if (ba & pinFilter != 0){
             count++;
         }
     }
@@ -181,7 +179,7 @@ float testFrequencyPIO(LogicAnalyzer &logicAnalyzer, PicoCapturePIO &capture_to_
     Serial.print(" hz / divider: ");
     Serial.print(capture_to_test.divider());
     Serial.print(" / duty cycle: ");
-    float duty = dutyCycle(logicAnalyzer,0b00000010); 
+    float duty = dutyCycle(logicAnalyzer, 0b100); 
     Serial.print(duty);
     float diff = abs(duty_cycle_percent - duty); 
     printOK(diff<3.0);
@@ -192,7 +190,6 @@ float testFrequencyPIO(LogicAnalyzer &logicAnalyzer, PicoCapturePIO &capture_to_
 // All tests for the Raspberry PI PIO
 void testAllPIO() {
     logicAnalyzer.begin(Serial, &capturePIO, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
-    capturePIO.activateTestSignal(logicAnalyzer.startPin()+1, duty_cycle_percent, 1000000.0 );
 
     testBufferSize(logicAnalyzer);
 
@@ -201,17 +198,9 @@ void testAllPIO() {
     Serial.println(capturePIO.maxFrequency());
     printLine();    
 
-    Serial.println("Repeat at 20'000'000 hz");
-    float total = 0;
-    for (int j=0; j<10; j++){
-        total += testFrequencyPIO(logicAnalyzer, capturePIO, 20000000);
-    }
-    Serial.print("=> avg duty cycle: ");
-    Serial.println(total/10.0);
-
-    printLine();    
-
     for(auto &f : frequencies){
+        capturePIO.activateTestSignal(logicAnalyzer.startPin()+2, duty_cycle_percent, f / 2.0);
+        delay(200);
         testFrequencyPIO(logicAnalyzer, capturePIO, f);
     }
 
@@ -220,31 +209,23 @@ void testAllPIO() {
 
 #endif    
 
-
-
 void setup() {
     Serial.begin(115200);  
-    Logger.begin(Serial, PicoLogger::Debug);
-    logicAnalyzer.setLogger(Serial);
+    //Logger.begin(Serial, PicoLogger::Debug);
+    //logicAnalyzer.setLogger(Serial);
+
     // wait for Serial to be ready
     while(!Serial);
     Serial.setTimeout(SERIAL_TIMEOUT);
     Serial.println("setup");
 
 #ifdef REGULAR_TEST
-    //testAll();
+    testAll();
 #endif
 
 #ifdef TEST_PIO
-    //testAllPIO();
+    testAllPIO();
 #endif    
-
-
-    logicAnalyzer.begin(Serial, &capturePIO, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
-    capturePIO.activateTestSignal(logicAnalyzer.startPin()+1, duty_cycle_percent, 10000000.0 );
-    delay(500);
-    testFrequencyPIO(logicAnalyzer, capturePIO, 2000000);
-
 
 }
 
