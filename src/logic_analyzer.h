@@ -18,7 +18,7 @@
 
 // Max size of buffered print
 #ifndef DUMP_RECORD_SIZE
-#define DUMP_RECORD_SIZE 1024
+#define DUMP_RECORD_SIZE 1024*5
 #endif
 
 // Supported Commands
@@ -96,6 +96,7 @@ inline void log(const char* fmt, ...) {
         vsnprintf(serial_printf_buffer,LOG_BUFFER_SIZE, fmt, args);
         logger_ptr->println(serial_printf_buffer);
         va_end(args);
+        logger_ptr->flush();
     }
 }
 
@@ -274,8 +275,8 @@ class LogicAnalyzerState {
         int delay_count = 0;
         int pin_start = 0;
         int pin_numbers = 0;
-        uint32_t frequecy_value;  // in hz
-        uint32_t delay_time_us;
+        uint64_t frequecy_value;  // in hz
+        uint64_t delay_time_us;
         PinBitArray trigger_mask = 0;
         PinBitArray trigger_values = 0;
         Sump4ByteComandArg cmd4;
@@ -319,14 +320,14 @@ class AbstractCapture {
         }
 
         /// Sets the status
-        void setStatus(Status status){
+        virtual void setStatus(Status status){
             la_state.setStatus(status);
         }
 
         /// Starts a test PWM signal on the indicated pin
-        void activateTestSignal(int testPin, float dutyCyclePercent=20.0) {
+        virtual void activateTestSignal(int testPin, float dutyCyclePercent) {
             if (testPin>=0){
-                log("Starting PWM test signal");
+                log("Starting PWM test signal with duty %f %", dutyCyclePercent);
                 pinMode(testPin, OUTPUT);
                 int value = dutyCyclePercent / 100.0 * 255.0;
                 analogWrite(testPin, value);
@@ -357,7 +358,7 @@ class AbstractCapture {
 class Capture : public AbstractCapture {
     public:
         /// Default Constructor
-        Capture(uint32_t maxCaptureFreq, uint32_t maxCaptureFreqThreshold  ) : AbstractCapture(){
+        Capture(uint64_t maxCaptureFreq, uint64_t maxCaptureFreqThreshold  ) : AbstractCapture(){
             max_frequecy_value = maxCaptureFreq;
             max_frequecy_threshold = maxCaptureFreqThreshold;
         }
@@ -441,8 +442,8 @@ class Capture : public AbstractCapture {
 
 
     protected:
-        uint32_t max_frequecy_value;  // in hz
-        uint32_t max_frequecy_threshold;  // in hz
+        uint64_t max_frequecy_value;  // in hz
+        uint64_t max_frequecy_threshold;  // in hz
 
         /// starts the capturing of the data
         void capture(bool is_max_speed) {
@@ -558,6 +559,7 @@ class LogicAnalyzer {
             stream_ptr = &procesingStream;
             this->capture_ptr = capture;
 
+            la_state.max_capture_size = maxCaptureSize;
             la_state.read_count = maxCaptureSize;
             la_state.delay_count = maxCaptureSize;
             la_state.pin_start = pinStart;
@@ -688,7 +690,7 @@ class LogicAnalyzer {
         void setCaptureFrequency(uint64_t value){
             la_state.frequecy_value = value;
             log("--> setCaptureFrequency: %lu", la_state.frequecy_value);
-            la_state.delay_time_us = (1000000.0 / value ) - 1;
+            la_state.delay_time_us = (1000000.0 / value );
             log("--> delay_time_us: %lu", la_state.delay_time_us);
             raiseEvent(CAPTURE_FREQUNCY);
         }

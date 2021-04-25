@@ -141,16 +141,17 @@ git clone pschatzmann/logic-analyzer.git
 
 # Supported Boards
 
-I have tested the functionality with the following processors:
 
-|Processor               | Max Freq  | Max Samples | Pins |
-|------------------------|-----------|-------------|------|
-|ESP32                   |   2940052 |      100000 |    8 |
-|ESP8266                 |   1038680 |       50000 |    4 |
-|AVR Processors (Nano)   |    109170 |         500 |    8 |
-|Raspberry Pico          |   2203225 |      100000 |    8 |
+| Processor               | Max Freq  | Max Samples | Pins | GPIO      |
+|-------------------------|-----------|-------------|------|-----------|
+| ESP32                   |   2940052 |       65535 |   8  | GPIO19-26 |
+| ESP8266                 |   1038680 |       50000 |   4  | GPIO12-15 |
+| AVR Processors (Nano)   |    109170 |         500 |   8  | GPIO0-7   |
+| Raspberry Pico          |   2508420 |       65535 |   8  | GPIO6-13  |
+| Raspberry Pico - PIO    | 125000000 |       65535 |   8  | GPIO6-13  |
 
-Please note, that SUMP currently supports only max 65535 samples.
+
+Please note, that SUMP supports only max 65535 samples.
 
 
 # Summary

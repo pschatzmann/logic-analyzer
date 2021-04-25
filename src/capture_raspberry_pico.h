@@ -10,6 +10,7 @@
 
 // Some logic to analyse:
 #include "logic_analyzer.h"
+#include "PicoPWM.h"
 
 namespace logic_analyzer {
 
@@ -28,7 +29,7 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// starts the capturing of the data
         virtual void capture(){
-            log("capture");
+            log("capture()");
             start();
             dump();
             // signal end of processing
@@ -41,7 +42,7 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// cancels the capturing which is ccurrently in progress
         void cancel() {
-            log("cancel");
+            log("cancel()");
             if (!abort){
                 abort = true;
                 pio_sm_set_enabled(pio,  sm,  false);
@@ -51,6 +52,7 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// Used to test the speed
         virtual void captureAll(){
+            log("captureAll()");
             start();
             waitForResult();
         }
@@ -66,7 +68,8 @@ class PicoCapturePIO : public AbstractCapture {
             return measured_freq;
         }
 
-        float maxFrequency() {
+        float maxFrequency(int warmup=1, int repeat=2) {
+            log("determine maxFrequency");
             if (max_frequecy_value<=0.0) {
                 pin_base = logicAnalyzer().startPin();
                 pin_count = logicAnalyzer().numberOfPins();
@@ -74,13 +77,12 @@ class PicoCapturePIO : public AbstractCapture {
                 divider_value = 1.0;
 
                 // warm up
-                for (int j=0;j<2;j++){
+                for (int j=0;j<warmup;j++){
                     arm();
                     dma_channel_wait_for_finish_blocking(dma_chan);
                 }
 
                 // measure
-                int repeat = 10;
                 float freqTotal = 0;
                 for (int j=0;j<repeat;j++){
                     arm();
@@ -89,6 +91,7 @@ class PicoCapturePIO : public AbstractCapture {
                     freqTotal += frequencyMeasured();
                 }
                 max_frequecy_value = freqTotal / repeat;
+                log("maxFrequency: %f", max_frequecy_value);
             }
             return max_frequecy_value;
         }
@@ -97,8 +100,25 @@ class PicoCapturePIO : public AbstractCapture {
             return divider_value;
         }
 
+        /// Starts a test PWM signal on the indicated pin 
+        void activateTestSignal(int testPin, float dutyCyclePercent) {
+            AbstractCapture::activateTestSignal(testPin, dutyCyclePercent);
+        }
+
+        /// Starts a test PWM signal on the indicated pin with indicated frequency
+        void activateTestSignal(int testPin, float dutyCyclePercent, float frequency) {
+            if (testPin>=0){
+                log("Starting PWM test signal with freq %f and duty %f %", frequency, dutyCyclePercent);
+                if (pwm_ptr!=nullptr){
+                    delete pwm_ptr;
+                }
+                pwm_ptr = new PicoPWM(frequency, 100.0);
+                pwm_ptr->begin(testPin, dutyCyclePercent);
+            }
+        }
 
     protected:
+        PicoPWM *pwm_ptr;
         PIO pio = pio0;
         uint sm = 0;
         uint dma_chan = 0;
@@ -121,6 +141,7 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// starts the processing
         void start() {
+            log("start()");
             // if we are well above the limit we do not capture at all
             if (logicAnalyzer().captureFrequency() > (1.5 * maxFrequency())){
                 setStatus(STOPPED);
@@ -151,7 +172,9 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// intitialize the PIO
         void arm() {
-            log("Init trigger");
+            log("arm()");
+
+            log("- Init trigger");
 
             // Grant high bus priority to the DMA, so it can shove the processors out
             // of the way. This should only be needed if you are pushing things up to
@@ -183,7 +206,7 @@ class PicoCapturePIO : public AbstractCapture {
             pio_sm_init(pio, sm, offset, &c);
 
             /// arms the logic analyzer
-            log("Arming trigger");
+            log("- Arming trigger");
             pio_sm_set_enabled(pio, sm, false);
             // Need to clear _input shift counter_, as well as FIFO, because there may be
             // partial ISR contents left over from a previous run. sm_restart does this.
@@ -233,17 +256,22 @@ class PicoCapturePIO : public AbstractCapture {
 
         /// Dumps the result to PuleView (SUMP software)
         void dump() {
+            log("dump()");
             // wait for result an print it
             waitForResult();
             // process result
             if (!abort){
-                write(logicAnalyzer().buffer().data_ptr(), n_samples);
+                size_t count = logicAnalyzer().available();
+                write(logicAnalyzer().buffer().data_ptr(), count);
+                log("dump() - ended with %ul records", count);
             } else {
                 // unblock pulseview
                 write(0);
+                log("dump() - aborted");
             }
         }
 
+        /// Wait for result and update run_time_us and buffer available
         void waitForResult() {
             dma_channel_wait_for_finish_blocking(dma_chan);
             run_time_us = micros() - start_time;

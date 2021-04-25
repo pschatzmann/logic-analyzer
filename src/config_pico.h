@@ -13,13 +13,12 @@
 #include <stdarg.h>     /* va_list, va_start, va_arg, va_end */
 
 // processor specific settings
-#define MAX_CAPTURE_SIZE 65535  // Max number supported by SUMP
+#define MAX_CAPTURE_SIZE 65535  
 #define SERIAL_SPEED 921600
 #define SERIAL_TIMEOUT 50
 #define MAX_FREQ 2203225
-#define MAX_FREQ_PIO 187779376.00
 #define MAX_FREQ_THRESHOLD 661400
-#define START_PIN 4
+#define START_PIN 6
 #define PIN_COUNT sizeof(PinBitArray)*8
 #define DESCRIPTION "Arduino-Pico"
 

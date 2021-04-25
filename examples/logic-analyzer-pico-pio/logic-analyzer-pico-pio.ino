@@ -8,7 +8,7 @@
 
 #include "Arduino.h"
 #include "capture_raspberry_pico.h"
-
+#include "SoftwareSerial.h"
 using namespace logic_analyzer;  
 
 int pinStart=START_PIN;
@@ -32,17 +32,19 @@ void onEvent(Event event) {
 }
 
 void setup() {
-    Serial1.begin(115200);
+    Serial2.begin(115200);
+    logicAnalyzer.setLogger(Serial2);
+    //Logger.begin(Serial2,PicoLogger::Debug);
+
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
             pinMode(LED_BUILTIN, OUTPUT);
 
-    logicAnalyzer.setLogger(Serial1);
+    capture.activateTestSignal(pinStart, 90.0);
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);
 
     logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
-    capture.activateTestSignal(pinStart, 10.0);
 }
 
 void loop() {
