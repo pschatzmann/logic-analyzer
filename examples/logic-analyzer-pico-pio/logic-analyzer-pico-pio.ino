@@ -38,6 +38,7 @@ void activateTestSignal(int testPin, float dutyCyclePercent) {
     analogWrite(testPin, value);
 }
 
+/// Arduino setup
 void setup() {
     //Serial2.begin(115200);
     //logicAnalyzer.setLogger(Serial2);
@@ -54,6 +55,7 @@ void setup() {
     logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);
 }
 
+/// Arduino loop: repeated processing
 void loop() {
     if (Serial) logicAnalyzer.processCommand();
 }
