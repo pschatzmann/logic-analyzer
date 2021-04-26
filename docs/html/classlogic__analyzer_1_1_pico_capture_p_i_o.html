@@ -115,9 +115,9 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">frequencyMeasured</a> ()</td></tr>
 <tr class="memdesc:a89ce19b83dbb0661656d7c93a872b56d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the measured capturing frequency. <br /></td></tr>
 <tr class="separator:a89ce19b83dbb0661656d7c93a872b56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a299efa6099cb3c77f8fd9d1083e3374a"><td class="memItemLeft" align="right" valign="top"><a id="a299efa6099cb3c77f8fd9d1083e3374a"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>maxFrequency</b> ()</td></tr>
-<tr class="separator:a299efa6099cb3c77f8fd9d1083e3374a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a433932d3b6dfdff0c58127f261a9839b"><td class="memItemLeft" align="right" valign="top"><a id="a433932d3b6dfdff0c58127f261a9839b"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>maxFrequency</b> (int warmup=1, int repeat=2)</td></tr>
+<tr class="separator:a433932d3b6dfdff0c58127f261a9839b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cd58a7563223e22e250d0656f507537"><td class="memItemLeft" align="right" valign="top"><a id="a1cd58a7563223e22e250d0656f507537"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>divider</b> ()</td></tr>
 <tr class="separator:a1cd58a7563223e22e250d0656f507537"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,14 +138,10 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>divider</b> ()</td><
 virtual <a class="el" href="classlogic__analyzer_1_1_pin_reader.html">PinReader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_abstract_capture.html#aaabcbc8d03111d9d133d5373405048c8">pinReader</a> ()</td></tr>
 <tr class="memdesc:aaabcbc8d03111d9d133d5373405048c8 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides access to the <a class="el" href="classlogic__analyzer_1_1_pin_reader.html" title="AVR specific implementation Logic for the PinReader.">PinReader</a>. <br /></td></tr>
 <tr class="separator:aaabcbc8d03111d9d133d5373405048c8 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27eb69aa0808032d888b7a943a0210a2 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memItemLeft" align="right" valign="top"><a id="a27eb69aa0808032d888b7a943a0210a2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_abstract_capture.html#a27eb69aa0808032d888b7a943a0210a2">setStatus</a> (Status status)</td></tr>
-<tr class="memdesc:a27eb69aa0808032d888b7a943a0210a2 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the status. <br /></td></tr>
-<tr class="separator:a27eb69aa0808032d888b7a943a0210a2 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad32edbf2d648eb702994ba1611bcf6aa inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memItemLeft" align="right" valign="top"><a id="ad32edbf2d648eb702994ba1611bcf6aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_abstract_capture.html#ad32edbf2d648eb702994ba1611bcf6aa">activateTestSignal</a> (int testPin, float dutyCyclePercent=20.0)</td></tr>
-<tr class="memdesc:ad32edbf2d648eb702994ba1611bcf6aa inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a test PWM signal on the indicated pin. <br /></td></tr>
-<tr class="separator:ad32edbf2d648eb702994ba1611bcf6aa inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa98d3668d98fc6d2a182824c1d76a317 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memItemLeft" align="right" valign="top"><a id="aa98d3668d98fc6d2a182824c1d76a317"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_abstract_capture.html#aa98d3668d98fc6d2a182824c1d76a317">setStatus</a> (Status status)</td></tr>
+<tr class="memdesc:aa98d3668d98fc6d2a182824c1d76a317 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the status. <br /></td></tr>
+<tr class="separator:aa98d3668d98fc6d2a182824c1d76a317 inherit pub_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -160,20 +156,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="memitem:a05d158a0e4e913c598ad93158ef5fa9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a> ()</td></tr>
 <tr class="memdesc:a05d158a0e4e913c598ad93158ef5fa9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">intitialize the PIO  <a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">More...</a><br /></td></tr>
 <tr class="separator:a05d158a0e4e913c598ad93158ef5fa9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3323d397fbd77cd1b792082722df88ae"><td class="memItemLeft" align="right" valign="top"><a id="a3323d397fbd77cd1b792082722df88ae"></a>
-dma_channel_transfer_size&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a3323d397fbd77cd1b792082722df88ae">transferSize</a> (int bytes)</td></tr>
-<tr class="memdesc:a3323d397fbd77cd1b792082722df88ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the dma channel tranfer size. <br /></td></tr>
-<tr class="separator:a3323d397fbd77cd1b792082722df88ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4573eaf1c064a5f52b92eedf0d37579d"><td class="memItemLeft" align="right" valign="top"><a id="a4573eaf1c064a5f52b92eedf0d37579d"></a>
-uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a4573eaf1c064a5f52b92eedf0d37579d">bit_count</a> ()</td></tr>
-<tr class="memdesc:a4573eaf1c064a5f52b92eedf0d37579d"><td class="mdescLeft">&#160;</td><td class="mdescRight">determines the number of bits <br /></td></tr>
-<tr class="separator:a4573eaf1c064a5f52b92eedf0d37579d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6631e89bdba4bedb7e1c5b04b7e5ffb5"><td class="memItemLeft" align="right" valign="top"><a id="a6631e89bdba4bedb7e1c5b04b7e5ffb5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">dump</a> ()</td></tr>
 <tr class="memdesc:a6631e89bdba4bedb7e1c5b04b7e5ffb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dumps the result to PuleView (SUMP software) <br /></td></tr>
 <tr class="separator:a6631e89bdba4bedb7e1c5b04b7e5ffb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd0e99e6130a4390daf2c4c73f014f68"><td class="memItemLeft" align="right" valign="top"><a id="acd0e99e6130a4390daf2c4c73f014f68"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>waitForResult</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#acd0e99e6130a4390daf2c4c73f014f68">waitForResult</a> ()</td></tr>
+<tr class="memdesc:acd0e99e6130a4390daf2c4c73f014f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for result and update run_time_us and buffer available. <br /></td></tr>
 <tr class="separator:acd0e99e6130a4390daf2c4c73f014f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classlogic__analyzer_1_1_abstract_capture"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classlogic__analyzer_1_1_abstract_capture')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classlogic__analyzer_1_1_abstract_capture.html">logic_analyzer::AbstractCapture</a></td></tr>
 <tr class="memitem:aa9a3cd13ef9cbacc7122308af0336ba2 inherit pro_methods_classlogic__analyzer_1_1_abstract_capture"><td class="memItemLeft" align="right" valign="top"><a id="aa9a3cd13ef9cbacc7122308af0336ba2"></a>

@@ -31,6 +31,14 @@ void onEvent(Event event) {
     }
 }
 
+/// Generates a test PWM signal
+void activateTestSignal(int testPin, float dutyCyclePercent) {
+    log("Starting PWM test signal with duty %f %", dutyCyclePercent);
+    pinMode(testPin, OUTPUT);
+    int value = dutyCyclePercent / 100.0 * 255.0;
+    analogWrite(testPin, value);
+}
+
 void setup() {
     Serial2.begin(115200);
     logicAnalyzer.setLogger(Serial2);
@@ -40,7 +48,7 @@ void setup() {
     Serial.setTimeout(SERIAL_TIMEOUT);
             pinMode(LED_BUILTIN, OUTPUT);
 
-    capture.activateTestSignal(pinStart, 90.0);
+    activateTestSignal(pinStart, 90.0);
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);
 

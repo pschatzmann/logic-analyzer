@@ -173,20 +173,21 @@ Installation</h1>
 <div class="line">git clone pschatzmann/logic-analyzer.git</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
 Supported Boards</h1>
-<p>I have tested the functionality with the following processors:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Processor   </th><th class="markdownTableHeadNone">Max Freq   </th><th class="markdownTableHeadNone">Max Samples   </th><th class="markdownTableHeadNone">Pins    </th></tr>
+<th class="markdownTableHeadNone">Processor   </th><th class="markdownTableHeadNone">Max Freq   </th><th class="markdownTableHeadNone">Max Samples   </th><th class="markdownTableHeadNone">Pins   </th><th class="markdownTableHeadNone">GPIO    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">ESP32   </td><td class="markdownTableBodyNone">2940052   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8    </td></tr>
+<td class="markdownTableBodyNone">ESP32   </td><td class="markdownTableBodyNone">2940052   </td><td class="markdownTableBodyNone">65535   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">GPIO19-26    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">ESP8266   </td><td class="markdownTableBodyNone">1038680   </td><td class="markdownTableBodyNone">50000   </td><td class="markdownTableBodyNone">4    </td></tr>
+<td class="markdownTableBodyNone">ESP8266   </td><td class="markdownTableBodyNone">1038680   </td><td class="markdownTableBodyNone">50000   </td><td class="markdownTableBodyNone">4   </td><td class="markdownTableBodyNone">GPIO12-15    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">AVR Processors (Nano)   </td><td class="markdownTableBodyNone">109170   </td><td class="markdownTableBodyNone">500   </td><td class="markdownTableBodyNone">8    </td></tr>
+<td class="markdownTableBodyNone">AVR Processors (Nano)   </td><td class="markdownTableBodyNone">109170   </td><td class="markdownTableBodyNone">500   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">GPIO0-7    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone">2203225   </td><td class="markdownTableBodyNone">100000   </td><td class="markdownTableBodyNone">8   </td></tr>
+<td class="markdownTableBodyNone">Raspberry Pico   </td><td class="markdownTableBodyNone">2508420   </td><td class="markdownTableBodyNone">65535   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">GPIO6-13    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Raspberry Pico - PIO   </td><td class="markdownTableBodyNone">125000000   </td><td class="markdownTableBodyNone">65535   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">GPIO6-13   </td></tr>
 </table>
-<p>Please note, that SUMP currently supports only max 65535 samples.</p>
+<p>Please note, that SUMP supports only max 65535 samples.</p>
 <h1><a class="anchor" id="autotoc_md10"></a>
 Summary</h1>
 <p>The basic implementation is only using a single core. While capturing is in process we do not support any cancellation triggered from Pulseview. In order to support this, we would just need to extend the functionality in a specific sketch to run the capturing on one core and the command handling on the second core. And this is exactly the purpose of this library: to be able to build a custom optimized logic analyzer implementation with minimal effort!</p>

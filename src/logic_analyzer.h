@@ -324,16 +324,6 @@ class AbstractCapture {
             la_state.setStatus(status);
         }
 
-        /// Starts a test PWM signal on the indicated pin
-        virtual void activateTestSignal(int testPin, float dutyCyclePercent) {
-            if (testPin>=0){
-                log("Starting PWM test signal with duty %f %", dutyCyclePercent);
-                pinMode(testPin, OUTPUT);
-                int value = dutyCyclePercent / 100.0 * 255.0;
-                analogWrite(testPin, value);
-            }
-        }
-
         /// Captures the data and dumps the result
         virtual void capture() = 0;
 

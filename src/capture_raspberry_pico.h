@@ -10,7 +10,6 @@
 
 // Some logic to analyse:
 #include "logic_analyzer.h"
-#include "PicoPWM.h"
 
 namespace logic_analyzer {
 
@@ -100,26 +99,8 @@ class PicoCapturePIO : public AbstractCapture {
             return divider_value;
         }
 
-        /// Starts a test PWM signal on the indicated pin 
-        void activateTestSignal(int testPin, float dutyCyclePercent) {
-            AbstractCapture::activateTestSignal(testPin, dutyCyclePercent);
-        }
-
-        /// Starts a test PWM signal on the indicated pin with indicated frequency and duty cycle
-        void activateTestSignal(int testPin, float dutyCyclePercent, float frequency) {
-            if (testPin>=0){
-                log("Starting PWM test signal with freq %f and duty %f %", frequency, dutyCyclePercent);
-                if (pwm_ptr!=nullptr){
-                    pwm_ptr->end(testPin);
-                    delete pwm_ptr;
-                }
-                pwm_ptr = new PicoPWM(frequency, 100.0);
-                pwm_ptr->begin(testPin, dutyCyclePercent);
-            }
-        }
 
     protected:
-        PicoPWM *pwm_ptr;
         PIO pio = pio0;
         uint sm = 0;
         uint dma_chan = 0;

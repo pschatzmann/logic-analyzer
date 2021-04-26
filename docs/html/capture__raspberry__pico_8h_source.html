@@ -90,11 +90,11 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a9e6b6cefecf6fe39d1482b454e3659fe">   30</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a9e6b6cefecf6fe39d1482b454e3659fe">capture</a>(){</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            log(<span class="stringliteral">&quot;capture&quot;</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            log(<span class="stringliteral">&quot;capture()&quot;</span>);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">start</a>();</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">dump</a>();</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="comment">// signal end of processing</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a27eb69aa0808032d888b7a943a0210a2">setStatus</a>(STOPPED);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#aa98d3668d98fc6d2a182824c1d76a317">setStatus</a>(STOPPED);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            log(<span class="stringliteral">&quot;Number of samples: %d&quot;</span>, n_samples);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            log(<span class="stringliteral">&quot;Time in us: %lu&quot;</span>, run_time_us);</div>
@@ -102,7 +102,7 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a201e087b2dccae705df715cc3880d03f">   43</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a201e087b2dccae705df715cc3880d03f">cancel</a>() {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            log(<span class="stringliteral">&quot;cancel&quot;</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            log(<span class="stringliteral">&quot;cancel()&quot;</span>);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">if</span> (!abort){</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                abort = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                pio_sm_set_enabled(pio,  sm,  <span class="keyword">false</span>);</div>
@@ -111,220 +111,235 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a0b7b65537527962e483651f4ab0f18be">   53</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a0b7b65537527962e483651f4ab0f18be">captureAll</a>(){</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">start</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            waitForResult();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#ae951f65795d2e579068ec21a9e2353b4">   59</a></span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#ae951f65795d2e579068ec21a9e2353b4">runtimeUs</a>(){</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordflow">return</span> run_time_us;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">   64</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">frequencyMeasured</a>(){</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordtype">float</span> measured_freq = run_time_us == 0 ? 0 : 1000000.0 * n_samples  / run_time_us;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> measured_freq;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">float</span> maxFrequency() {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">if</span> (max_frequecy_value&lt;=0.0) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                pin_base = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">startPin</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                pin_count = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">numberOfPins</a>();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                n_samples = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd">readCount</a>();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                divider_value = 1.0;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                <span class="comment">// warm up</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0;j&lt;2;j++){</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                    <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                    dma_channel_wait_for_finish_blocking(dma_chan);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                <span class="comment">// measure</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordtype">int</span> repeat = 10;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                <span class="keywordtype">float</span> freqTotal = 0;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0;j&lt;repeat;j++){</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                    <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                    dma_channel_wait_for_finish_blocking(dma_chan);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                    run_time_us = micros() - start_time;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                    freqTotal += <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">frequencyMeasured</a>();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                max_frequecy_value = freqTotal / repeat;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">return</span> max_frequecy_value;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">float</span> divider() {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">return</span> divider_value;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        PIO pio = pio0;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        uint sm = 0;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        uint dma_chan = 0;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        uint pin_base;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        uint pin_count; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        uint32_t n_samples;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        uint32_t n_transfers;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordtype">size_t</span> capture_size_words;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        uint trigger_pin;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordtype">bool</span> trigger_level;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordtype">float</span> divider_value;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        uint64_t frequecy_value;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">float</span> max_frequecy_value = -1.0;  <span class="comment">// in hz</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordtype">bool</span> abort = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> start_time;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> run_time_us;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordtype">float</span> test_duty_cycle;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordtype">int</span> test_pin=-1;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">  123</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">start</a>() {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="comment">// if we are well above the limit we do not capture at all</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().captureFrequency() &gt; (1.5 * maxFrequency())){</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a27eb69aa0808032d888b7a943a0210a2">setStatus</a>(STOPPED);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                <span class="comment">// Send some dummy data to stop pulseview</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                write(0);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                log(<span class="stringliteral">&quot;The frequency %u is not supported!&quot;</span>, <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().captureFrequency () );</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <span class="comment">// Get SUMP values </span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            abort = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            pin_base = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">startPin</a>();</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            pin_count = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">numberOfPins</a>();</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            n_samples = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd">readCount</a>();</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            divider_value = <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">calculateDivider</a>(<a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().captureFrequency());</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>();</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            log(<span class="stringliteral">&quot;captureAll()&quot;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">start</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#acd0e99e6130a4390daf2c4c73f014f68">waitForResult</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#ae951f65795d2e579068ec21a9e2353b4">   60</a></span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#ae951f65795d2e579068ec21a9e2353b4">runtimeUs</a>(){</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> run_time_us;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">   65</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">frequencyMeasured</a>(){</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordtype">float</span> measured_freq = run_time_us == 0 ? 0 : 1000000.0 * n_samples  / run_time_us;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">return</span> measured_freq;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">float</span> maxFrequency(<span class="keywordtype">int</span> warmup=1, <span class="keywordtype">int</span> repeat=2) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            log(<span class="stringliteral">&quot;determine maxFrequency&quot;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">if</span> (max_frequecy_value&lt;=0.0) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                pin_base = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">startPin</a>();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                pin_count = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">numberOfPins</a>();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                n_samples = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd">readCount</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                divider_value = 1.0;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="comment">// warm up</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0;j&lt;warmup;j++){</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                    <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    dma_channel_wait_for_finish_blocking(dma_chan);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                <span class="comment">// measure</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="keywordtype">float</span> freqTotal = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0;j&lt;repeat;j++){</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                    <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                    dma_channel_wait_for_finish_blocking(dma_chan);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                    run_time_us = micros() - start_time;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                    freqTotal += <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">frequencyMeasured</a>();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                max_frequecy_value = freqTotal / repeat;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                log(<span class="stringliteral">&quot;maxFrequency: %f&quot;</span>, max_frequecy_value);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keywordflow">return</span> max_frequecy_value;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">float</span> divider() {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> divider_value;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        PIO pio = pio0;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        uint sm = 0;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        uint dma_chan = 0;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        uint pin_base;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        uint pin_count; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        uint32_t n_samples;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        uint32_t n_transfers;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordtype">size_t</span> capture_size_words;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        uint trigger_pin;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordtype">bool</span> trigger_level;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">float</span> divider_value;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        uint64_t frequecy_value;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordtype">float</span> max_frequecy_value = -1.0;  <span class="comment">// in hz</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">bool</span> abort = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> start_time;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> run_time_us;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordtype">float</span> test_duty_cycle;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordtype">int</span> test_pin=-1;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">  125</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">start</a>() {</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            log(<span class="stringliteral">&quot;start()&quot;</span>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="comment">// if we are well above the limit we do not capture at all</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().captureFrequency() &gt; (1.5 * maxFrequency())){</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#aa98d3668d98fc6d2a182824c1d76a317">setStatus</a>(STOPPED);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                <span class="comment">// Send some dummy data to stop pulseview</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                write(0);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                log(<span class="stringliteral">&quot;The frequency %u is not supported!&quot;</span>, <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().captureFrequency () );</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <span class="comment">// Get SUMP values </span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            abort = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            pin_base = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">startPin</a>();</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            pin_count = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">numberOfPins</a>();</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            n_samples = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd">readCount</a>();</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            divider_value = <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">calculateDivider</a>(<a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().captureFrequency());</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">  145</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">calculateDivider</a>(uint32_t frequecy_value_hz){</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="comment">// 1.0 =&gt; maxCaptureFrequency()</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keywordtype">float</span> result = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(maxFrequency()) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(frequecy_value_hz) ;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            log(<span class="stringliteral">&quot;divider: %f&quot;</span>, result);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keywordflow">return</span> result &lt; 1.0 ? 1.0 : result;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        }</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">  153</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>() {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            log(<span class="stringliteral">&quot;Init trigger&quot;</span>);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            <span class="comment">// Grant high bus priority to the DMA, so it can shove the processors out</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="comment">// of the way. This should only be needed if you are pushing things up to</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="comment">// &gt;16bits/clk here, i.e. if you need to saturate the bus completely.</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            bus_ctrl_hw-&gt;priority = BUSCTRL_BUS_PRIORITY_DMA_W_BITS | BUSCTRL_BUS_PRIORITY_DMA_R_BITS;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">  148</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">calculateDivider</a>(uint32_t frequecy_value_hz){</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="comment">// 1.0 =&gt; maxCaptureFrequency()</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordtype">float</span> result = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(maxFrequency()) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(frequecy_value_hz) ;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            log(<span class="stringliteral">&quot;divider: %f&quot;</span>, result);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            <span class="keywordflow">return</span> result &lt; 1.0 ? 1.0 : result;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">  156</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">arm</a>() {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            log(<span class="stringliteral">&quot;arm()&quot;</span>);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            log(<span class="stringliteral">&quot;- Init trigger&quot;</span>);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="comment">// Load a program to capture n pins. This is just a single `in pins, n`</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="comment">// instruction with a wrap.</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            uint16_t capture_prog_instr = pio_encode_in(pio_pins, pin_count);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            <span class="keyword">struct </span>pio_program capture_prog = {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                .instructions = &amp;capture_prog_instr,</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                .length = 1,</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                .origin = -1</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            };</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            uint offset = pio_add_program(pio, &amp;capture_prog);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            <span class="comment">// Configure state machine to loop over this `in` instruction forever,</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            <span class="comment">// with autopush enabled.</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            pio_sm_config c = pio_get_default_sm_config();</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            sm_config_set_in_pins(&amp;c, pin_base);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            sm_config_set_wrap(&amp;c, offset, offset);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            sm_config_set_clkdiv(&amp;c, divider_value);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="comment">// Note that we may push at a &lt; 32 bit threshold if pin_count does not</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="comment">// divide 32. We are using shift-to-right, so the sample data ends up</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="comment">// left-justified in the FIFO in this case, with some zeroes at the LSBs.</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            sm_config_set_in_shift(&amp;c, <span class="keyword">true</span>, <span class="keyword">true</span>, 32);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            sm_config_set_fifo_join(&amp;c, PIO_FIFO_JOIN_RX);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            pio_sm_init(pio, sm, offset, &amp;c);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            log(<span class="stringliteral">&quot;Arming trigger&quot;</span>);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            pio_sm_set_enabled(pio, sm, <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            <span class="comment">// Need to clear _input shift counter_, as well as FIFO, because there may be</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            <span class="comment">// partial ISR contents left over from a previous run. sm_restart does this.</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            pio_sm_clear_fifos(pio, sm);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            pio_sm_restart(pio, sm);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            dma_channel_config dma_config = dma_channel_get_default_config(dma_chan);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            channel_config_set_read_increment(&amp;dma_config, <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            channel_config_set_write_increment(&amp;dma_config, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            channel_config_set_transfer_data_size(&amp;dma_config, DMA_SIZE_32);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            channel_config_set_dreq(&amp;dma_config, pio_get_dreq(pio, sm, <span class="keyword">false</span>));</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            n_transfers = n_samples /4 * <span class="keyword">sizeof</span>(PinBitArray);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            dma_channel_configure(dma_chan, &amp;dma_config,</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().buffer().data_ptr(),        <span class="comment">// Destination pointer</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                &amp;pio-&gt;rxf[sm],      <span class="comment">// Source pointer</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                n_transfers,        <span class="comment">// Number of transfers</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                <span class="keyword">true</span>                <span class="comment">// Start immediately</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            );</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            run_time_us = 0;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            start_time = micros();</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            pio_sm_set_enabled(pio, sm, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        }</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a3323d397fbd77cd1b792082722df88ae">  215</a></span>&#160;        dma_channel_transfer_size <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a3323d397fbd77cd1b792082722df88ae">transferSize</a>(<span class="keywordtype">int</span> bytes) {</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            <span class="keywordflow">switch</span>(bytes){</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                <span class="keywordflow">case</span> 1:</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                    <span class="keywordflow">return</span> DMA_SIZE_8;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                <span class="keywordflow">case</span> 2:</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                    <span class="keywordflow">return</span> DMA_SIZE_16;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                <span class="keywordflow">case</span> 4:</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                    <span class="keywordflow">return</span> DMA_SIZE_32;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                    <span class="keywordflow">return</span> DMA_SIZE_32;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            }</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        }</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a4573eaf1c064a5f52b92eedf0d37579d">  230</a></span>&#160;        uint <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a4573eaf1c064a5f52b92eedf0d37579d">bit_count</a>() {</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(PinBitArray) * 8;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="comment">// Grant high bus priority to the DMA, so it can shove the processors out</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="comment">// of the way. This should only be needed if you are pushing things up to</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="comment">// &gt;16bits/clk here, i.e. if you need to saturate the bus completely.</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            bus_ctrl_hw-&gt;priority = BUSCTRL_BUS_PRIORITY_DMA_W_BITS | BUSCTRL_BUS_PRIORITY_DMA_R_BITS;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="comment">// Load a program to capture n pins. This is just a single `in pins, n`</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            <span class="comment">// instruction with a wrap.</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            uint16_t capture_prog_instr = pio_encode_in(pio_pins, pin_count);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            <span class="keyword">struct </span>pio_program capture_prog = {</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                .instructions = &amp;capture_prog_instr,</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                .length = 1,</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                .origin = -1</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            };</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            uint offset = pio_add_program(pio, &amp;capture_prog);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            <span class="comment">// Configure state machine to loop over this `in` instruction forever,</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="comment">// with autopush enabled.</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            pio_sm_config c = pio_get_default_sm_config();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            sm_config_set_in_pins(&amp;c, pin_base);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            sm_config_set_wrap(&amp;c, offset, offset);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            sm_config_set_clkdiv(&amp;c, divider_value);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="comment">// Note that we may push at a &lt; 32 bit threshold if pin_count does not</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            <span class="comment">// divide 32. We are using shift-to-right, so the sample data ends up</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            <span class="comment">// left-justified in the FIFO in this case, with some zeroes at the LSBs.</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            sm_config_set_in_shift(&amp;c, <span class="keyword">true</span>, <span class="keyword">true</span>, 32);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            sm_config_set_fifo_join(&amp;c, PIO_FIFO_JOIN_RX);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            pio_sm_init(pio, sm, offset, &amp;c);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            log(<span class="stringliteral">&quot;- Arming trigger&quot;</span>);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            pio_sm_set_enabled(pio, sm, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            <span class="comment">// Need to clear _input shift counter_, as well as FIFO, because there may be</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            <span class="comment">// partial ISR contents left over from a previous run. sm_restart does this.</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            pio_sm_clear_fifos(pio, sm);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            pio_sm_restart(pio, sm);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            dma_channel_config dma_config = dma_channel_get_default_config(dma_chan);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            channel_config_set_read_increment(&amp;dma_config, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            channel_config_set_write_increment(&amp;dma_config, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            channel_config_set_transfer_data_size(&amp;dma_config, DMA_SIZE_32);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;            channel_config_set_dreq(&amp;dma_config, pio_get_dreq(pio, sm, <span class="keyword">false</span>));</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            n_transfers = n_samples /4 * <span class="keyword">sizeof</span>(PinBitArray);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            dma_channel_configure(dma_chan, &amp;dma_config,</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().buffer().data_ptr(),        <span class="comment">// Destination pointer</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                &amp;pio-&gt;rxf[sm],      <span class="comment">// Source pointer</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                n_transfers,        <span class="comment">// Number of transfers</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                <span class="keyword">true</span>                <span class="comment">// Start immediately</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            );</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            run_time_us = 0;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            start_time = micros();</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            pio_sm_set_enabled(pio, sm, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        }</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <span class="comment">// /// Determines the dma channel tranfer size</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <span class="comment">// dma_channel_transfer_size transferSize(int bytes) {</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="comment">//     switch(bytes){</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="comment">//         case 1:</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="comment">//             return DMA_SIZE_8;</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="comment">//         case 2:</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="comment">//             return DMA_SIZE_16;</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="comment">//         case 4:</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="comment">//             return DMA_SIZE_32;</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="comment">//         default:</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="comment">//             return DMA_SIZE_32;</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="comment">//     }</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <span class="comment">// }</span></div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">  235</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">dump</a>() {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            <span class="comment">// wait for result an print it</span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            waitForResult();</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            <span class="comment">// process result</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            <span class="keywordflow">if</span> (!abort){</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                write(<a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().buffer().data_ptr(), n_samples);</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                <span class="comment">// unblock pulseview</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                write(0);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            }</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        }</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        <span class="keywordtype">void</span> waitForResult() {</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            dma_channel_wait_for_finish_blocking(dma_chan);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            run_time_us = micros() - start_time;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#ae9d11d03e812d939155c745f8e16a0ee">buffer</a>().<a class="code" href="classlogic__analyzer_1_1_ring_buffer.html#a619bc1d446b7f08103744cd5ef9c49dc">setAvailable</a>(abort ? 0 : n_transfers * 4 / <span class="keyword">sizeof</span>(PinBitArray));</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        }</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;};</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;} <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="comment">// /// determines the number of bits </span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <span class="comment">// uint bit_count() {</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="comment">//     return sizeof(PinBitArray) * 8;</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="comment">// }</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">  241</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">dump</a>() {</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            log(<span class="stringliteral">&quot;dump()&quot;</span>);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            <span class="comment">// wait for result an print it</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#acd0e99e6130a4390daf2c4c73f014f68">waitForResult</a>();</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            <span class="comment">// process result</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            <span class="keywordflow">if</span> (!abort){</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                <span class="keywordtype">size_t</span> count = <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#a16f7537f340b6c71d4c300c7c5ec88f5">available</a>();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                write(<a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().buffer().data_ptr(), count);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                log(<span class="stringliteral">&quot;dump() - ended with %u records&quot;</span>, count);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                <span class="comment">// unblock pulseview</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                write(0);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                log(<span class="stringliteral">&quot;dump() - aborted&quot;</span>);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            }</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        }</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_abstract_capture_html"><div class="ttname"><a href="classlogic__analyzer_1_1_abstract_capture.html">logic_analyzer::AbstractCapture</a></div><div class="ttdoc">Abstract Class for Capturing Logic. Create your own subclass if you want to implement your own optimi...</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:299</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_abstract_capture_html_a27eb69aa0808032d888b7a943a0210a2"><div class="ttname"><a href="classlogic__analyzer_1_1_abstract_capture.html#a27eb69aa0808032d888b7a943a0210a2">logic_analyzer::AbstractCapture::setStatus</a></div><div class="ttdeci">void setStatus(Status status)</div><div class="ttdoc">Sets the status.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:322</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_abstract_capture_html_a6b9186b1923b22ddd8bc14e828617977"><div class="ttname"><a href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logic_analyzer::AbstractCapture::logicAnalyzer</a></div><div class="ttdeci">LogicAnalyzer &amp; logicAnalyzer()</div><div class="ttdoc">Provides access to the LogicAnalyzer.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:312</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_a8a64fd18dba327d7348dac2eacac7721"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">logic_analyzer::LogicAnalyzer::numberOfPins</a></div><div class="ttdeci">uint16_t numberOfPins()</div><div class="ttdoc">Provides the number of subsequent GPIO pins which will be used for capturing.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:599</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_a9e628f249c56af8136e515136ad9ba4c"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">logic_analyzer::LogicAnalyzer::startPin</a></div><div class="ttdeci">uint16_t startPin()</div><div class="ttdoc">Provides the GPIO number of the start pin which is used for capturing.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:594</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_ae9d11d03e812d939155c745f8e16a0ee"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#ae9d11d03e812d939155c745f8e16a0ee">logic_analyzer::LogicAnalyzer::buffer</a></div><div class="ttdeci">RingBuffer &amp; buffer()</div><div class="ttdoc">Provides access to the buffer.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:619</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_af27306b65c65a7bf3e92acf6079ee6cd"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd">logic_analyzer::LogicAnalyzer::readCount</a></div><div class="ttdeci">int readCount()</div><div class="ttdoc">provides the read count</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:657</div></div>
+<div class="line"><a name="l00258"></a><span class="lineno"><a class="line" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#acd0e99e6130a4390daf2c4c73f014f68">  258</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#acd0e99e6130a4390daf2c4c73f014f68">waitForResult</a>() {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            log(<span class="stringliteral">&quot;waitForResult()&quot;</span>);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            dma_channel_wait_for_finish_blocking(dma_chan);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            run_time_us = micros() - start_time;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            <span class="keywordtype">size_t</span> record_count = n_transfers * 4 / <span class="keyword">sizeof</span>(PinBitArray);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            <a class="code" href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logicAnalyzer</a>().<a class="code" href="classlogic__analyzer_1_1_logic_analyzer.html#ae9d11d03e812d939155c745f8e16a0ee">buffer</a>().<a class="code" href="classlogic__analyzer_1_1_ring_buffer.html#a619bc1d446b7f08103744cd5ef9c49dc">setAvailable</a>(abort ? 0 : record_count);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            log(<span class="stringliteral">&quot;waitForResult() -&gt; result available with %u records&quot;</span>,record_count);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        }</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;};</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;} <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_abstract_capture_html"><div class="ttname"><a href="classlogic__analyzer_1_1_abstract_capture.html">logic_analyzer::AbstractCapture</a></div><div class="ttdoc">Abstract Class for Capturing Logic. Create your own subclass if you want to implement your own optimi...</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:300</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_abstract_capture_html_a6b9186b1923b22ddd8bc14e828617977"><div class="ttname"><a href="classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977">logic_analyzer::AbstractCapture::logicAnalyzer</a></div><div class="ttdeci">LogicAnalyzer &amp; logicAnalyzer()</div><div class="ttdoc">Provides access to the LogicAnalyzer.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:313</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_abstract_capture_html_aa98d3668d98fc6d2a182824c1d76a317"><div class="ttname"><a href="classlogic__analyzer_1_1_abstract_capture.html#aa98d3668d98fc6d2a182824c1d76a317">logic_analyzer::AbstractCapture::setStatus</a></div><div class="ttdeci">virtual void setStatus(Status status)</div><div class="ttdoc">Sets the status.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:323</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_a16f7537f340b6c71d4c300c7c5ec88f5"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#a16f7537f340b6c71d4c300c7c5ec88f5">logic_analyzer::LogicAnalyzer::available</a></div><div class="ttdeci">size_t available()</div><div class="ttdoc">returns the avialable buffer entries</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:719</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_a8a64fd18dba327d7348dac2eacac7721"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#a8a64fd18dba327d7348dac2eacac7721">logic_analyzer::LogicAnalyzer::numberOfPins</a></div><div class="ttdeci">uint16_t numberOfPins()</div><div class="ttdoc">Provides the number of subsequent GPIO pins which will be used for capturing.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:591</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_a9e628f249c56af8136e515136ad9ba4c"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#a9e628f249c56af8136e515136ad9ba4c">logic_analyzer::LogicAnalyzer::startPin</a></div><div class="ttdeci">uint16_t startPin()</div><div class="ttdoc">Provides the GPIO number of the start pin which is used for capturing.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:586</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_ae9d11d03e812d939155c745f8e16a0ee"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#ae9d11d03e812d939155c745f8e16a0ee">logic_analyzer::LogicAnalyzer::buffer</a></div><div class="ttdeci">RingBuffer &amp; buffer()</div><div class="ttdoc">Provides access to the buffer.</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:611</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_logic_analyzer_html_af27306b65c65a7bf3e92acf6079ee6cd"><div class="ttname"><a href="classlogic__analyzer_1_1_logic_analyzer.html#af27306b65c65a7bf3e92acf6079ee6cd">logic_analyzer::LogicAnalyzer::readCount</a></div><div class="ttdeci">int readCount()</div><div class="ttdoc">provides the read count</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:649</div></div>
 <div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html">logic_analyzer::PicoCapturePIO</a></div><div class="ttdoc">First version of Capture implementation for Raspberry Pico using the PIO. Based on https://github....</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:23</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a05d158a0e4e913c598ad93158ef5fa9e"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">logic_analyzer::PicoCapturePIO::arm</a></div><div class="ttdeci">void arm()</div><div class="ttdoc">intitialize the PIO</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:153</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a069ccd8b178f84efa6f7eeebc08314c8"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">logic_analyzer::PicoCapturePIO::calculateDivider</a></div><div class="ttdeci">float calculateDivider(uint32_t frequecy_value_hz)</div><div class="ttdoc">determines the divider value</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:145</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a05d158a0e4e913c598ad93158ef5fa9e"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a05d158a0e4e913c598ad93158ef5fa9e">logic_analyzer::PicoCapturePIO::arm</a></div><div class="ttdeci">void arm()</div><div class="ttdoc">intitialize the PIO</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:156</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a069ccd8b178f84efa6f7eeebc08314c8"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a069ccd8b178f84efa6f7eeebc08314c8">logic_analyzer::PicoCapturePIO::calculateDivider</a></div><div class="ttdeci">float calculateDivider(uint32_t frequecy_value_hz)</div><div class="ttdoc">determines the divider value</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:148</div></div>
 <div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a0b7b65537527962e483651f4ab0f18be"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a0b7b65537527962e483651f4ab0f18be">logic_analyzer::PicoCapturePIO::captureAll</a></div><div class="ttdeci">virtual void captureAll()</div><div class="ttdoc">Used to test the speed.</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:53</div></div>
 <div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a201e087b2dccae705df715cc3880d03f"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a201e087b2dccae705df715cc3880d03f">logic_analyzer::PicoCapturePIO::cancel</a></div><div class="ttdeci">void cancel()</div><div class="ttdoc">cancels the capturing which is ccurrently in progress</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:43</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a21a4e7bb2df71d37cd1c8ede7e9b6c0c"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">logic_analyzer::PicoCapturePIO::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">starts the processing</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:123</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a3323d397fbd77cd1b792082722df88ae"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a3323d397fbd77cd1b792082722df88ae">logic_analyzer::PicoCapturePIO::transferSize</a></div><div class="ttdeci">dma_channel_transfer_size transferSize(int bytes)</div><div class="ttdoc">Determines the dma channel tranfer size.</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:215</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a4573eaf1c064a5f52b92eedf0d37579d"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a4573eaf1c064a5f52b92eedf0d37579d">logic_analyzer::PicoCapturePIO::bit_count</a></div><div class="ttdeci">uint bit_count()</div><div class="ttdoc">determines the number of bits</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:230</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a6631e89bdba4bedb7e1c5b04b7e5ffb5"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">logic_analyzer::PicoCapturePIO::dump</a></div><div class="ttdeci">void dump()</div><div class="ttdoc">Dumps the result to PuleView (SUMP software)</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:235</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a89ce19b83dbb0661656d7c93a872b56d"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">logic_analyzer::PicoCapturePIO::frequencyMeasured</a></div><div class="ttdeci">float frequencyMeasured()</div><div class="ttdoc">Provides the measured capturing frequency.</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:64</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a21a4e7bb2df71d37cd1c8ede7e9b6c0c"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a21a4e7bb2df71d37cd1c8ede7e9b6c0c">logic_analyzer::PicoCapturePIO::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">starts the processing</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:125</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a6631e89bdba4bedb7e1c5b04b7e5ffb5"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a6631e89bdba4bedb7e1c5b04b7e5ffb5">logic_analyzer::PicoCapturePIO::dump</a></div><div class="ttdeci">void dump()</div><div class="ttdoc">Dumps the result to PuleView (SUMP software)</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:241</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a89ce19b83dbb0661656d7c93a872b56d"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d">logic_analyzer::PicoCapturePIO::frequencyMeasured</a></div><div class="ttdeci">float frequencyMeasured()</div><div class="ttdoc">Provides the measured capturing frequency.</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:65</div></div>
 <div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a8dcd715eefb3e3b37a9571a7bac7e744"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a8dcd715eefb3e3b37a9571a7bac7e744">logic_analyzer::PicoCapturePIO::PicoCapturePIO</a></div><div class="ttdeci">PicoCapturePIO()</div><div class="ttdoc">Default Constructor.</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:26</div></div>
 <div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_a9e6b6cefecf6fe39d1482b454e3659fe"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#a9e6b6cefecf6fe39d1482b454e3659fe">logic_analyzer::PicoCapturePIO::capture</a></div><div class="ttdeci">virtual void capture()</div><div class="ttdoc">starts the capturing of the data</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:30</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_ae951f65795d2e579068ec21a9e2353b4"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#ae951f65795d2e579068ec21a9e2353b4">logic_analyzer::PicoCapturePIO::runtimeUs</a></div><div class="ttdeci">unsigned long runtimeUs()</div><div class="ttdoc">provides the runtime in microseconds from the capturing start to when the data is available</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:59</div></div>
-<div class="ttc" id="aclasslogic__analyzer_1_1_ring_buffer_html_a619bc1d446b7f08103744cd5ef9c49dc"><div class="ttname"><a href="classlogic__analyzer_1_1_ring_buffer.html#a619bc1d446b7f08103744cd5ef9c49dc">logic_analyzer::RingBuffer::setAvailable</a></div><div class="ttdeci">void setAvailable(size_t avail)</div><div class="ttdoc">Usualy you must not use this function. However for the RP PIO it is quite usefull to indicated that t...</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:223</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_acd0e99e6130a4390daf2c4c73f014f68"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#acd0e99e6130a4390daf2c4c73f014f68">logic_analyzer::PicoCapturePIO::waitForResult</a></div><div class="ttdeci">void waitForResult()</div><div class="ttdoc">Wait for result and update run_time_us and buffer available.</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:258</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_pico_capture_p_i_o_html_ae951f65795d2e579068ec21a9e2353b4"><div class="ttname"><a href="classlogic__analyzer_1_1_pico_capture_p_i_o.html#ae951f65795d2e579068ec21a9e2353b4">logic_analyzer::PicoCapturePIO::runtimeUs</a></div><div class="ttdeci">unsigned long runtimeUs()</div><div class="ttdoc">provides the runtime in microseconds from the capturing start to when the data is available</div><div class="ttdef"><b>Definition:</b> capture_raspberry_pico.h:60</div></div>
+<div class="ttc" id="aclasslogic__analyzer_1_1_ring_buffer_html_a619bc1d446b7f08103744cd5ef9c49dc"><div class="ttname"><a href="classlogic__analyzer_1_1_ring_buffer.html#a619bc1d446b7f08103744cd5ef9c49dc">logic_analyzer::RingBuffer::setAvailable</a></div><div class="ttdeci">void setAvailable(size_t avail)</div><div class="ttdoc">Usualy you must not use this function. However for the RP PIO it is quite usefull to indicated that t...</div><div class="ttdef"><b>Definition:</b> logic_analyzer.h:224</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

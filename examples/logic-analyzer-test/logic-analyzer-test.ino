@@ -46,6 +46,17 @@ void testBufferSize(LogicAnalyzer &logicAnalyzer) {
     printLine();
 }
 
+/// Generates a test PWM signal
+void activateTestSignal(int testPin, float dutyCyclePercent) {
+    if (testPin>=0){
+        log("Starting PWM test signal with duty %f %", dutyCyclePercent);
+        pinMode(testPin, OUTPUT);
+        int value = dutyCyclePercent / 100.0 * 255.0;
+        analogWrite(testPin, value);
+    }
+}
+
+
 // Test all pins
 void testPins(LogicAnalyzer &logicAnalyzer, Capture &capture) {
     logicAnalyzer.clear();
@@ -153,7 +164,7 @@ void testAll() {
     testBufferSize(logicAnalyzer);
     testSingleSample(logicAnalyzer, capture);
 
-    capture.activateTestSignal(logicAnalyzer.startPin(), duty_cycle_percent);
+    activateTestSignal(logicAnalyzer.startPin(), duty_cycle_percent);
     delay(100);
     testFrequencyMaxSpeed(logicAnalyzer, capture);
     for(auto &f : frequencies){
@@ -198,8 +209,8 @@ void testAllPIO() {
     Serial.println(capturePIO.maxFrequency());
     printLine();    
 
+    activateTestSignal(logicAnalyzer.startPin()+2, duty_cycle_percent);
     for(auto &f : frequencies){
-        capturePIO.activateTestSignal(logicAnalyzer.startPin()+2, duty_cycle_percent, f / 2.0);
         delay(200);
         testFrequencyPIO(logicAnalyzer, capturePIO, f);
     }
