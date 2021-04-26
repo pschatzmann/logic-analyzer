@@ -8,7 +8,6 @@
 
 #include "Arduino.h"
 #include "capture_raspberry_pico.h"
-#include "SoftwareSerial.h"
 using namespace logic_analyzer;  
 
 int pinStart=START_PIN;
@@ -40,8 +39,8 @@ void activateTestSignal(int testPin, float dutyCyclePercent) {
 }
 
 void setup() {
-    Serial2.begin(115200);
-    logicAnalyzer.setLogger(Serial2);
+    //Serial2.begin(115200);
+    //logicAnalyzer.setLogger(Serial2);
     //Logger.begin(Serial2,PicoLogger::Debug);
 
     Serial.begin(SERIAL_SPEED);  
