@@ -20,18 +20,8 @@ To come up with an basic implementation for a specific board you just need to im
 - ESP8266
 - Raspberry Pico
 
-# An Example Processor Configuration File
 
-The config file must contains the following information: 
-
-- Defines for the __processor specific (resource) settings__ (e.g. MAX_CAPTURE_SIZE, SERIAL_SPEED ...)
-- A __typedef of the PinBitArray__ which defines the recorded data size
-- An implementation of the __class PinReader__ which reads all pins in one shot 
-
-Here is the [config_esp32.h](https://github.com/pschatzmann/logic-analyzer/blob/main/src/config_esp32.h).
-
-
-# The Arduino Sketch
+# The Basic Arduino Sketch
 
 The basic Arduino Sketch for the __logic-analyzer__ is quite simple. We just need create a [LogicAnalyzer](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_logic_analyzer.html) and a [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) object.
 In the setup we call the __begin method__ on the LogicAnalyzer object which provides all mandatory parameters. The provided implementation just uses the default values which are defined in the config.
@@ -61,7 +51,9 @@ void loop() {
 }
 ```
 
-# Logging
+# Adding Additional Functionality
+
+## Logging
 
 You can actvate the logging by assigning a Stream to the LogicAnalyzer object by calling logicAnalyzer.setLogger():
 ```
@@ -70,7 +62,7 @@ Serial1.begin(115200, SERIAL_8N1, 16, 17);
 logicAnalyzer.setLogger(Serial1);
 ```
 
-# Adding Additional Functionality
+## Using Events
 
 An easy way to extend the functionalty is by adding an event handler. The following acts on a status change event by activating the LED dependent on the actual status:
 
@@ -97,7 +89,7 @@ logicAnalyzer.setEventHandler(&onEvent);
 
 ```
 
-# Custom Capturing
+## Custom Capturing
 
 I am providing a default implementation for the capturing with the [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:
 
@@ -114,6 +106,18 @@ class YourFastCapture : public AbstractCapture {
         }
 }
 ```
+
+## Supporting new Architectures
+
+In order to support a new architecture you need to implement a simple config file, that must contains the following information: 
+
+- Defines for the __processor specific (resource) settings__ (e.g. MAX_CAPTURE_SIZE, SERIAL_SPEED ...)
+- A __typedef of the PinBitArray__ which defines the recorded data size
+- An implementation of the __class PinReader__ which reads all pins in one shot 
+
+Here is the [config_esp32.h](https://github.com/pschatzmann/logic-analyzer/blob/main/src/config_esp32.h).
+
+
 # Class Documentation
 
 The complete [generated class documentation](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) can be found on Github.
