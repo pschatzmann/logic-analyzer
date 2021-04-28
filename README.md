@@ -13,7 +13,7 @@ Howerver all of them are geared for __one specific architecture__ and therfore a
 
 I wanted to come up with a better design and provide a [simple Arduino C++ Library](https://pschatzmann.github.io/logic-analyzer/html/annotated.html) that implements the [SUMP protocol](https://www.sump.org/projects/analyzer/protocol/) and clearly separates the generic functionality from the processor specific in order to support an __easy rollout to new architectures__: The only common precondition is the Arduino API. 
 
-To come up with an basic implementation for a specific board you just need to implement a specific config. I am currently providing implementations for
+I am currently providing implementations for
 
 - AVR Processors
 - ESP32
