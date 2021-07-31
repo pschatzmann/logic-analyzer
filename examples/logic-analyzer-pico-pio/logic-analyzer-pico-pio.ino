@@ -48,7 +48,7 @@ void setup() {
     Serial.setTimeout(SERIAL_TIMEOUT);
             pinMode(LED_BUILTIN, OUTPUT);
 
-    activateTestSignal(pinStart, 90.0);
+    //activateTestSignal(pinStart, 90.0);
     logicAnalyzer.setDescription("Raspberry-Pico-PIO");
     logicAnalyzer.setEventHandler(&onEvent);
 
