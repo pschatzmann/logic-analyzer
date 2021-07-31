@@ -211,5 +211,8 @@ pip-log.txt
 #Translations
 *.mo
 
-#Mr Developer
+# Mr Developer
 .mr.developer.cfg
+
+# Doxygen
+.DS_Store
