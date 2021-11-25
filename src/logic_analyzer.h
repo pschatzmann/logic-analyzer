@@ -18,7 +18,7 @@
 
 // Max size of buffered print
 #ifndef DUMP_RECORD_SIZE
-#define DUMP_RECORD_SIZE 1024*5
+#define DUMP_RECORD_SIZE 1024*1
 #endif
 
 // Supported Commands
@@ -493,6 +493,7 @@ class Capture : public AbstractCapture {
             log("dumpData: %lu",buffer_ptr->available());
             // buffered write 
             uint32_t tmp[DUMP_RECORD_SIZE];
+            stream_ptr->setTimeout(10000);
             while(buffer_ptr->available()){
                 size_t len = buffer_ptr->readBuffer(tmp, DUMP_RECORD_SIZE);
                 write(tmp, len);
