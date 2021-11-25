@@ -24,7 +24,7 @@ int pinStart=START_PIN;
 int numberOfPins=PIN_COUNT;
 
 LogicAnalyzer logicAnalyzer;
-Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD, );
+Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);
 TaskHandle_t task;
 
 // when the status is changed to armed we start the capture
