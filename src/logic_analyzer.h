@@ -65,10 +65,18 @@ void write(PinBitArray bits) {
     // write 4 bytes
     stream_ptr->write(htonl(bits));
 }
+
 // writes a buffer of uint32_t values
 void write(uint32_t *buff, size_t n_samples) {
-    stream_ptr->write((const char*)buff, n_samples * sizeof(uint32_t));
+    int written = 0;
+    int open = n_samples * sizeof(uint32_t);
+    while(open > 0){
+        size_t result = stream_ptr->write((const char*)buff + written, open);
+        written += result;
+        open -= result;
+    }
 }
+
 // writes a buffer of PinBitArray
 void write(PinBitArray *buff, size_t n_samples) {
     // convert to uint32_t
