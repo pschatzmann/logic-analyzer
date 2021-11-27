@@ -194,10 +194,13 @@ class RingBuffer {
         size_t readBuffer(uint32_t *result, size_t read_len){
             size_t result_len;
             for (size_t j=0; j<read_len; j++){
-                result[j] = read();
-                if (available()==0){
-                    return j+1;
-                }
+                PinBitArray *ptr = (PinBitArray *) (result+j);
+                for (int i=0;i < (4/sizeof(PinBitArray)); i++){
+                    ptr[i] = read();
+                    if (available()==0){
+                        return j+1;
+                    }
+                } 
             }
             return read_len;
         }

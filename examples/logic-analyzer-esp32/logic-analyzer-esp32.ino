@@ -14,9 +14,6 @@
 #include "logic_analyzer.h"
 #include "esp_int_wdt.h"
 
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 13 // pin number is specific to your esp32 board
-#endif
 
 using namespace logic_analyzer;  
 

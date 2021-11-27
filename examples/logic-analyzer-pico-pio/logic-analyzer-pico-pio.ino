@@ -17,7 +17,7 @@ PicoCapturePIO capture;
 
 // Use Event handler to cancel capturing
 void onEvent(Event event) {
-    if (event == STATUS) {
+    if (event == logic_analyzer::STATUS) {
         switch (logicAnalyzer.status()) {
             case ARMED:
                 digitalWrite(LED_BUILTIN, LOW);

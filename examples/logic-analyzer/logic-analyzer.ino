@@ -18,7 +18,7 @@ Capture capture(MAX_FREQ, MAX_FREQ_THRESHOLD);
 
 // Use Event handler to control the LED
 void onEvent(Event event) {
-    if (event == STATUS) {
+    if (event == logic_analyzer::STATUS) {
         switch (logicAnalyzer.status()) {
             case ARMED:
                 digitalWrite(LED_BUILTIN, LOW);

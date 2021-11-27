@@ -2,6 +2,11 @@
 #ifdef ESP32
 #include "Arduino.h"
 
+
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 13 // pin number is specific to your esp32 board
+#endif
+
 // processor specific settings
 #define MAX_CAPTURE_SIZE 65535  // Max number supported by SUMP
 #define SERIAL_SPEED 921600
