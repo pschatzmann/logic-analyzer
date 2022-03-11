@@ -66,10 +66,10 @@ void write(PinBitArray bits) {
     stream_ptr->write(htonl(bits));
 }
 
-// writes a buffer of uint32_t values
-void write(uint32_t *buff, size_t n_samples) {
+// writes a buffer of PinBitArray
+void write(PinBitArray *buff, size_t n_samples) {
     int written = 0;
-    int open = n_samples * sizeof(uint32_t);
+    int open = n_samples * sizeof(PinBitArray);
     while(open > 0){
         size_t result = stream_ptr->write((const char*)buff + written, open);
         written += result;
@@ -77,21 +77,9 @@ void write(uint32_t *buff, size_t n_samples) {
     }
 }
 
-// writes a buffer of PinBitArray
-void write(PinBitArray *buff, size_t n_samples) {
-    // convert to uint32_t
-    uint32_t tmp[DUMP_RECORD_SIZE];
-    int idx = 0;
-    for (int j=0;j<n_samples;j++){
-        tmp[idx++] = htonl(buff[j]);
-        if (idx==DUMP_RECORD_SIZE){
-            write(tmp, idx);
-            idx = 0;
-        }
-    }
-    if (idx>0){
-        write(tmp, idx);
-    }
+// writes a buffer of uint32_t values
+void write(uint32_t *buff, size_t n_samples) {
+     write(reinterpret_cast <PinBitArray *>(buff), n_samples * sizeof(uint32_t) / sizeof(PinBitArray));
 }
 
 
