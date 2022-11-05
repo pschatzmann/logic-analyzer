@@ -20,15 +20,13 @@ I am currently providing implementations for
 - ESP8266
 - Raspberry Pico
 
-
 # The Basic Arduino Sketch
 
 The basic Arduino Sketch for the __logic-analyzer__ is quite simple. We just need create a [LogicAnalyzer](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_logic_analyzer.html) and a [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) object.
 In the setup we call the __begin method__ on the LogicAnalyzer object which provides all mandatory parameters. The provided implementation just uses the default values which are defined in the config.
 Finally we add the __command handler__ in the loop():
 
-
-```
+```c++
 #include "Arduino.h"
 #include "logic_analyzer.h"
 
@@ -56,7 +54,8 @@ void loop() {
 ## Logging
 
 You can actvate the logging by assigning a Stream to the LogicAnalyzer object by calling logicAnalyzer.setLogger():
-```
+
+```c++
 // setup logger
 Serial1.begin(115200, SERIAL_8N1, 16, 17);
 logicAnalyzer.setLogger(Serial1);
@@ -66,7 +65,7 @@ logicAnalyzer.setLogger(Serial1);
 
 An easy way to extend the functionalty is by adding an event handler. The following acts on a status change event by activating the LED dependent on the actual status:
 
-```
+```c++
 // Use Event handler to control the LED
 void onEvent(Event event) {
     if (event == STATUS) {
@@ -84,16 +83,15 @@ void onEvent(Event event) {
 
 and we can just activate it by calling:
 
-```
+```c++
 logicAnalyzer.setEventHandler(&onEvent);
-
 ```
 
 ## Custom Capturing
 
 I am providing a default implementation for the capturing with the [Capture](https://pschatzmann.github.io/logic-analyzer/html/classlogic__analyzer_1_1_capture.html) class. It's main goal is portability because it should work on all Arduino Boards. To come up with a dedicated improved capturing is easy. Just implement your own class:
 
-```
+```c++
 class YourFastCapture : public AbstractCapture {
     public:
         /// Default Constructor
@@ -137,7 +135,8 @@ The complete [generated class documentation](https://pschatzmann.github.io/logic
 # Installation
 
 You can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
-```
+
+```shell
 cd  ~/Documents/Arduino/libraries
 git clone pschatzmann/logic-analyzer.git
 ```
