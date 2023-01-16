@@ -37,7 +37,7 @@ class PinReader  {
 
         /// reads all pins and provides the result as bitmask
         inline PinBitArray readAll() {
-          uint32_t input = (GPIO_REG_READ(GPIO_OUT_ADDRESS) & (uint32)(0b1111111111111111)) >> start_pin;
+          uint32_t input = (GPIO_REG_READ(GPIO_IN_ADDRESS) & (uint32)(0b1111111111111111)) >> start_pin;
           return input;
         }
 
