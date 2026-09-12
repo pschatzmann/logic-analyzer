@@ -148,6 +148,7 @@ git clone pschatzmann/logic-analyzer.git
 | Processor               | Max Freq  | Max Samples | Pins | GPIO      |
 |-------------------------|-----------|-------------|------|-----------|
 | ESP32                   |   2940052 |       65535 |   8  | GPIO19-26 |
+| ESP32 - I2S DMA         | untested  |       65535 |   8  | GPIO19-26 |
 | ESP8266                 |   1038680 |       50000 |   4  | GPIO12-15 |
 | AVR Processors (Nano)   |    109170 |         500 |   8  | GPIO0-7   |
 | Raspberry Pico          |   2508420 |       65535 |   8  | GPIO6-13  |
@@ -155,6 +156,23 @@ git clone pschatzmann/logic-analyzer.git
 
 
 Please note, that SUMP supports only max 65535 samples.
+
+## ESP32 - Hardware-Timed Capture via I2S DMA
+
+The regular ESP32 `Capture` class samples pins in a software loop, which gets
+unreliable above a few tens of kHz (loop overhead, RTOS jitter, WiFi/BT
+interrupts). The [logic-analyzer-esp32-i2s](https://github.com/pschatzmann/logic-analyzer/tree/main/examples/logic-analyzer-esp32-i2s)
+example (`CaptureESP32I2S`) instead drives the I2S0 peripheral's parallel
+"camera mode" with DMA, so samples are captured with no CPU involvement,
+similar in spirit to how `PicoCapturePIO` uses the RP2040's PIO block.
+
+This only works on the __original ESP32__ (not S2/S3/C3, which have a
+different I2S peripheral), and the I2S0 peripheral needs an __external__
+sampling clock in this mode - the sketch generates one itself via LEDC PWM
+on GPIO32, which you must connect with a __jumper wire to GPIO34__ (the
+clock input) for it to capture anything at all. Triggering is not
+supported yet. Consider this experimental until confirmed against a real
+captured signal.
 
 
 # Summary
