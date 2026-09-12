@@ -62,8 +62,12 @@ Stream *stream_ptr = nullptr;
 
 /// writes the status of all activated pins to the capturing device
 void write(PinBitArray bits) {
-    // write 4 bytes
-    stream_ptr->write(htonl(bits));
+    // The SUMP/OLS protocol expects each 4 byte sample in the host's native
+    // (little endian) byte order - NOT network (big endian) order, so we must
+    // not apply htonl() here. Also Arduino's Print::write(unsigned long)
+    // truncates to a single byte, so we write the full 4 bytes explicitly.
+    uint32_t tmp = (uint32_t) bits;
+    stream_ptr->write((const uint8_t*)&tmp, sizeof(tmp));
 }
 
 // writes a buffer of uint32_t values
@@ -79,11 +83,12 @@ void write(uint32_t *buff, size_t n_samples) {
 
 // writes a buffer of PinBitArray
 void write(PinBitArray *buff, size_t n_samples) {
-    // convert to uint32_t
+    // convert to uint32_t - samples must stay in native (little endian) byte
+    // order to match what the SUMP/OLS protocol (and PulseView) expects.
     uint32_t tmp[DUMP_RECORD_SIZE];
     int idx = 0;
     for (int j=0;j<n_samples;j++){
-        tmp[idx++] = htonl(buff[j]);
+        tmp[idx++] = (uint32_t) buff[j];
         if (idx==DUMP_RECORD_SIZE){
             write(tmp, idx);
             idx = 0;
@@ -167,7 +172,7 @@ class RingBuffer {
                 return;
             }
             data[write_pos++] = value;
-            if (write_pos>size_count){
+            if (write_pos>=size_count){
                 write_pos = 0;
             }
             if (available_count<size_count){
@@ -181,7 +186,7 @@ class RingBuffer {
         PinBitArray read() {
             PinBitArray result = 0;
             if (available_count>0){
-                if (read_pos>size_count){
+                if (read_pos>=size_count){
                     read_pos = 0;
                 }
                 result = data[read_pos++];

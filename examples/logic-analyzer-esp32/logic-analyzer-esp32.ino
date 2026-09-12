@@ -12,7 +12,6 @@
 
 #include "Arduino.h"
 #include "logic_analyzer.h"
-#include "esp_int_wdt.h"
 
 
 using namespace logic_analyzer;  

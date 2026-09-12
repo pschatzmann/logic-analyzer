@@ -174,6 +174,14 @@ class PicoCapturePIO : public AbstractCapture {
 
             uint offset = pio_add_program(pio, &capture_prog);
 
+            // Route the requested GPIOs to the PIO block and set them as inputs.
+            // Without this the state machine never sees the external pin levels
+            // (it stays connected to SIO), so the capture just reads zeros.
+            for (uint i = 0; i < pin_count; i++) {
+                pio_gpio_init(pio, pin_base + i);
+            }
+            pio_sm_set_consecutive_pindirs(pio, sm, pin_base, pin_count, false);
+
             // Configure state machine to loop over this `in` instruction forever,
             // with autopush enabled.
             pio_sm_config c = pio_get_default_sm_config();

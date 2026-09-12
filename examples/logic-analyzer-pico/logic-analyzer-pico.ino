@@ -6,8 +6,8 @@
  * See https://sigrok.org/wiki/Openbench_Logic_Sniffer#Short_Commands * 
  */
 
-#ifndef PICO
-#error "This sketch is only works with the arduino-pico framwork"
+#ifndef ARDUINO_ARCH_RP2040
+#error "This sketch only works with the arduino-pico framework"
 #endif
 
 

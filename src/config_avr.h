@@ -43,9 +43,12 @@ class PinReader  {
           this->start_pin = startPin;
         }
 
-        /// reads all pins and provides the result as bitmask -  PORTD:pins 0 to 7 / PORTB: pins 8 to 13 
+        /// reads all pins and provides the result as bitmask -  PIND:pins 0 to 7 / PINB: pins 8 to 13
         inline PinBitArray readAll() {
-            uint16_t result = ((uint16_t)PORTB & B00111111) << 8 | PORTD;
+            // Use the PINx input registers (actual physical pin state), not the
+            // PORTx output-latch registers - PORTx does not reflect the real
+            // voltage on pins configured as INPUT.
+            uint16_t result = ((uint16_t)PINB & B00111111) << 8 | PIND;
             return result >> start_pin;
         }
 
