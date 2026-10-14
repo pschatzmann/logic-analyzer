@@ -1,5 +1,5 @@
 /**
- * @file logic_analyzer_generic.h
+ * @file logic_analyzer.h
  * @author Phil Schatzmann
  * @copyright GPLv3
  * @brief Generic implementation of SUMP based logic analyzer
@@ -552,10 +552,8 @@ class LogicAnalyzer {
         /**
          * @brief Starts the processing
          * 
-         * @param procesingStream Stream which is used to communicate to pulsview
+         * @param procesingStream Stream which is used to communicate to PulseView
          * @param capture  AbstractCapture
-         * @param maxCaptureFreq Max Supported Capturing Frequency
-         * @param maxCaptureFreqThreshold Threshold which is used to change to the 'full speed' implementation which does not dontain any delays
          * @param maxCaptureSize Maximum number of captured entries
          * @param pinStart Start GPIO Pin Number for capturing
          * @param numberOfPins Number of subsequent pins to capture

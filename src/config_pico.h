@@ -1,5 +1,5 @@
 /**
- * @file logic_analyzer_generic.h
+ * @file config_pico.h
  * @author Phil Schatzmann
  * @copyright GPLv3
  * @brief Rasperry Pico processor specific implementation of SUMP based logic analyzer

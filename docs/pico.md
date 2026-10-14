@@ -5,6 +5,10 @@
 | Raspberry Pico          |   2508420 |       65535 |   8  | GPIO6-13  |
 | Raspberry Pico - PIO    | 125000000 |       65535 |   8  | GPIO6-13  |
 
+Default serial speed: 921600 baud (`SERIAL_SPEED`). Both examples work with the
+[Arduino-Pico core](https://github.com/earlephilhower/arduino-pico) for
+RP2040 and RP2350 boards (e.g. Pico, Pico W, Pico 2, Pico 2 W).
+
 Config file: [config_pico.h](https://github.com/pschatzmann/logic-analyzer/blob/main/src/config_pico.h)
 
 ## Software Loop Capture (`Capture`)

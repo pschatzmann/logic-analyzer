@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['logicanalyzer_33',['LogicAnalyzer',['../classlogic__analyzer_1_1_logic_analyzer.html',1,'logic_analyzer::LogicAnalyzer'],['../classlogic__analyzer_1_1_logic_analyzer.html#ab7a073d7e4da72c284aa0817cdf29934',1,'logic_analyzer::LogicAnalyzer::LogicAnalyzer()']]],
-  ['logicanalyzer_34',['logicAnalyzer',['../classlogic__analyzer_1_1_abstract_capture.html#a6b9186b1923b22ddd8bc14e828617977',1,'logic_analyzer::AbstractCapture']]],
-  ['logicanalyzerstate_35',['LogicAnalyzerState',['../classlogic__analyzer_1_1_logic_analyzer_state.html',1,'logic_analyzer']]]
+  ['i2s_20dma_20tt_20captureesp32i2s_20tt_0',['Hardware-Timed Capture via I2S DMA (&lt;tt&gt;CaptureESP32I2S&lt;/tt&gt;)',['../md_docs_2esp32.html#autotoc_md16',1,'']]],
+  ['installation_1',['Installation',['../index.html#autotoc_md9',1,'']]],
+  ['iscontinuouscapture_2',['isContinuousCapture',['../classlogic__analyzer_1_1_logic_analyzer.html#aab071906756a14d9a3aebc61b53d461d',1,'logic_analyzer::LogicAnalyzer']]]
 ];

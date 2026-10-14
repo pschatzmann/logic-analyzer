@@ -21,7 +21,7 @@ void onEvent(Event event) {
     if (event == logic_analyzer::STATUS) {
         switch (logicAnalyzer.status()) {
             case ARMED:
-                digitalWrite(LED_BUILTIN, LOW);
+                digitalWrite(LED_BUILTIN, HIGH);
                 break;
             case STOPPED:
                 digitalWrite(LED_BUILTIN, LOW);
@@ -34,6 +34,7 @@ void setup() {
     Serial.begin(SERIAL_SPEED);  
     Serial.setTimeout(SERIAL_TIMEOUT);
 
+    pinMode(LED_BUILTIN, OUTPUT);
     logicAnalyzer.setEventHandler(&onEvent);
     logicAnalyzer.setDescription(DESCRIPTION);
     logicAnalyzer.begin(Serial, &capture, MAX_CAPTURE_SIZE, pinStart, numberOfPins);

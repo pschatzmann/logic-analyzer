@@ -1,14 +1,19 @@
 # AVR Processors
 
-| Processor             | Max Freq | Max Samples | Pins | GPIO    |
-|------------------------|---------|-------------|------|---------|
-| AVR Processors (Nano)  |  109170 |         500 |   8  | GPIO0-7 |
-| Arduino Mega 2560      |         |         500 |   8  | GPIO22-29 |
+| Processor              | Max Freq | Max Samples | Pins | GPIO      |
+|------------------------|----------|-------------|------|-----------|
+| AVR Processors (Nano)  |   109170 |         500 |   8  | GPIO0-7   |
+| Arduino Mega 2560      | not measured |     500 |   8  | GPIO22-29 |
 
 Config file: [config_avr.h](https://github.com/pschatzmann/logic-analyzer/blob/main/src/config_avr.h)
 
 Uses the portable, bit-banged `Capture` class - there is currently no
 hardware-timed capture backend for AVR.
+
+On the Uno/Nano, GPIO0 and GPIO1 are the hardware `Serial` RX/TX pins that
+are used to communicate with PulseView, so those two channels show the serial
+traffic and can't be used for measuring. Pass a different start pin to
+`begin()` if you need all 8 channels (e.g. start pin 2 for GPIO2-9).
 
 Note: `PinReader::readAll()` reads the `PINB`/`PIND` input registers (the
 actual physical pin state), not `PORTB`/`PORTD` (the output latch), which

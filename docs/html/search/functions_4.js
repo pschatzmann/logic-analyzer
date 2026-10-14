@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['frequencymeasured_109',['frequencyMeasured',['../classlogic__analyzer_1_1_pico_capture_p_i_o.html#a89ce19b83dbb0661656d7c93a872b56d',1,'logic_analyzer::PicoCapturePIO']]]
+  ['enablesampleclock_0',['enableSampleClock',['../classlogic__analyzer_1_1_capture_e_s_p32_i2_s.html#acec5383125fe20ac8ba60aac70bf5c42',1,'logic_analyzer::CaptureESP32I2S']]]
 ];
