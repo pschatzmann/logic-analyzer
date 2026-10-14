@@ -591,7 +591,7 @@ class LogicAnalyzer {
             // by default the pins are in read mode - so it is usually not really necesarry to set the mode to input
             if (setup_pins){
                 // pinmode imput for requested pins
-                for (int j=pinStart;j<numberOfPins;j++){
+                for (int j=0;j<numberOfPins;j++){
                     pinMode(pinStart+j, INPUT);
                 }
             }
